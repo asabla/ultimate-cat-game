@@ -23,7 +23,7 @@ public class Connect {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Driverfel");
 				e.printStackTrace();
 			}
 			
@@ -33,7 +33,7 @@ public class Connect {
             try {
 				conn = DriverManager.getConnection(url, "scrum", "stiga123");//inlogg och lšsen
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Fel url, inlogg eller lšsen");
 				e.printStackTrace();
 			}
 				
@@ -55,8 +55,7 @@ public class Connect {
 				
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Fel1");
+				System.out.println("SQLfel");
 				e.printStackTrace();
 			}
 			
