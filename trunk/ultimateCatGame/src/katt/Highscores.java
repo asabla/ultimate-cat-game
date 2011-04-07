@@ -117,38 +117,6 @@ public void write(Score noll){
 	}
 	
 	
-	/* public void write()
-	{
-					
-			String hs1 = Long.toHexString(high);
-			String hs2 = Long.toHexString(mid);
-			String hs3 = Long.toHexString(low);			
-			
-			
-			try{
-				FileWriter fw1 = new FileWriter("highscore1.hs");
-				FileWriter fw2 = new FileWriter("highscore2.hs");
-				FileWriter fw3 = new FileWriter("highscore3.hs");
-				BufferedWriter out1 = new BufferedWriter(fw1);
-				BufferedWriter out2 = new BufferedWriter(fw2);
-				BufferedWriter out3 = new BufferedWriter(fw3);
-				out1.write(hs1);
-				out1.close();
-				out2.write(hs2);
-				out2.close();
-				out3.write(hs3);
-				out3.close();
-				}
-				
-				catch(Exception e)
-			{
-					System.out.print("FEL");
-			}
-				System.out.println("V‰rden ut:\n" + high + "\n" + mid + "\n" + low );
-	}
-	
-	//Get metod som hamtar en hexString från en fil och gör om den till en decString.
-	 */
 	 public void get(){
 		 	
 			try {
@@ -183,80 +151,6 @@ public void write(Score noll){
 			
 			
 	 }
-	 
-	 /* 
-	public void get()
-	{
-		//Hämtar filen från highscore.hs som är en txt-fil med ett lite klurigt namn.
-		
-			FileReader fr1;
-			FileReader fr2;
-			FileReader fr3;
-			try {
-				fr1 = new FileReader("highscore1.hs");
-				fr2 = new FileReader("highscore2.hs");
-				fr3 = new FileReader("highscore3.hs");
-			
-			
-			BufferedReader in;
-			String ut = "";
-			
-			for(int i = 1; i < 4; i++)
-			{
-				
-			if(i == 1){
-				in = new BufferedReader(fr1);
-			}
-			else if(i == 2){
-				in = new BufferedReader(fr2);
-
-			}
-			else{
-				in = new BufferedReader(fr3);
-			}
-			//lägger hexStringen från highscore.hs i en tom string(ut).
-			
-			
-			
-				//Läser in ut.
-				try {
-					ut = in.readLine();
-					in.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				//Gör om hexStringen i ut till en decString.
-				Long t = Long.valueOf(ut, 16);
-				//Skriver ut i consolen
-				
-				if(i == 1){
-					high = t;
-				}
-				else if(i == 2){
-					mid = t;
-
-				}
-				else{
-					low = t;
-				}
-				
-				
-				
-			} 
-} 
-			
-			catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("V‰rden in:\n" + high + "\n" + mid + "\n" + low );
-			
-		
-		
-		
-			}	
-	*/
 	 
 	public void reset()
 	{
