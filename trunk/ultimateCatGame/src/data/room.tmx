@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="30" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="collision" tilewidth="16" tileheight="16">
+  <image source="red.png" width="128" height="51"/>
+ </tileset>
+ <tileset firstgid="25" name="walls" tilewidth="16" tileheight="16">
+  <image source="fetch.png" width="128" height="64"/>
+ </tileset>
+ <layer name="collision" width="40" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3RQQoAIAhE0bz/pdu0iCCQbNDiP5hVJGO1BgAAgBtspKpoP3OEfnnWfqp3OPVaP8Vsz567s2r9Kv3dLNLPe0+x6w/9MmYpZir7kVg6SPF6YMASAAA=
+  </data>
+ </layer>
+ <layer name="room" width="40" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2VSwqAMAxEvYafjZ8LKN7/bLbQgJQmBJLQLubB4KaNE6ep0wQAAAAAADyYk7beJgT2pMuwP/e3CLL2bvWX95+CLLU9/EVT++Py6nVGa39cXr2+cWS+rSy4HLh7JNJfKwvuXeSj7mmU+biT3vJ8ftL4085MxF2v8ZfXHA3V+yKy8Kw5uj86Q56QP+kfqtVa5FGLRHPfOl8jiPx9sDuT9sASAAA=
+  </data>
+ </layer>
+</map>
