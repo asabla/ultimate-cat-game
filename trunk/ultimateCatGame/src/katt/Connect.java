@@ -7,9 +7,9 @@ public class Connect {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		connect();
-	}
+//	public static void main(String[] args) {
+//		connect();
+//	}
 	
 	public static Connection conn = null;
 	
@@ -44,7 +44,7 @@ public class Connect {
 				stmt.executeUpdate("UPDATE highscore SET telefon='0701231234' WHERE namn='Yahoo'");
 				
 				//fråga om man vill få ut ett resultat. läggs med fördel i en resultset.
-				//stmt.executeQuery(sql)
+				//stmt.executeQuery("INSERT INTO highscore (namn, highscore, telefon, email) Values ('Christian', 9999999, '0735314549', 'christian.werme@gmail.com')");
 			
 				//Metod för att skriva ut resultset:
 				//while (rs.next()) {
