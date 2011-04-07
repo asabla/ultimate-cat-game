@@ -15,100 +15,120 @@ import org.dyno.visual.swing.layouts.Leading;
 public class TestFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField jTextField0;
-	private JTextField jTextField1;
-	private JTextField jTextField2;
-	private JTextField jTextField3;
-	private JButton jButton0;
-	private JButton jButton1;
-	
+	private JTextField pointsField;
+	private JTextField nameField;
+	private JTextField emailField;
+	private JTextField phoneField;
+	private JButton updateButton;
+	private JButton resetButton;
+	private Database database; 
 	private UpdateScore update;
-
+	private JButton sendScoresButton;
 	public TestFrame() {
 		initComponents();
 		update = new UpdateScore();
+		database = new Database();
 	}
 
 	private void initComponents() {
 		setLayout(new GroupLayout());
-		add(getJTextField0(), new Constraints(new Leading(12, 91, 10, 10), new Leading(12, 12, 12)));
-		add(getJTextField1(), new Constraints(new Leading(12, 90, 12, 12), new Leading(50, 12, 12)));
-		add(getJTextField2(), new Constraints(new Leading(12, 90, 12, 12), new Leading(88, 12, 12)));
-		add(getJTextField3(), new Constraints(new Leading(12, 90, 12, 12), new Leading(126, 12, 12)));
-		add(getJButton0(), new Constraints(new Leading(144, 10, 10), new Leading(12, 12, 12)));
-		add(getJButton1(), new Constraints(new Leading(144, 12, 12), new Leading(56, 12, 12)));
+		add(getPointsField(), new Constraints(new Leading(12, 91, 10, 10), new Leading(12, 12, 12)));
+		add(getNameField(), new Constraints(new Leading(12, 90, 12, 12), new Leading(50, 12, 12)));
+		add(getEmailField(), new Constraints(new Leading(12, 90, 12, 12), new Leading(88, 12, 12)));
+		add(getPhoneField(), new Constraints(new Leading(12, 90, 12, 12), new Leading(126, 12, 12)));
+		add(getResetButton(), new Constraints(new Leading(144, 108, 12, 12), new Leading(56, 12, 12)));
+		add(getUpdateButton(), new Constraints(new Leading(144, 108, 12, 12), new Leading(12, 12, 12)));
+		add(getSendScoresButton(), new Constraints(new Leading(144, 108, 12, 12), new Leading(100, 12, 12)));
 		setSize(358, 302);
 	}
 
-	private JTextField getJTextField0() {
-		if (jTextField0 == null) {
-			jTextField0 = new JTextField();
-			jTextField0.setText("Poäng");
-		}
-		return jTextField0;
-	}
-
-	private JButton getJButton1() {
-		if (jButton1 == null) {
-			jButton1 = new JButton();
-			jButton1.setText("Reset");
-			jButton1.addActionListener(new ActionListener() {
+	private JButton getSendScoresButton() {
+		if (sendScoresButton == null) {
+			sendScoresButton = new JButton();
+			sendScoresButton.setText("Skicka");
+			sendScoresButton.addActionListener(new ActionListener() {
 	
 				public void actionPerformed(ActionEvent event) {
-					jButton1ActionActionPerformed(event);
+					sendScoresButtonActionActionPerformed(event);
 				}
 			});
 		}
-		return jButton1;
+		return sendScoresButton;
 	}
 
-	private JButton getJButton0() {
-		if (jButton0 == null) {
-			jButton0 = new JButton();
-			jButton0.setText("Uppdatera");
-			jButton0.addActionListener(new ActionListener() {
+	private JTextField getPointsField() {
+		if (pointsField == null) {
+			pointsField = new JTextField();
+			pointsField.setText("Poäng");
+		}
+		return pointsField;
+	}
+
+	private JButton getResetButton() {
+		if (resetButton == null) {
+			resetButton = new JButton();
+			resetButton.setText("Reset");
+			resetButton.addActionListener(new ActionListener() {
 	
 				public void actionPerformed(ActionEvent event) {
-					jButton0ActionActionPerformed(event);
+					resetButtonActionActionPerformed(event);
 				}
 			});
 		}
-		return jButton0;
+		return resetButton;
 	}
 
-	private JTextField getJTextField3() {
-		if (jTextField3 == null) {
-			jTextField3 = new JTextField();
-			jTextField3.setText("Telefon");
+	private JButton getUpdateButton() {
+		if (updateButton == null) {
+			updateButton = new JButton();
+			updateButton.setText("Uppdatera");
+			updateButton.addActionListener(new ActionListener() {
+	
+				public void actionPerformed(ActionEvent event) {
+					updateButtonActionActionPerformed(event);
+				}
+			});
 		}
-		return jTextField3;
+		return updateButton;
 	}
 
-	private JTextField getJTextField2() {
-		if (jTextField2 == null) {
-			jTextField2 = new JTextField();
-			jTextField2.setText("Epost");
+	private JTextField getPhoneField() {
+		if (phoneField == null) {
+			phoneField = new JTextField();
+			phoneField.setText("Telefon");
 		}
-		return jTextField2;
+		return phoneField;
 	}
 
-	private JTextField getJTextField1() {
-		if (jTextField1 == null) {
-			jTextField1 = new JTextField();
-			jTextField1.setText("Namn");
+	private JTextField getEmailField() {
+		if (emailField == null) {
+			emailField = new JTextField();
+			emailField.setText("Epost");
 		}
-		return jTextField1;
+		return emailField;
 	}
 
-	private void jButton0ActionActionPerformed(ActionEvent event) {
-		Long insertedScore = Long.parseLong(jTextField0.getText());
-		String name = jTextField1.getText();
+	private JTextField getNameField() {
+		if (nameField == null) {
+			nameField = new JTextField();
+			nameField.setText("Namn");
+		}
+		return nameField;
+	}
+
+	private void updateButtonActionActionPerformed(ActionEvent event) {
+		Long insertedScore = Long.parseLong(pointsField.getText());
+		String name = nameField.getText();
 		update.update(name, insertedScore);
 		
 	}
 
-	private void jButton1ActionActionPerformed(ActionEvent event) {
+	private void resetButtonActionActionPerformed(ActionEvent event) {
 		update.reset();
+	}
+
+	private void sendScoresButtonActionActionPerformed(ActionEvent event) {
+		database.sendHighscore(nameField.getText(), (int) Long.parseLong(pointsField.getText()), emailField.getText(), phoneField.getText());
 	}
 
 }
