@@ -21,6 +21,7 @@ public class TestFrame extends JFrame {
 	private JTextField jTextField3;
 	private JButton jButton0;
 	private JButton jButton1;
+	
 	private UpdateScore update;
 
 	public TestFrame() {
@@ -50,7 +51,13 @@ public class TestFrame extends JFrame {
 	private JButton getJButton1() {
 		if (jButton1 == null) {
 			jButton1 = new JButton();
-			jButton1.setText("jButton1");
+			jButton1.setText("Reset");
+			jButton1.addActionListener(new ActionListener() {
+	
+				public void actionPerformed(ActionEvent event) {
+					jButton1ActionActionPerformed(event);
+				}
+			});
 		}
 		return jButton1;
 	}
@@ -94,10 +101,14 @@ public class TestFrame extends JFrame {
 	}
 
 	private void jButton0ActionActionPerformed(ActionEvent event) {
-		Long currentScore = Long.parseLong(jTextField0.getText());
+		Long insertedScore = Long.parseLong(jTextField0.getText());
 		String name = jTextField1.getText();
-		update.update(name, currentScore);
+		update.update(name, insertedScore);
 		
+	}
+
+	private void jButton1ActionActionPerformed(ActionEvent event) {
+		update.reset();
 	}
 
 }

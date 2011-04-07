@@ -84,10 +84,36 @@ public class Highscores {
 			// TODO Auto-generated catch block
 			System.out.print("IOException");
 		}
-		System.out.println("Värden ut:");
-		System.out.println(high.getName() + " : " + high.getPoints());
-		System.out.println(mid.getName() + " : " + mid.getPoints());
-		System.out.println(low.getName() + " : " + low.getPoints());
+		get();
+		
+	}
+public void write(Score noll){
+		
+		try {
+		
+		FileOutputStream fos1 = new FileOutputStream("data/score1.tmp");
+        ObjectOutputStream oos1 = new ObjectOutputStream(fos1);
+        FileOutputStream fos2 = new FileOutputStream("data/score2.tmp");
+        ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+        FileOutputStream fos3 = new FileOutputStream("data/score3.tmp");
+        ObjectOutputStream oos3 = new ObjectOutputStream(fos3);
+
+        oos1.writeObject(noll);
+        oos2.writeObject(noll);
+        oos3.writeObject(noll);
+
+        oos1.close();
+        oos2.close();
+        oos3.close();
+		}
+        catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.print("Filen saknas");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.print("IOException");
+		}
+		get();
 	}
 	
 	
@@ -154,10 +180,7 @@ public class Highscores {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("Värden in:");
-			System.out.println(high.getPoints());
-			System.out.println(mid.getPoints());
-			System.out.println(low.getPoints());
+			
 			
 	 }
 	 
@@ -233,39 +256,53 @@ public class Highscores {
 		
 		
 			}	
-	
+	*/
+	 
 	public void reset()
 	{
 		
-		Long n = 0l;
-
-		
-		String hs1 = n.toString();
-		String hs2 = n.toString();
-		String hs3 = n.toString();			
+		Score noll = new Score(0l);	
 		
 		
 		try{
-			FileWriter fw1 = new FileWriter("highscore1.hs");
-			FileWriter fw2 = new FileWriter("highscore2.hs");
-			FileWriter fw3 = new FileWriter("highscore3.hs");
-			BufferedWriter out1 = new BufferedWriter(fw1);
-			BufferedWriter out2 = new BufferedWriter(fw2);
-			BufferedWriter out3 = new BufferedWriter(fw3);
-			out1.write(hs1);
-			out1.close();
-			out2.write(hs2);
-			out2.close();
-			out3.write(hs3);
-			out3.close();
+			FileOutputStream fos1 = new FileOutputStream("data/score1.tmp");
+	        ObjectOutputStream oos1 = new ObjectOutputStream(fos1);
+	        FileOutputStream fos2 = new FileOutputStream("data/score2.tmp");
+	        ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+	        FileOutputStream fos3 = new FileOutputStream("data/score3.tmp");
+	        ObjectOutputStream oos3 = new ObjectOutputStream(fos3);
+
+	        oos1.writeObject(noll);
+	        oos2.writeObject(noll);
+	        oos3.writeObject(noll);
+
+	        oos1.close();
+	        oos2.close();
+	        oos3.close();
 			}
 			
 			catch(Exception e)
 		{
 				System.out.print("FEL");
 		}
+			printUt();
 		
-	} */
+	} 
+	
+	public void printIn(){
+		System.out.println("Värden in:");
+		System.out.println(high.getName() + " : " + high.getPoints());
+		System.out.println(mid.getName() + " : " + mid.getPoints());
+		System.out.println(low.getName() + " : " + low.getPoints());
+	}
+	
+	public void printUt(){
+		System.out.println("Värden ut:");
+		System.out.println(high.getName() + " : " + high.getPoints());
+		System.out.println(mid.getName() + " : " + mid.getPoints());
+		System.out.println(low.getName() + " : " + low.getPoints());
+	}
+	
 	}	
 	
 		
