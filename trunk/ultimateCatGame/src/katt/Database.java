@@ -21,12 +21,19 @@ public class Database
         {
             connectToDB();  //Ansluter till servern
             boolean btemp = getValue("email", email); //Kontrollerar om email-adressen finns sen tidigare
+            String stemp = getUpdateString(btemp, name, highscore, email, telefon);
             
-            System.out.println("Skickar värden till servern");
-            statement = connect.createStatement(); //Ser till att drivern hamnar i createstatement
-            int val = statement.executeUpdate(getUpdateString(btemp, name, highscore, email, telefon)); //Den faktiska anropet som uppdaterar databasen
-            System.out.println("Du har nu skickat in ditt highscore!");
-
+            if(stemp.equals("No"))
+            {
+                System.out.println("Ditt highscore är för litet för att lägga till");
+            }
+            else
+            {
+                System.out.println("Skickar värden till servern");
+                statement = connect.createStatement(); //Ser till att drivern hamnar i createstatement
+                int val = statement.executeUpdate(stemp); //Den faktiska anropet som uppdaterar databasen
+                System.out.println("Du har nu skickat in ditt highscore!");
+            }
             close();  //Stänger ner anslutningen
         }
         catch (SQLException e)
@@ -35,11 +42,11 @@ public class Database
         }
     }
 
-    private String getUpdateString(boolean update,String name, int highscore, String email, String telefon)
+    private String getUpdateString(boolean update, String name, int highscore, String email, String telefon)
     {
         String s_return = null;
 
-        if(update == false)
+        if (update == true)
         {
             s_return = "INSERT INTO highscore (namn, highscore, email, telefon) "
                     + "VALUES('" + name + "', " + highscore + ", '" + email + "', '" + telefon + "')";
@@ -47,10 +54,52 @@ public class Database
         else
         {
             //Lägg till funktion som kollar om highscore värdet är lägre eller högre än tidigare
-            s_return = "UPDATE highscore SET highscore=" + highscore + " WHERE email='" + email + "'";
+            boolean btemp = checkResult("email", email, "highscore", highscore);
+            if(btemp == true)
+            {
+                System.out.println("Highscore förlitet");
+                s_return = "No";
+            }
+            else
+            {
+                //System.out.println("Försöker uppdatera highscore");  //Felsökningssträng
+                s_return = "UPDATE highscore SET highscore=" + highscore + " WHERE email='" + email + "'";
+            }
         }
 
         return s_return;  //Returnerar rätt sträng, beroende på om den skall uppdateras eller läggas till
+    }
+
+    private boolean checkResult(String column, String value, String scoulmn, int highscore )
+    {
+        int a_res = 0;
+        boolean b_res = false;
+        try
+        {
+            statement = connect.createStatement();
+            preparedStatement = connect.prepareStatement("SELECT * FROM highscore WHERE " + column + "='" + value + "' AND " + scoulmn + ">=" + highscore);
+            resultset = preparedStatement.executeQuery();
+            while (resultset.next())
+            {
+                a_res = resultset.getInt(1);
+            }
+
+            if (a_res == 0)
+            {
+                b_res = false;
+            }
+            else
+            {
+                b_res = true;
+            }
+            
+            //System.out.println("Kollade om highscore är mindre eller större");  //Felsökningssträng
+        }
+        catch (SQLException e)
+        {
+        }
+        
+        return b_res;
     }
 
     //Används för att kontrollera om värdet finns sen tidigare. Om det inte finns returneras false och true om värdet finns
@@ -60,20 +109,18 @@ public class Database
         boolean b_res = false;
         String exception = null;
 
-        //connectToDB(); //Behövs inte då anslutningen inte är nerstängd
-
         try
         {
             exception = "Hämtning av " + column;
             statement = connect.createStatement();
             preparedStatement = connect.prepareStatement("SELECT * FROM highscore WHERE " + column + "=" + value);
             resultset = preparedStatement.executeQuery();
-            while(resultset.next())
+            while (resultset.next())
             {
                 a_res = resultset.getInt(1);
             }
 
-            if(a_res == 0)
+            if (a_res == 0)
             {
                 b_res = false;
             }
@@ -82,13 +129,11 @@ public class Database
                 b_res = true;
             }
         }
-        catch(SQLException e)
+        catch (SQLException e)
         {
             //Skriver ut felmeddelandet även när det inte blir fel
             //System.out.println("Operationen: " + exception + " kunde inte genomföras. Kontakta support för mer info");
         }
-
-        //close(); //Kan inte användas då anslutningen redan är öppen
 
         return b_res;
     }
@@ -98,7 +143,7 @@ public class Database
         connectToDB();
 
         String sort = null;
-        if(visaStigande == true)
+        if (visaStigande == true)
         {
             sort = "ASC";
         }
@@ -113,16 +158,15 @@ public class Database
             statement = connect.createStatement();
             resultset = statement.executeQuery("SELECT * FROM highscore ORDER BY highscore " + sort + " LIMIT " + antal);
             System.out.println("Spelarnamn: " + "\t" + "Poäng: ");
-            while(resultset.next())
+            while (resultset.next())
             {
                 String stemp = resultset.getString("namn");
                 int itemp = resultset.getInt("highscore");
                 System.out.println(stemp + "\t\t" + itemp);
             }
         }
-        catch(SQLException e)
+        catch (SQLException e)
         {
-
         }
 
         close();
@@ -166,5 +210,4 @@ public class Database
             System.out.println(e);
         }
     }
-
 }

@@ -32,14 +32,14 @@ public class TestFrame extends JFrame {
 
 	private void initComponents() {
 		setLayout(new GroupLayout());
-		add(getPointsField(), new Constraints(new Leading(12, 91, 10, 10), new Leading(12, 12, 12)));
-		add(getNameField(), new Constraints(new Leading(12, 90, 12, 12), new Leading(50, 12, 12)));
-		add(getEmailField(), new Constraints(new Leading(12, 90, 12, 12), new Leading(88, 12, 12)));
-		add(getPhoneField(), new Constraints(new Leading(12, 90, 12, 12), new Leading(126, 12, 12)));
-		add(getResetButton(), new Constraints(new Leading(144, 108, 12, 12), new Leading(56, 12, 12)));
-		add(getUpdateButton(), new Constraints(new Leading(144, 108, 12, 12), new Leading(12, 12, 12)));
-		add(getSendScoresButton(), new Constraints(new Leading(144, 108, 12, 12), new Leading(100, 12, 12)));
-		setSize(358, 302);
+		add(getUpdateButton(), new Constraints(new Leading(245, 108, 10, 10), new Leading(12, 12, 12)));
+		add(getResetButton(), new Constraints(new Leading(245, 108, 12, 12), new Leading(56, 12, 12)));
+		add(getSendScoresButton(), new Constraints(new Leading(245, 108, 12, 12), new Leading(100, 12, 12)));
+		add(getPointsField(), new Constraints(new Leading(12, 136, 10, 10), new Leading(12, 12, 12)));
+		add(getNameField(), new Constraints(new Leading(12, 136, 12, 12), new Leading(50, 12, 12)));
+		add(getEmailField(), new Constraints(new Leading(12, 136, 12, 12), new Leading(88, 12, 12)));
+		add(getPhoneField(), new Constraints(new Leading(12, 136, 12, 12), new Leading(126, 12, 12)));
+		setSize(488, 314);
 	}
 
 	private JButton getSendScoresButton() {
