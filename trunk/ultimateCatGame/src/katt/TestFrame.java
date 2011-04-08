@@ -1,6 +1,9 @@
 package katt;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,6 +34,8 @@ public class TestFrame extends JFrame {
 	private JScrollPane jScrollPane0;
 	private JButton jButton0;
 	
+	
+	
 	public TestFrame() {
 		initComponents();
 		update = new UpdateScore();
@@ -50,14 +55,12 @@ public class TestFrame extends JFrame {
 		add(getJButton0(), new Constraints(new Leading(247, 104, 12, 12), new Leading(144, 12, 12)));
 		setSize(488, 314);
 	}
-
-	private JButton getJButton0() {
-		if (jButton0 == null) {
+	private JButton getJButton0(){
+		if(jButton0 == null){
 			jButton0 = new JButton();
-			jButton0.setText("jButton0");
-			jButton0.addActionListener(new ActionListener() {
-	
-				public void actionPerformed(ActionEvent event) {
+			jButton0.setText("Hämta");
+			jButton0.addActionListener(new ActionListener(){
+				public void actionPerformed (ActionEvent event){
 					jButton0ActionActionPerformed(event);
 				}
 			});
@@ -76,7 +79,7 @@ public class TestFrame extends JFrame {
 	private JTable getJTable0() {
 		if (jTable0 == null) {
 			jTable0 = new JTable();
-			jTable0.setModel(new DefaultTableModel(new Object[][] { { "0x0", "0x1", }, { "1x0", "1x1", }, }, new String[] { "Title 0", "Title 1", }) {
+			jTable0.setModel(new DefaultTableModel() {
 				private static final long serialVersionUID = 1L;
 				Class<?>[] types = new Class<?>[] { Object.class, Object.class, };
 	
@@ -178,7 +181,46 @@ public class TestFrame extends JFrame {
 	}
 
 	private void jButton0ActionActionPerformed(ActionEvent event) {
-		database.getHighscore(5, false);
+		DefaultTableModel model = (DefaultTableModel) jTable0.getModel();
+		String[] tableColumnsName = {"Namn", "Highscore"};
+		model.setColumnIdentifiers(tableColumnsName);
+		model.setNumRows(0);
+		jTable0.setModel(model); 
+		
+		int colNo = 0;
+		ResultSetMetaData rsmd = null;
+		ResultSet rs = database.getTopScore();
+		
+		try {
+			rsmd = rs.getMetaData();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			colNo = rsmd.getColumnCount();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			while(rs.next()){
+				Object[] objects = new Object[colNo];
+				for(int i = 0; i < colNo; i++){
+					objects[i] = rs.getObject(i + 1);
+					
+				}
+				model.addRow(objects);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		jTable0.setModel(model);
+		database.close();
 	}
 
 }
