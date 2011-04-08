@@ -194,7 +194,6 @@ public class Database
 
         }
 
-        close();
 
         return rs;
     }
@@ -213,7 +212,7 @@ public class Database
         }
     }
 
-    private void close()
+    public void close()
     {
         try
         {
