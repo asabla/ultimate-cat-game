@@ -1,6 +1,8 @@
 package katt;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Database
 {
@@ -16,12 +18,14 @@ public class Database
     private String pass = "stiga123";
 
     public void sendHighscore(String name, int highscore, String email, String telefon)
-    {
+    {   
         try
         {
             connectToDB();  //Ansluter till servern
             boolean btemp = getValue("email", email); //Kontrollerar om email-adressen finns sen tidigare
+            System.out.println("Värdet för mailen är: " + btemp);
             String stemp = getUpdateString(btemp, name, highscore, email, telefon);
+            System.out.println(stemp);
             
             if(stemp.equals("No"))
             {
@@ -46,8 +50,9 @@ public class Database
     {
         String s_return = null;
 
-        if (update == true)
+        if (update == false)
         {
+            System.out.println("Försöker lägga till i databasen");
             s_return = "INSERT INTO highscore (namn, highscore, email, telefon) "
                     + "VALUES('" + name + "', " + highscore + ", '" + email + "', '" + telefon + "')";
         }
@@ -62,7 +67,7 @@ public class Database
             }
             else
             {
-                //System.out.println("Försöker uppdatera highscore");  //Felsökningssträng
+                System.out.println("Försöker uppdatera highscore");  //Felsökningssträng
                 s_return = "UPDATE highscore SET highscore=" + highscore + " WHERE email='" + email + "'";
             }
         }
@@ -111,9 +116,10 @@ public class Database
 
         try
         {
+            //System.out.println("Testar att hämta mail");
             exception = "Hämtning av " + column;
             statement = connect.createStatement();
-            preparedStatement = connect.prepareStatement("SELECT * FROM highscore WHERE " + column + "=" + value);
+            preparedStatement = connect.prepareStatement("SELECT * FROM highscore WHERE " + column + "='" + value + "'");
             resultset = preparedStatement.executeQuery();
             while (resultset.next())
             {
@@ -123,16 +129,18 @@ public class Database
             if (a_res == 0)
             {
                 b_res = false;
+                //System.out.println("Mailen finns inte sen tidigare");
             }
             else
             {
                 b_res = true;
+                //System.out.println("Mailen finns sen tidigare");
             }
         }
         catch (SQLException e)
         {
             //Skriver ut felmeddelandet även när det inte blir fel
-            //System.out.println("Operationen: " + exception + " kunde inte genomföras. Kontakta support för mer info");
+            //System.out.println("Något gick fel vid kontroll av mail\n\n" + e);
         }
 
         return b_res;
@@ -167,11 +175,43 @@ public class Database
         }
         catch (SQLException e)
         {
-        }
+        } 
 
         close();
     }
 
+    public ArrayList<Object> getTopScore()
+    {
+        connectToDB();
+        ArrayList<Object> ar = new ArrayList<Object>();
+
+        try
+        {
+            statement = connect.createStatement();
+            resultset = statement.executeQuery("SELECT namn, highscore FROM highscore ORDER BY highscore DESC LIMIT 10");
+            ResultSetMetaData md = resultset.getMetaData();
+            int columns = md.getColumnCount();
+
+            while(resultset.next())
+            {
+                HashMap row = new HashMap();
+                ar.add(row);
+                for(int i=1; i <= columns; i++)
+                {
+                    row.put(md.getColumnName(i), resultset.getObject(i));
+                }
+            }
+        }
+        catch(SQLException e)
+        {
+
+        }
+
+        close();
+
+        return ar;
+    }
+    
     private void connectToDB()
     {
         try
