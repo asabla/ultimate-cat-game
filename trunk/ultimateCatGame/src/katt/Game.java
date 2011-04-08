@@ -54,7 +54,7 @@ public class Game extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		currentScore = 0L;
 		playerName = "Klas";
-		container.setVSync(true);
+		//container.setVSync(true);
 		map1 = new TiledMap("data/room2.tmx");
 		map2 = new TiledMap("data/room.tmx");
 		mr = new Player(100, 300, "src/data/barney.png");
