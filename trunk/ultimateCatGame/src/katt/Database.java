@@ -1,8 +1,6 @@
 package katt;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Database
 {
@@ -180,27 +178,16 @@ public class Database
         close();
     }
 
-    public ArrayList<Object> getTopScore()
+    public ResultSet getTopScore()
     {
         connectToDB();
-        ArrayList<Object> ar = new ArrayList<Object>();
+        ResultSet rs = null;
 
         try
         {
             statement = connect.createStatement();
-            resultset = statement.executeQuery("SELECT namn, highscore FROM highscore ORDER BY highscore DESC LIMIT 10");
-            ResultSetMetaData md = resultset.getMetaData();
-            int columns = md.getColumnCount();
-
-            while(resultset.next())
-            {
-                HashMap row = new HashMap();
-                ar.add(row);
-                for(int i=1; i <= columns; i++)
-                {
-                    row.put(md.getColumnName(i), resultset.getObject(i));
-                }
-            }
+            rs = statement.executeQuery("SELECT namn, highscore FROM highscore ORDER BY highscore DESC LIMIT 10");
+            
         }
         catch(SQLException e)
         {
@@ -209,7 +196,7 @@ public class Database
 
         close();
 
-        return ar;
+        return rs;
     }
     
     private void connectToDB()
