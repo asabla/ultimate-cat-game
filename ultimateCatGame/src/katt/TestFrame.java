@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import org.dyno.visual.swing.layouts.Bilateral;
 import org.dyno.visual.swing.layouts.Constraints;
 import org.dyno.visual.swing.layouts.GroupLayout;
 import org.dyno.visual.swing.layouts.Leading;
@@ -51,10 +52,11 @@ public class TestFrame extends JFrame {
 		add(getNameField(), new Constraints(new Leading(12, 136, 12, 12), new Leading(50, 12, 12)));
 		add(getEmailField(), new Constraints(new Leading(12, 136, 12, 12), new Leading(88, 12, 12)));
 		add(getPhoneField(), new Constraints(new Leading(12, 136, 12, 12), new Leading(126, 12, 12)));
-		add(getJScrollPane0(), new Constraints(new Leading(11, 200, 12, 12), new Leading(152, 150, 10, 10)));
 		add(getJButton0(), new Constraints(new Leading(247, 104, 12, 12), new Leading(144, 12, 12)));
-		setSize(488, 314);
+		add(getJScrollPane0(), new Constraints(new Leading(19, 294, 10, 10), new Bilateral(182, 12, 26)));
+		setSize(500, 450);
 	}
+
 	private JButton getJButton0(){
 		if(jButton0 == null){
 			jButton0 = new JButton();
