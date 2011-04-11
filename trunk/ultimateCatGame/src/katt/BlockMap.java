@@ -16,7 +16,7 @@ public class BlockMap {
 
         public BlockMap(String ref) throws SlickException {
                 this.entities = new ArrayList<Block>();
-                this.tmap = new TiledMap(ref, "data");
+                this.tmap = new TiledMap(ref, "data/Img");
                 this.mapWidth = tmap.getWidth() * tmap.getTileWidth();
                 this.mapHeight = tmap.getHeight() * tmap.getTileHeight();
                 this.tileSize = tmap.getTileWidth();

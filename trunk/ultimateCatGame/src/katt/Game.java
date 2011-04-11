@@ -62,21 +62,21 @@ public class Game extends BasicGame {
                 soundBank.startBackground("BGMMenu");
                // container.setVSync(true);
                 container.setTargetFrameRate(150);
-                mapX1 = new BlockMap("data/room3.tmx");
-                mapX2 = new BlockMap("data/room3.tmx");
+                mapX1 = new BlockMap("data/Img/room3.tmx");
+                mapX2 = new BlockMap("data/Img/room3.tmx");
 
-                mr = new Player1(200, 400, "src/data/cat2.png");
+                mr = new Player1(200, 400, "data/Img/cat2.png");
                 mr.setCurrentAnimation(mr.getRun());
                 mr.setOnGround(false);
                 /*
                  * Filnamn på game-assets som laddas
                  */
 
-                bgSky = new Image("data/img_bg_sky.png");
-                bgLayer1 = new Image("data/img_bg_layer1.png");
-                bgLayer2 = new Image("data/img_bg_layer1.png");
-                bgLayer3 = new Image("data/img_bg_layer2.png");
-                bgLayer4 = new Image("data/img_bg_layer2.png");
+                bgSky = new Image("data/Img/img_bg_sky.png");
+                bgLayer1 = new Image("data/Img/img_bg_layer1.png");
+                bgLayer2 = new Image("data/Img/img_bg_layer1.png");
+                bgLayer3 = new Image("data/Img/img_bg_layer2.png");
+                bgLayer4 = new Image("data/Img/img_bg_layer2.png");
         }
 
         public void update(GameContainer container, int delta) {
