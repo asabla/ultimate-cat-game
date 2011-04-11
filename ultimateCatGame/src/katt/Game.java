@@ -13,7 +13,7 @@ import org.newdawn.slick.geom.Polygon;
 public class Game extends BasicGame {
         private BlockMap mapX1, mapX2;
         private ArrayList<BlockMap> mapRow;
-        private Player mr;
+        private Player1 mr;
         public static float gameSpeed = 1f;
         private Long currentScore;
         private static UpdateScore ts;
@@ -25,6 +25,7 @@ public class Game extends BasicGame {
         private final static int screenHeight = 480;
         private Polygon collisonBlock;
         public static TestFrame frame;
+        public static SFXBank soundBank;
 
         // ******************************************************************
         /*
@@ -50,6 +51,7 @@ public class Game extends BasicGame {
 
         public Game() {
                 super("one class barebone game");
+                soundBank = new SFXBank();
                 frame = new TestFrame();
                 
         }
@@ -57,11 +59,13 @@ public class Game extends BasicGame {
         public void init(GameContainer container) throws SlickException {
                 currentScore = 0L;
                 playerName = "Klas";
-                container.setVSync(true);
+                soundBank.startBackground("BGMMenu");
+               // container.setVSync(true);
+                container.setTargetFrameRate(150);
                 mapX1 = new BlockMap("data/room3.tmx");
                 mapX2 = new BlockMap("data/room3.tmx");
 
-                mr = new Player(200, 400, "src/data/cat2.png");
+                mr = new Player1(200, 400, "src/data/cat2.png");
                 mr.setCurrentAnimation(mr.getRun());
                 mr.setOnGround(false);
                 /*
