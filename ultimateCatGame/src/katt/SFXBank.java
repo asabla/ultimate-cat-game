@@ -22,6 +22,19 @@ public class SFXBank {
 		soundMap.put("SFXHarp2", new SoundFile("file:Data\\Audio\\SFXHarp2.wav"));
 		soundMap.put("SFXShake", new SoundFile("file:Data\\Audio\\SFXShake.wav"));
 		soundMap.put("SFXSnap", new SoundFile("file:Data\\Audio\\SFXSnap.wav"));
+		
+//		Christians MAC-sökvägar:
+//		soundMap.put("BGMMenu", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/BGMMenu.wav"));
+//		soundMap.put("SFXBottleCrack", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXBottleCrack.wav"));
+//		soundMap.put("SFXButton", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXButton.wav"));
+//		soundMap.put("SFXCanCrush", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXCanCrush.wav"));
+//		soundMap.put("SFXCatCrash", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXCatCrash.wav"));
+//		soundMap.put("SFXCatJump", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXCatJump.wav"));
+//		soundMap.put("SFXHappyCat", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXHappyCat.wav"));
+//		soundMap.put("SFXHarp1", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXHarp1.wav"));
+//		soundMap.put("SFXHarp2", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXHarp2.wav"));
+//		soundMap.put("SFXShake", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXShake.wav"));
+//		soundMap.put("SFXSnap", new SoundFile("file:/Users/christianwerme/Documents/workspace/ultimateCat/data/Audio/SFXSnap.wav"));
 	}
 	//Returnerar en ljudfil
 	public SoundFile getSoundFile(String key){
