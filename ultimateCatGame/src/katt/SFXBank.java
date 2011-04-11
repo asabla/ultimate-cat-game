@@ -93,5 +93,19 @@ public class SFXBank {
 				soundFile.killSound();
 			}
 	}
+	
+	public void setDisabled(){
+		soundsEnabled = false;
+	}
+	
+	public void setEnabled(){
+		soundsEnabled = true;
+	}
+	
+	public boolean isEnabled(){
+		return soundsEnabled;
+	}
+	
+	
 
 	}

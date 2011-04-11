@@ -81,6 +81,17 @@ public class Player1 implements Runnable {
                 if (input.isKeyPressed(Input.KEY_Z)){
                 	Game.frame.setVisible(true);
                 }
+                if (input.isKeyPressed(Input.KEY_S)){
+                	if(Game.soundBank.isEnabled()){
+                	Game.soundBank.stopSounds();
+                	Game.soundBank.setDisabled();
+                	}
+                	else{
+                    	Game.soundBank.setEnabled();
+                    	Game.soundBank.startBackground("BGMMenu");
+                    }
+                }
+                
         }
 
         public void jump() {
