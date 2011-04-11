@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="15" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="collisionBlock" tilewidth="32" tileheight="32">
+  <image source="collisionBlock.png" width="128" height="64"/>
+ </tileset>
+ <tileset firstgid="9" name="roof" tilewidth="32" tileheight="32">
+  <image source="roof.png" width="128" height="64"/>
+ </tileset>
+ <layer name="collision" width="20" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMAtoCRiBmIgMzo5kDAL9tiFGwBAAA
+  </data>
+ </layer>
+ <layer name="texture" width="20" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMAtoCTiDmIgNzo5kDANVzY4ywBAAA
+  </data>
+ </layer>
+</map>
