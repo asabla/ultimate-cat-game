@@ -65,7 +65,7 @@ public class Game extends BasicGame {
         		
                 
         }
-
+        //Häglund fattar inte kommentera????
         public void init(GameContainer container) throws SlickException {
                 currentScore = 0L;
                 playerName = "Klas";
@@ -91,7 +91,7 @@ public class Game extends BasicGame {
                 bgLayer3 = new Image("data/Img/img_bg_layer2.png");
                 bgLayer4 = new Image("data/Img/img_bg_layer2.png");
         }
-
+        //Häglund fattar inte ????
         public void update(GameContainer container, int delta) {
                 Input input = container.getInput();
                 mr.getPlayerBox().setY(mr.getPlayerY());
@@ -165,7 +165,7 @@ public class Game extends BasicGame {
                 mapX2.updateBlockMap(mapLayer2);
 
         }
-
+        //? Häglund fattar inte... kommentera
         public boolean entityCollisionWith(BlockMap bMap) throws SlickException {
                 for (int i = 0; i < bMap.getEntities().size(); i++) {
                         Block entity1 = (Block) bMap.getEntities().get(i);
@@ -178,7 +178,7 @@ public class Game extends BasicGame {
                 }
                 return false;
         }
-
+        //Häglund fattar inbte kommentera 
         public void render(GameContainer container, Graphics g) {
                 bgSky.draw(0, 0);
 
@@ -197,7 +197,7 @@ public class Game extends BasicGame {
                 mr.updateAnimation();
                 g.drawAnimation(mr.getCurrentAnimation(), mr.getPlayerX(),mr.getPlayerY());
         }
-
+        // Häglund fattar inte ????
         public static void main(String[] argv) throws SlickException {
                 AppGameContainer container = new AppGameContainer(new Game(),
                                 screenWidth, screenHeight, false);
