@@ -29,8 +29,9 @@ public class Game extends BasicGame {
         
         public static boolean soundsOn;
         public static boolean musicOn;
+        //Sparar ett ljud för bakgrundsmusik.
         public static Sound bgm;
-        //public static Sound catJump;
+        //Ljudeffekterna sparas i en ljudbank
         public static SFXBank soundBank;
         
 
@@ -75,7 +76,6 @@ public class Game extends BasicGame {
                 currentScore = 0L;
                 playerName = "Klas";                
                 bgm = new Sound("data/Audio/BGMMenu.ogg");
-                //catJump = new Sound("data/Audio/SFXCatJump.ogg");
                 if(musicOn){
                 bgm.loop();
                 }

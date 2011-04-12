@@ -89,6 +89,7 @@ public class Player1 implements Runnable {
                 if (input.isKeyPressed(Input.KEY_Z)){
                 	Game.frame.setVisible(true);
                 }
+                //Slår på eller av ljudeffekterna
                 if (input.isKeyPressed(Input.KEY_S)){
 
                 	if(Game.soundsOn == true){
@@ -100,6 +101,7 @@ public class Player1 implements Runnable {
                 	}
 
                 }
+                //Slår på eller av bakgrundsmusiken
                 if (input.isKeyPressed(Input.KEY_M)){
                 	if(Game.musicOn == true){
                 		Game.musicOn = false;
