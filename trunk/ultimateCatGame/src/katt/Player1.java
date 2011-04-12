@@ -68,7 +68,7 @@ public class Player1 implements Runnable {
                                 jumps++;
                                 jumping = new Thread(this);
                                 jumping.start();
-                                //Game.catJump.play();
+                                Game.catJump.play();
                         }
                 }
                 // UP-REPEAT
@@ -88,16 +88,16 @@ public class Player1 implements Runnable {
                 	Game.frame.setVisible(true);
                 }
                 if (input.isKeyPressed(Input.KEY_S)){
-                	if(Game.soundBank.isEnabled()){
-                	Game.soundBank.muteSounds(true);
-                	Game.soundBank.setDisabled();
-                	//if(Game.bgm.playing()){
-                		//Game.bgm.stop();
-                //	}
-                	//else{
-                		//Game.bgm.loop();
-                    	Game.soundBank.setEnabled();
-                    	Game.soundBank.startBackground("BGMMenu");
+                	//if(Game.soundBank.isEnabled()){
+                	//Game.soundBank.muteSounds(true);
+                	//Game.soundBank.setDisabled();
+                	if(Game.bgm.playing()){
+                		Game.bgm.stop();
+                	}
+                	else{
+                		Game.bgm.loop();
+                    	//Game.soundBank.setEnabled();
+                    	//Game.soundBank.startBackground("BGMMenu");
                     }
                 }
                 
