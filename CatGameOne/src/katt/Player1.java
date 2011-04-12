@@ -68,7 +68,7 @@ public class Player1 implements Runnable {
                                 jumping = new Thread(this);
                                 jumping.start();
                                 if(Game.soundsOn)
-                                Game.soundBank.getSound("jump").play();
+                                Game.soundBank.playSound("jump");
                         }
                 }
                 // UP-REPEAT
@@ -77,7 +77,7 @@ public class Player1 implements Runnable {
                                 jumping = new Thread(this);
                                 jumping.start();
                                 if(Game.soundsOn)
-                                	Game.soundBank.getSound("jump").play();
+                                	Game.soundBank.playSound("jump");
                                 setOnGround(false);
                                 if(isOnGround){
                                         setOnGround(true);
@@ -103,8 +103,10 @@ public class Player1 implements Runnable {
                 }
                 //Slår på eller av bakgrundsmusiken
                 if (input.isKeyPressed(Input.KEY_M)){
+                	//Kollar om musiken är på eller inte
                 	if(Game.musicOn == true){
                 		Game.musicOn = false;
+                		//Stoppar musiken, om den spelas
                 	if(Game.bgm.playing()){
                 		Game.bgm.stop();
                 		}
@@ -112,6 +114,7 @@ public class Player1 implements Runnable {
                 	else
                 	{
                 		Game.musicOn = true;
+                		//Slår på musiken igen
                 		Game.bgm.loop();
                 	}
                 }
@@ -121,7 +124,7 @@ public class Player1 implements Runnable {
         public void jump() {
                 float jumpPower = -15f;
                 float gravity = 2f;
-                //Game.soundBank.startSound("SFXCatJump");
+   
                 // Jumping begins
                 currentAnimation = jump;
                 while (!isOnGround) {

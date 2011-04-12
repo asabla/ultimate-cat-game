@@ -1,10 +1,14 @@
 package katt;
-
+/*Den här klassen innehåller en hashmap som samlar alla ljudeffekter som används i spelet.
+ *För att välja ett ljud att spela upp så använder man getSound()-metoden, på ljudet använder
+ *man sedan play(). Exempelvis getSound("bottle").play(); 
+ */
 import java.util.HashMap;
 import java.util.Random;
 import java.util.ArrayList;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+
 
 public class SFXBank {
 
@@ -33,7 +37,12 @@ public class SFXBank {
 	 * returnerar ett ljud beroende på vilken nyckel som är inmatad
 	 * */
 	public Sound getSound(String key){		
+		//Returnerar ett ljud med vald nyckel. Nyckeln görs om till lower case för att undvika nullPointer
 		return soundMap.get(key.toLowerCase());
+	}
+	
+	public void playSound(String key){
+		getSound(key).play();
 	}
 	
 	/*onödig funktion, kan dock komma till pass om man t.ex.
