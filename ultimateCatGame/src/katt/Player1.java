@@ -2,6 +2,7 @@ package katt;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Polygon;
 
@@ -15,10 +16,14 @@ public class Player1 implements Runnable {
         private int jumps;
         private Thread jumping;
         private boolean isOnGround;
+        
 
 
-        public Player1(int playerX, int playerY, String pngDir) {
+        public Player1(int playerX, int playerY, String pngDir) throws SlickException{
                 super();
+                
+					
+				
                 spriteSizeX = 50;
                 spriteSizeY = 50;
                 isOnGround = false;
@@ -63,6 +68,7 @@ public class Player1 implements Runnable {
                                 jumps++;
                                 jumping = new Thread(this);
                                 jumping.start();
+                                //Game.catJump.play();
                         }
                 }
                 // UP-REPEAT
@@ -83,10 +89,13 @@ public class Player1 implements Runnable {
                 }
                 if (input.isKeyPressed(Input.KEY_S)){
                 	if(Game.soundBank.isEnabled()){
-                	Game.soundBank.stopSounds();
+                	Game.soundBank.muteSounds(true);
                 	Game.soundBank.setDisabled();
-                	}
-                	else{
+                	//if(Game.bgm.playing()){
+                		//Game.bgm.stop();
+                //	}
+                	//else{
+                		//Game.bgm.loop();
                     	Game.soundBank.setEnabled();
                     	Game.soundBank.startBackground("BGMMenu");
                     }
@@ -97,13 +106,13 @@ public class Player1 implements Runnable {
         public void jump() {
                 float jumpPower = -15f;
                 float gravity = 2f;
-                Game.soundBank.startSound("SFXCatJump");
+                //Game.soundBank.startSound("SFXCatJump");
                 // Jumping begins
                 currentAnimation = jump;
                 while (!isOnGround) {
                         playerY += (jumpPower + gravity); // Increment the jump
                         jumpPower++;
-                        System.out.println("HOpp");
+                        System.out.println("Hopp");
 
                         try {
                                 Thread.sleep(30);
