@@ -15,11 +15,11 @@ public class BlockMap {
         private static int tileSize;
 
         public BlockMap(String ref) throws SlickException {
-                this.entities = new ArrayList<Block>();
-                this.tmap = new TiledMap(ref, "data/Img");
-                this.mapWidth = tmap.getWidth() * tmap.getTileWidth();
-                this.mapHeight = tmap.getHeight() * tmap.getTileHeight();
-                this.tileSize = tmap.getTileWidth();
+                entities = new ArrayList<Block>();
+                tmap = new TiledMap(ref, "data/Img");
+                mapWidth = tmap.getWidth() * tmap.getTileWidth();
+                mapHeight = tmap.getHeight() * tmap.getTileHeight();
+                tileSize = tmap.getTileWidth();
 
                 loadBlocks();   
         }
