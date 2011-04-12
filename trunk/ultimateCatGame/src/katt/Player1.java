@@ -68,6 +68,7 @@ public class Player1 implements Runnable {
                                 jumps++;
                                 jumping = new Thread(this);
                                 jumping.start();
+                                if(Game.bgm.playing())
                                 Game.catJump.play();
                         }
                 }
