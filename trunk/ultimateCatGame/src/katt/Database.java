@@ -9,12 +9,12 @@ public class Database
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultset = null;
-    private String url = "jdbc:mysql://scrum.no-ip.org:3306/";
+    private String url = "jdbc:mysql://193.168.0.13:scrum.no-ip.org:3306/";
     private String db = "scrum";
     private String driver = "com.mysql.jdbc.Driver";
     private String user = "scrum";
     private String pass = "stiga123";
-
+    //Vad händer här?
     public void sendHighscore(String name, int highscore, String email, String telefon)
     {   
         try
@@ -43,7 +43,7 @@ public class Database
             System.out.println("Det gick inte att skicka in highsore\nErrorcode: 1001\n" + e);
         }
     }
-
+  //Vad händer här?
     private String getUpdateString(boolean update, String name, int highscore, String email, String telefon)
     {
         String s_return = null;
@@ -72,7 +72,7 @@ public class Database
 
         return s_return;  //Returnerar rätt sträng, beroende på om den skall uppdateras eller läggas till
     }
-
+  //Vad händer här?
     private boolean checkResult(String column, String value, String scoulmn, int highscore )
     {
         int a_res = 0;
@@ -143,7 +143,7 @@ public class Database
 
         return b_res;
     }
-
+  //Vad händer här?
     public void getHighscore(int antal, boolean visaStigande)
     {
         connectToDB();
@@ -177,7 +177,7 @@ public class Database
 
         close();
     }
-
+  //Vad händer här?
     public ResultSet getTopScore()
     {
         connectToDB();
@@ -197,7 +197,7 @@ public class Database
 
         return rs;
     }
-    
+  //Vad händer här?
     private void connectToDB()
     {
         try
@@ -211,7 +211,7 @@ public class Database
             System.out.println(e);
         }
     }
-
+  //Vad händer här?
     public void close()
     {
         try
