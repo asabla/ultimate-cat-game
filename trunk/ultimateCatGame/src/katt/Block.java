@@ -1,5 +1,5 @@
 package katt;
-import org.newdawn.slick.Graphics;
+
 import org.newdawn.slick.geom.Polygon;
  
 public class Block  {
