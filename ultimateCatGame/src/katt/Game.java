@@ -26,7 +26,7 @@ public class Game extends BasicGame {
         private final static int screenHeight = 480;
         private Polygon collisonBlock;
         public static TestFrame frame;
-        public static SFXBank soundBank;
+        //public static SFXBank soundBank;
         public static Sound bgm;
         public static Sound catJump;
         
@@ -55,7 +55,7 @@ public class Game extends BasicGame {
 
         public Game() {
                 super("one class barebone game");
-        //        soundBank = new SFXBank();
+               // soundBank = new SFXBank();
                 frame = new TestFrame();
                 
                 
@@ -69,11 +69,11 @@ public class Game extends BasicGame {
         public void init(GameContainer container) throws SlickException {
                 currentScore = 0L;
                 playerName = "Klas";
-                soundBank.startBackground("BGMMenu");
-                //bgm = new Sound("data/Audio/BGMMenu.ogg");
-                //catJump = new Sound("data/Audio/SFXCatJump.ogg");
-                //bgm.loop();
-               // container.setVSync(true);
+                //soundBank.startBackground("BGMMenu");
+                bgm = new Sound("data/Audio/BGMMenu.ogg");
+                catJump = new Sound("data/Audio/SFXCatJump.ogg");
+                bgm.loop();
+                //container.setVSync(true);
                 container.setTargetFrameRate(150);
                 mapX1 = new BlockMap("data/Img/room3.tmx");
                 mapX2 = new BlockMap("data/Img/room3.tmx");
