@@ -29,7 +29,7 @@ public class Game extends BasicGame {
         
         public static boolean soundsOn;
         public static boolean musicOn;
-        //Sparar ett ljud för bakgrundsmusik.
+        //variabeln håller ett ljud för bakgrundsmusik.
         public static Sound bgm;
         //Ljudeffekterna sparas i en ljudbank
         public static SFXBank soundBank;
