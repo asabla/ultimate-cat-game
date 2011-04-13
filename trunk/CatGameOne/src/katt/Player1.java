@@ -58,6 +58,11 @@ public class Player1 implements Runnable {
         }
      // Metod för keylistener för knapp upp
         public void keyPressed(Input input) {
+        	
+        	if(input.isKeyPressed(Input.KEY_R)){
+        		setPlayerX(200);
+        		setPlayerY(400);
+        	}
                 
                 
                 //Om knapp upp är nedtryckt en gång
@@ -246,6 +251,8 @@ public class Player1 implements Runnable {
         public void run() {
                 jump();
                 // TODO Auto-generated method stub
-
+        }
+        public int getJumps(){
+        	return jumps;
         }
 }
