@@ -12,7 +12,7 @@ public class Player1 implements Runnable {
         private int spriteSizeX, spriteSizeY;
         private Animation run, jump, die;
         private Animation currentAnimation;
-        private int jumps;
+        private int jumps; //Räknar antalet genomförda hopp, max 2 tillåtet 
         private Thread jumping;
         private boolean isOnGround;
         
@@ -56,36 +56,46 @@ public class Player1 implements Runnable {
                 }
                 return tempAnim;
         }
-
+     // Metod för keylistener för knapp upp
         public void keyPressed(Input input) {
                 
                 
-                // UP
+                //Om knapp upp är nedtryckt en gång
                 if (input.isKeyPressed(Input.KEY_UP)) {
+                		//Sätt false(Spelare är i luften)
                         setOnGround(false);
+                        //Koll hur många hopp, mer än två så körs ej If-blocket
                         if (jumps < 2) {
+                        		//Räkna upp hopp
                                 jumps++;
+                                //Skapa och starta ny tråd för hopp
                                 jumping = new Thread(this);
                                 jumping.start();
+                                //Spela hoppljud om ljudet är påslaget
                                 if(Game.soundsOn)
                                 Game.soundBank.playSound("jump");
                         }
                 }
-                // UP-REPEAT
+                //Om knapp upp är konstant nedtryckt 
                 if (input.isKeyDown(Input.KEY_UP)) {
+                		//Om tråden jumping inte är aktiv gör
                         if (!jumping.isAlive()) {
+                        		//Skapa ny tråd för hopp, starta tråd
                                 jumping = new Thread(this);
                                 jumping.start();
+                                //Spela hoppljud om ljud påslaget
                                 if(Game.soundsOn)
                                 	Game.soundBank.playSound("jump");
+                                //Spelare är inte på marken
                                 setOnGround(false);
-                                if(isOnGround){
-                                        setOnGround(true);
-                                        
-                                }
+                                //Om spelare är på marken
+//                                if(isOnGround){		/////Om isOnGround redan är true, varför sätta isOnGround true?
+//                                        setOnGround(true);    //Borde kunna tas bort                                    
+//                                }
 
                         }
                 }
+                //Keylistener, visa frame om knapp z är tryckt
                 if (input.isKeyPressed(Input.KEY_Z)){
                 	Game.frame.setVisible(true);
                 }
@@ -122,25 +132,31 @@ public class Player1 implements Runnable {
         }
 
         public void jump() {
+        		//Spelares hoppkraft och gravitation, vid hopp flyttas spelaren antalet pixlar som jumppower och 
+        		//gravity är tillsammans. jumpPower räknas upp värde 1 varje loop  
                 float jumpPower = -15f;
                 float gravity = 2f;
    
-                // Jumping begins
+                // Hopp börjar, nuvarande animation av spelare sätts till jump-animation
                 currentAnimation = jump;
+                //Loopar hoppet, så länge spelare inte är på marken, addera spelares position med jumpPower+gravity och räkna upp jumpPower 1
                 while (!isOnGround) {
                         playerY += (jumpPower + gravity); // Increment the jump
                         jumpPower++;
-                        System.out.println("Hopp");
+                        System.out.println("Hopp  " + jumpPower);
 
                         try {
+                        	//Pausa hopp-tråden 30 millisekunder
                                 Thread.sleep(30);
                         } catch (InterruptedException e) {
                                 e.printStackTrace();
                         }
                         
                 }
+                //Sätter nuvarande animation till spring-versionen igen.
                 currentAnimation = run;
-                jumps = 0; // Jump ends
+                //Nollställer antalet hopp, möjligt med dubbelhopp igen
+                jumps = 0;
         }
 
         public SpriteSheet getSheet() {
@@ -158,19 +174,19 @@ public class Player1 implements Runnable {
         public void setSheet(SpriteSheet sheet) {
                 this.sheet = sheet;
         }
-
+        //returnerar spelares x-position
         public float getPlayerX() {
                 return playerX;
         }
-
+        //Sätter spelares x-position till detta
         public void setPlayerX(float playerX) {
                 this.playerX = playerX;
         }
-
+      //returnerar spelares y-position
         public float getPlayerY() {
                 return playerY;
         }
-
+      //Sätter spelares y-position till detta
         public void setPlayerY(float playerY) {
                 this.playerY = playerY;
         }
