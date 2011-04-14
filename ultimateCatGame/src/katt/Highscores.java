@@ -20,7 +20,7 @@ public class Highscores {
 		
 	}
 	
-
+// Testar om Lock fungerar
 	
 	public void check(Score nytt)
 	{
