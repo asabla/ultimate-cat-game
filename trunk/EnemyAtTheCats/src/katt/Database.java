@@ -34,9 +34,10 @@ public class Database
             {
                 System.out.println("Skickar värden till servern");
                 statement = connect.createStatement(); //Ser till att drivern hamnar i createstatement
-                int val = statement.executeUpdate(stemp); //Den faktiska anropet som uppdaterar databasen
+                statement.executeUpdate(stemp); //Den faktiska anropet som uppdaterar databasen
                 System.out.println("Du har nu skickat in ditt highscore!");
             }
+            
             close();  //Stänger ner anslutningen
         }
         catch (SQLException e)
@@ -101,6 +102,7 @@ public class Database
         }
         catch (SQLException e)
         {
+        	//Skriv ut felmeddelande
         }
         
         return b_res;
@@ -111,7 +113,7 @@ public class Database
     {
         int a_res = 0;
         boolean b_res = false;
-        String exception = null;
+        String exception = null;  //Felsökningssträng, var tänkt att kunna ge olika errorcodes
 
         try
         {
@@ -128,18 +130,18 @@ public class Database
             if (a_res == 0)
             {
                 b_res = false;
-                //System.out.println("Mailen finns inte sen tidigare");
+                //System.out.println("Mailen finns inte sen tidigare");  //Felsökningssträng
             }
             else
             {
                 b_res = true;
-                //System.out.println("Mailen finns sen tidigare");
+                //System.out.println("Mailen finns sen tidigare");  //Felsökningssträng
             }
         }
         catch (SQLException e)
         {
             //Skriver ut felmeddelandet även när det inte blir fel
-            //System.out.println("Något gick fel vid kontroll av mail\n\n" + e);
+            //System.out.println("Något gick fel vid kontroll av mail\n\n" + e); //Felsökningssträng
         }
 
         return b_res;
@@ -205,12 +207,13 @@ public class Database
             {
                 String stemp = resultset.getString("namn");
                 int itemp = resultset.getInt("highscore");
-                arrList.add(stemp + "\t" + itemp);
+                arrList.add(stemp + "\t" + itemp);  //Kombinationen \t används för att göra en tabb mellan namn och highscore
                 //System.out.println(stemp + "\t" + itemp);
             }
         }
         catch (SQLException e)
         {
+        	//Skriv ut felmeddelande
         }
 
         close();
@@ -252,6 +255,7 @@ public class Database
         }
     }
 
+    //En metod som används för att stänga ner alla anslutningar
     public void close()
     {
         try
