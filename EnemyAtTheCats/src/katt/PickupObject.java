@@ -129,6 +129,8 @@ public class PickupObject{
 	{
 		if(xPos > - 5){
 			xPos -= TheGame.gameSpeed;
+			//Ökar poängen för objekten för varje sekund som passerat
+			value += TheGame.time/1000;
 		}else{			
 			newObjectPos();
 		}
