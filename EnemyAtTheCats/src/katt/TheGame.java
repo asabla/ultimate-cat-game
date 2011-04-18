@@ -33,6 +33,9 @@ public class TheGame extends BasicGameState {
 	private PickupObject pointObject;
 	private PickupObject lifeObject;
 	private GroundEnemy gEnemy;
+	private boolean gogo;
+    private boolean movePoint;
+    private boolean moveLife;
 
 	/*
 	 * Deklaration av variablerna för spelets olika bakgrund bgLayerX - Olika
@@ -56,6 +59,11 @@ public class TheGame extends BasicGameState {
 	float posXLayer3 = 0;
 	float posXLayer4 = screenWidth * 2;
 	float posY = 0;
+	float startPy;
+    float startPx;
+    float slutPXv;
+    float slutPXh;
+    float slutPy;
 
 	public TheGame(int ID) {
 		super();
@@ -85,6 +93,11 @@ public class TheGame extends BasicGameState {
 		gEnemyImage = new Image(gEnemy.getImgLoc());
 		initPlayers();
 		initBackgrounds();
+		startPy = mr.getPlayerY();
+        startPx = mr.getPlayerX();
+        slutPy = startPy - 200f;
+        slutPXh = startPx + 40f;
+        slutPXv = startPx - 40f;
 
 	}
 
@@ -147,6 +160,7 @@ public class TheGame extends BasicGameState {
 			}
 			
 			mr.setPlayerScore(mr.getPlayerScore() + pointObject.getValue());
+			movePoint = true;
 			pointObject = new PickupObject();
 			
 			try {
@@ -158,6 +172,7 @@ public class TheGame extends BasicGameState {
 			if (StateHandler.soundsOn) {
 				StateHandler.soundBank.playSound("happy");
 			}
+			moveLife = true;
 			mr.gainPlayerLife();
 			lifeObject.newObjectPosLong();
 		}
@@ -179,9 +194,51 @@ public class TheGame extends BasicGameState {
 		drawBackgrounds();
 		renderMaps();
 		mr.updateAnimationSpeed();
-		
-
-		// draw chosen player with current animation and current coordinate
+		System.out.println("Y "+startPy  + "X "+startPx);
+		// om Movepoint eller lifePoint är true så kör denna igång och flyttar poängobjektet uppåt tills den nåt rätt Y pos = slutPy.
+		// movePoint är true om katten tagit ett objekt,moveLife är true om katten tagit ett liv, 
+				String lifePoint = "";
+				if(movePoint || moveLife){
+					if(movePoint)
+				{ 
+						lifePoint = "" + pointObject.getValue();
+				}
+					if(moveLife){
+						lifePoint = "1 UP";
+					}
+				
+				
+				}
+				{
+						// gogo är en koll att så den fortsätter tills den nåt max pos på X
+						// kollar om den har nått slutPy
+	             	 if(startPy == slutPy){
+	             		g.drawString(lifePoint, startPx, slutPy);
+	             		movePoint = false;
+	             		moveLife = false;
+	             		startPy = 400f;
+	                    startPx = 200f;
+	                    
+	                  }
+	             	 // Kollar att den den inte gått för mycket åt höger, körs tills den når slutPXH = den högra gränsen på X
+	             	 else if(startPx > slutPXh || (gogo)){
+	             		
+	             	g.drawString(lifePoint,startPx --,(startPy --));
+	             	if(startPx > slutPXv){ gogo = true;}
+	             	else{
+	             		gogo = false;
+	             		}
+     	             	 }
+	             	// Kollar att den den inte gått för mycket åt vänster, körs tills den når slutPXv = den vänstra gränsen på X
+	             	 else if(startPx < slutPXv || (!gogo)){
+	             		g.drawString(lifePoint ,startPx ++,(startPy --));
+	                 	if(startPx < slutPXh){ gogo = false;}
+	                 	else{ 
+	                 		gogo = true;
+	                 		}
+	             	}
+	             	}
+	     // draw chosen player with current animation and current coordinate
 		((ConfigurableEmitter) smoke.getEmitter(0)).setPosition(
 				mr.getPlayerX() + 30, mr.getPlayerY() + 15);
 		smoke.render();
