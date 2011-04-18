@@ -1,110 +1,121 @@
 package katt;
+
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class BlockMap {
-        private static TiledMap tmap;
+	private TiledMap tmap;
 
-        private static int mapWidth;
-        private static int mapHeight;
-        private int square[] = { 1, 1, 15, 1, 15, 15, 1, 15 }; // square shaped tile
-        //private int square[] = { 1, 1, 31, 1, 31, 31, 1, 31 }; // square shaped tile
-        private static ArrayList<Block> entities;
-        private static int tileSize;
+	private int mapWidth;
+	private int mapHeight;
+	private int square[] = { 1, 1, 15, 1, 15, 15, 1, 15 };
+	// private int square[] = { 1, 1, 31, 1, 31, 31, 1, 31 };
+	private ArrayList<Block> blockList;
+	private int tileSize;
 
-        public BlockMap(String ref) throws SlickException {
-                entities = new ArrayList<Block>();
-                tmap = new TiledMap(ref, "data/Img");
-                mapWidth = tmap.getWidth() * tmap.getTileWidth();
-                mapHeight = tmap.getHeight() * tmap.getTileHeight();
-                tileSize = tmap.getTileWidth();
+	public BlockMap(String ref) throws SlickException {
+		this.blockList = new ArrayList<Block>();
+		this.tmap = new TiledMap(ref, "data/Img");
+		this.mapWidth = this.tmap.getWidth() * this.tmap.getTileWidth();
+		this.mapHeight = this.tmap.getHeight() * this.tmap.getTileHeight();
+		this.tileSize = this.tmap.getTileWidth();
 
-                loadBlocks();   
-        }
-        
-        /*
-         * Reload map
-         * move every polygon to the left
-         * */
-        public void updateBlockMap(float currentX){
-                for (int x = 0; x < entities.size(); x++) {
-                        //Hitta ett bra sätt att nollställa denna
-                        if(currentX >= 640){
-                                clearBlocks();
-                                loadBlocks();
-                        }
-                        entities.get(x).getPoly().setX(entities.get(x).getPoly().getX()-1*Game.gameSpeed);
-                }
-        }
+		loadBlocks();
+	}
 
-        /* For testing only
-         * Draws the hitboxes, in the game
-         * */
-        public void drawHitBox(Graphics g, float currentX) {
-                for (int x = 0; x < entities.size(); x++) {
-                        g.draw(entities.get(x).getPoly());
-                }
-        }
+	public void moveBlockMap() {
+		for (Block block : blockList) {
+			block.getPoly().setX // Set the position of the Block
+					(block.getPoly().getX() // Get the current position
+							- TheGame.gameSpeed); // Add the map position
+		}
+	}
 
-        /*
-         * reade the tmx file
-         * Create a hitbox
-         * Insert it in to an arraylist 
-         * */
-        public void loadBlocks(){
-                for (int x = 0; x < tmap.getWidth(); x++) {
-                        for (int y = 0; y < tmap.getHeight(); y++) {
-                        //System.out.println(x + ":" + y + " collision: " +(tmap.getTileId(x, y, 0) == 1));
-                                if (tmap.getTileId(x, y, 0) == 1) {
-                                        entities.add(new Block(x * tileSize, y * tileSize, square, "square"));
-                                }
-                        }
-                }
-        }
+	/**
+	 * Reload map Move every polygon to the left
+	 */
+	public void updateBlockMap(float currentX, boolean buffer) {
+		clearBlocks();
+		loadBlocks();
+		if (buffer) {
+			for (Block block : blockList) {
+				block.getPoly().setX // Set the position of the Block
+						(block.getPoly().getX() // Get the current position
+								+ currentX); // Add the map position
+			}
+		}
+	}
 
-        public void clearBlocks(){
-                        entities.clear();
-        }
-        
-        public static TiledMap getTmap() {
-                return tmap;
-        }
+	public void jumpMap(int length) {
+		for (int x = 0; x < this.blockList.size(); x++) {
+			this.blockList.get(x).getPoly()
+					.setX(this.blockList.get(x).getPoly().getX() + length);
+		}
+	}
 
-        public static void setTmap(TiledMap tmap) {
-                BlockMap.tmap = tmap;
-        }
+	/**
+	 * For testing only Draws the hitboxes, in the game
+	 */
+	public void drawHitBox(Graphics g, float currentX) {
+		for (int x = 0; x < this.blockList.size(); x++) {
+			g.draw(this.blockList.get(x).getPoly());
+		}
+	}
 
-        public static int getMapWidth() {
-                return mapWidth;
-        }
+	/**
+	 * reades the tmx file Create a hitbox Insert it in to an arraylist
+	 */
+	public void loadBlocks() {
+		for (int x = 0; x < this.tmap.getWidth(); x++) {
+			for (int y = 0; y < this.tmap.getHeight() - 1; y++) {
+				if (this.tmap.getTileId(x, y, 0) == 1) {
+					this.blockList.add(new Block(x * this.tileSize, y
+							* this.tileSize, this.square, "square"));
+				}
+			}
+		}
+	}
 
-        public static void setMapWidth(int mapWidth) {
-                BlockMap.mapWidth = mapWidth;
-        }
+	public void clearBlocks() {
+		this.blockList.clear();
+	}
 
-        public static int getMapHeight() {
-                return mapHeight;
-        }
+	public TiledMap getTmap() {
+		return tmap;
+	}
 
-        public static void setMapHeight(int mapHeight) {
-                BlockMap.mapHeight = mapHeight;
-        }
+	public int[] getSquare() {
+		return square;
+	}
 
-        public int[] getSquare() {
-                return square;
-        }
+	public void setSquare(int[] square) {
+		this.square = square;
+	}
 
-        public void setSquare(int[] square) {
-                this.square = square;
-        }
+	public ArrayList<Block> getEntities() {
+		return blockList;
+	}
 
-        public static ArrayList<Block> getEntities() {
-                return entities;
-        }
+	public void setEntities(ArrayList<Block> entities) {
+		this.blockList = entities;
+	}
 
-        public static void setEntities(ArrayList<Block> entities) {
-                BlockMap.entities = entities;
-        }
+	public int getMapWidth() {
+		return mapWidth;
+	}
+
+	public void setMapWidth(int mapWidth) {
+		this.mapWidth = mapWidth;
+	}
+
+	public int getMapHeight() {
+		return mapHeight;
+	}
+
+	public void setMapHeight(int mapHeight) {
+		this.mapHeight = mapHeight;
+	}
+
 }

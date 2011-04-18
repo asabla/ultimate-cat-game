@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="45" height="30" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="collision" tilewidth="16" tileheight="16">
+  <image source="../../../catGame/src/data/red.png" width="128" height="51"/>
+ </tileset>
+ <tileset firstgid="25" name="walls" tilewidth="16" tileheight="16">
+  <image source="../../../catGame/src/data/fetch.png" width="128" height="64"/>
+ </tileset>
+ <layer name="collision" width="45" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WwQkAMAgEQdN/06lBIkFlBvZ/z4sAANjnJOtg4mYAoKfqv/Djf9ic/4N66wKtwLg0GBUAAA==
+  </data>
+ </layer>
+ <layer name="room" width="45" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WwQqAIBCE4X2NskvpKd///VohwUIicEuK/4MBT7MeRwQAAOB/Bo27manTH89mzbLHF+9aQqc/AgCAb0hbyHLjWPfVpC1kuXGs+964kfvGB5O3plXfqolyvV1b03LDy3FbxyIbAcFwZhgVAAA=
+  </data>
+ </layer>
+</map>
