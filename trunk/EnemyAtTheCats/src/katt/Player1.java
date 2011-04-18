@@ -103,8 +103,9 @@ public class Player1 implements Runnable {
 		if (input.isKeyPressed(Input.KEY_Z)) {
 			TheGame.frame.setVisible(true);
 		}
-
-		if (input.isKeyPressed(Input.KEY_S)) {
+		
+		//Slår av musik
+		if (input.isKeyPressed(Input.KEY_M)) {
 			if (StateHandler.musicOn) {
 				StateHandler.musicOn = false;
 				if (StateHandler.bgm.playing()) {
@@ -113,6 +114,15 @@ public class Player1 implements Runnable {
 			} else {
 				StateHandler.musicOn = true;
 				StateHandler.bgm.loop();
+			}
+		}
+		//Slår av ljudeffekter
+		if (input.isKeyPressed(Input.KEY_S)) {
+			if (StateHandler.soundsOn) {
+				StateHandler.soundsOn = false;
+
+			} else {
+				StateHandler.soundsOn = true;				
 			}
 		}
 
