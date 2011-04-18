@@ -1,112 +1,62 @@
 package katt;
-
+/*Den här klassen innehåller en hashmap som samlar alla ljudeffekter som används i spelet.
+ *För att välja ett ljud att spela upp så använder man getSound()-metoden, på ljudet använder
+ *man sedan play(). Exempelvis getSound("bottle").play(); 
+ */
 import java.util.HashMap;
-import java.util.Collection;
+import java.util.Random;
+import java.util.ArrayList;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
 
 public class SFXBank {
 
-	private HashMap<String, SoundFile> soundMap;
-	private boolean soundsEnabled;
+	private HashMap<String, Sound> soundMap;
 	
 	public SFXBank(){
-		soundsEnabled = true;
-		soundMap = new HashMap<String, SoundFile>();
-		soundMap.put("BGMMenu", new SoundFile("file:Data/Audio/BGMmenu.wav"));
-		soundMap.put("SFXBottleCrack", new SoundFile("file:Data/Audio/SFXBottleCrack.wav"));
-		soundMap.put("SFXButton", new SoundFile("file:Data/Audio/SFXButton.wav"));
-		soundMap.put("SFXCanCrush", new SoundFile("file:Data/Audio/SFXCanCrush.wav"));
-		soundMap.put("SFXCatCrash", new SoundFile("file:Data/Audio/SFXCatCrash.wav"));
-		soundMap.put("SFXCatJump", new SoundFile("file:Data/Audio/SFXCatJump.wav"));
-		soundMap.put("SFXHappyCat", new SoundFile("file:Data/Audio/SFXHappyCat.wav"));
-		soundMap.put("SFXHarp1", new SoundFile("file:Data/Audio/SFXHarp1.wav"));
-		soundMap.put("SFXHarp2", new SoundFile("file:Data/Audio/SFXHarp2.wav"));
-		soundMap.put("SFXShake", new SoundFile("file:Data/Audio/SFXShake.wav"));
-		soundMap.put("SFXSnap", new SoundFile("file:Data/Audio/SFXSnap.wav"));
-		
-}
-	//Returnerar en ljudfil
-	public SoundFile getSoundFile(String key){
-		return soundMap.get(key);
-	}
 
-	//Startar ett ljud, parametern key ska motsvara namnet på ett ljud
-	public void startSound(String key){
-		if(soundsEnabled){
-		getSoundFile(key).runSound();
-		}
+		soundMap = new HashMap<String, Sound>();
+		
+		try{
+			//Samlar alla ljud i en ljudbank, med varsin sträng som nyckel
+		soundMap.put("bottle", new Sound("Data/Audio/SFXBottleCrack.ogg"));
+		soundMap.put("boing", new Sound("Data/Audio/SFXBoing.ogg"));
+		soundMap.put("crush", new Sound("Data/Audio/SFXCanCrush.ogg"));
+		soundMap.put("crash", new Sound("Data/Audio/SFXCatCrash.ogg"));
+		soundMap.put("jump", new Sound("Data/Audio/SFXCatJump.ogg"));
+		soundMap.put("happy", new Sound("Data/Audio/SFXHappyCat.ogg"));
+		soundMap.put("harp1", new Sound("Data/Audio/SFXHarp1.ogg"));
+		soundMap.put("harp2", new Sound("Data/Audio/SFXHarp2.ogg"));
+		soundMap.put("shake", new Sound("Data/Audio/SFXShake.ogg"));
+		soundMap.put("click", new Sound("Data/Audio/SFXClick.ogg"));
+		}catch (SlickException e) {}
 	}
-	//Startar bakgrundsmusiken och loopar den
-	public void startBackground(String key){
-		if(soundsEnabled){
-		getSoundFile(key).setLoop(true);
-		getSoundFile(key).runSound();
-		}
-	}
-	
-	//Stoppar ett ljud
-	public void stopSound(String key){
-		getSoundFile(key).killSound();
-	}
-	
-	/*Tystar/avtystar ett ljud. Bra om man vill slå på/av bakgrundsmusiken, 
-	 * men vill behålla ljudeffekter
+	/*
+	 * returnerar ett ljud beroende på vilken nyckel som är inmatad
 	 * */
-	
-	public void muteSound(String key, boolean state){
-		getSoundFile(key).setMute(state);
+	public Sound getSound(String key){		
+		//Returnerar ett ljud med vald nyckel. Nyckeln görs om till lower case för att undvika nullPointer
+		return soundMap.get(key.toLowerCase());
 	}
 	
-	//Tystar/avtystar alla ljud
-	public void muteSounds(boolean state){
-		Collection<SoundFile> c = soundMap.values();
-		for(SoundFile soundFile : c){
-			soundFile.setMute(state);
-		}
+	public void playSound(String key){
+		getSound(key).play();
+	}
+	
+	/*onödig funktion, kan dock komma till pass om man t.ex.
+	 *  vill alternera mellan två olika hoppljud.
+	 *   metoden returnerar ett slumpmässigt valt ljud
+	 */
+	public Sound getRandomSound(){
+		Random r = new Random();
+		ArrayList<String> al = new ArrayList<String>();
+		al.add("bottle");
+		al.add("boing");
+		al.add("jump");
+		al.add("happy");
+
+		return getSound(al.get(r.nextInt(4)));
 		
 	}
-	
-	public void getGainLevel(String key){
-		getSoundFile(key).getGainLevel();
-	}
-	
-	public void setVolume(String key, float level){
-		getSoundFile(key).setGainLevel(level);
-	}
-	
-	public void fadeOutSound(String key){
-		getSoundFile(key).fadeOutSound();
-	}
-	
-	public void fadeInSound(String key){
-		getSoundFile(key).fadeInSound();
-	}
-	public void stopSounds(){
-		Collection<SoundFile> c = soundMap.values();
-		for(SoundFile soundFile : c){
-			soundFile.stopSound();
-		}
-	}
-	
-	//Dödar alla ljud
-	public void killSounds(){
-		Collection<SoundFile> c = soundMap.values();
-			for(SoundFile soundFile : c){
-				soundFile.killSound();
-			}
-	}
-	
-	public void setDisabled(){
-		soundsEnabled = false;
-	}
-	
-	public void setEnabled(){
-		soundsEnabled = true;
-	}
-	
-	public boolean isEnabled(){
-		return soundsEnabled;
-	}
-	
-	
-
-	}
+}

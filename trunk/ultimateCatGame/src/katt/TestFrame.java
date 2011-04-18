@@ -26,6 +26,7 @@ public class TestFrame extends JFrame {
 	private JTextField nameField;
 	private JTextField emailField;
 	private JTextField phoneField;
+	
 	private JButton updateButton;
 	private JButton resetButton;
 	private Database database; 
