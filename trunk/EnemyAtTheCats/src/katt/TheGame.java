@@ -158,7 +158,7 @@ public class TheGame extends BasicGameState {
 			if (StateHandler.soundsOn) {
 				StateHandler.soundBank.playSound("happy");
 			}
-			mr.setPlayerlife(mr.getPlayerlife() + 1);
+			mr.gainPlayerLife();
 			lifeObject.newObjectPosLong();
 		}
 		
@@ -166,7 +166,7 @@ public class TheGame extends BasicGameState {
 			if (StateHandler.soundsOn){
 				StateHandler.soundBank.playSound("crash");
 			}
-			mr.setPlayerlife(mr.getPlayerlife() - 1);
+			mr.loosePlayerLife();
 		}
 
 	}
