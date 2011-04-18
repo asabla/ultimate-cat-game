@@ -25,7 +25,7 @@ public class TheGame extends BasicGameState {
 	private int screenWidth = 640;
 	private Polygon collisonBlock;
 	private ParticleSystem smoke;
-	private final float speedAcc = 0.2f;
+	private final float speedAcc = 0.02f;
 	private StateBasedGame game;
 	public int ID;
 	public static int time;
@@ -199,7 +199,6 @@ public class TheGame extends BasicGameState {
 		drawBackgrounds();
 		renderMaps();
 		mr.updateAnimationSpeed();
-		System.out.println("Y "+startPy  + "X "+startPx);
 		// om Movepoint eller lifePoint är true så kör denna igång och flyttar poängobjektet uppåt tills den nåt rätt Y pos = slutPy.
 		// movePoint är true om katten tagit ett objekt,moveLife är true om katten tagit ett liv, 
 				String lifePoint = "";
