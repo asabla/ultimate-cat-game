@@ -116,6 +116,7 @@ public class Player1 implements Runnable {
 				StateHandler.bgm.loop();
 			}
 		}
+					
 		//Slår av ljudeffekter
 		if (input.isKeyPressed(Input.KEY_S)) {
 			if (StateHandler.soundsOn) {
@@ -124,6 +125,9 @@ public class Player1 implements Runnable {
 			} else {
 				StateHandler.soundsOn = true;				
 			}
+		}
+		if(input.isKeyPressed(Input.KEY_R)){
+			TheGame.smokeOn = !TheGame.smokeOn;
 		}
 
 	}

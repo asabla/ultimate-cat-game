@@ -35,7 +35,10 @@ public class TheGame extends BasicGameState {
 	private GroundEnemy gEnemy;
 	private boolean gogo;
     private boolean movePoint;
-    private boolean moveLife;
+    private boolean moveLife;    
+    //Variabel som håller om röken ska synas eller inte
+    public static boolean smokeOn;
+
 
 	/*
 	 * Deklaration av variablerna för spelets olika bakgrund bgLayerX - Olika
@@ -80,6 +83,8 @@ public class TheGame extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		this.game = game;
+		//Slår på röken från början
+		smokeOn = true;
 		pointObject = new PickupObject();
 		lifeObject = new PickupObject(0, 5000, 250);
 		gEnemy = new GroundEnemy(1);
@@ -241,7 +246,9 @@ public class TheGame extends BasicGameState {
 	     // draw chosen player with current animation and current coordinate
 		((ConfigurableEmitter) smoke.getEmitter(0)).setPosition(
 				mr.getPlayerX() + 30, mr.getPlayerY() + 15);
+		if(smokeOn){
 		smoke.render();
+		}
 	
 		g.drawAnimation(mr.getCurrentAnimation(), mr.getPlayerX(), mr.getPlayerY());
 		
