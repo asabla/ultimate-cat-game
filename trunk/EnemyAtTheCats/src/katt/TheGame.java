@@ -410,6 +410,12 @@ public class TheGame extends BasicGameState {
 		initBackgrounds();
 
 	}
+	
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		if(StateHandler.bgm.playing())
+			StateHandler.bgm.stop();
+	}
 
 	public boolean pointObjectPickup(Player1 pl) {
 		if (pl.getPlayerBox().intersects(pointObject.getRectangle())) {
