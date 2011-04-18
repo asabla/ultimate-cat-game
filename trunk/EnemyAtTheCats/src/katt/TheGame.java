@@ -28,7 +28,7 @@ public class TheGame extends BasicGameState {
 	private final float speedAcc = 0.2f;
 	private StateBasedGame game;
 	public int ID;
-	private static int time;
+	public static int time;
 	public final static float gravity = 2f;
 	private PickupObject pointObject;
 	private PickupObject lifeObject;
