@@ -1,6 +1,7 @@
 package katt;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database
 {
@@ -176,6 +177,45 @@ public class Database
         } 
 
         close();
+    }
+    
+    public ArrayList<String> getHighscoreToArrayList(int antal, boolean visaStigande)
+    {
+        connectToDB();
+
+        ArrayList<String> arrList = new ArrayList<String>();
+
+        String sort = null;
+        if (visaStigande == false)
+        {
+            sort = "DESC";
+        }
+        else
+        {
+            sort = "ASC";
+        }
+
+        try
+        {
+            System.out.println("Hämtar top " + antal + " ifrån servern");
+            statement = connect.createStatement();
+            resultset = statement.executeQuery("SELECT * FROM highscore ORDER BY highscore " + sort + " LIMIT " + antal);
+            System.out.println("Spelarnamn: " + "\t" + "Poäng: ");
+            while (resultset.next())
+            {
+                String stemp = resultset.getString("namn");
+                int itemp = resultset.getInt("highscore");
+                arrList.add(stemp + "\t" + itemp);
+                //System.out.println(stemp + "\t" + itemp);
+            }
+        }
+        catch (SQLException e)
+        {
+        }
+
+        close();
+
+        return arrList;
     }
 
     public ResultSet getTopScore()
