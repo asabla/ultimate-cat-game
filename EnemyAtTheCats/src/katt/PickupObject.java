@@ -22,19 +22,28 @@ public class PickupObject{
 	private int value;
 	private Random r;
 	private String imgLoc;
+	private Rectangle rectangle;
 
 	//Skapar ett objekt av slumpmässig typ(ej livobjekt) på en slumpmässig plats
 	public PickupObject(){
-		r = new Random();
 		
-		newObjectPos();
+		r = new Random();	
+
 		objectType = r.nextInt(5);
 		if(objectType == 0){
 			objectType = 1;
 		}
 			value = objectType * 1000;
 
-		imgLoc = "data/Img/object" + objectType +".png";				
+		imgLoc = "data/Img/object" + objectType +".png";
+		//Skapar en rektangel för objektet med samma storlek som bilden för objektet
+		try{
+			Image i = new Image((String)imgLoc);			
+		rectangle = new Rectangle(xPos + 4, yPos + 4, i.getWidth()-8, i.getHeight()-8);
+		}
+		catch(Exception e){}
+		
+		newObjectPos();
 	}
 	/*Skapar ett objekt av bestämd typ och bestämd plats
 	 * @param type = ett heltal mellan 0-9
@@ -59,7 +68,12 @@ public class PickupObject{
 		} else if(objectType == 0){
 			value = 1;
 		}
-		imgLoc = "data/Img/object" + objectType +".png";				
+		imgLoc = "data/Img/object" + objectType +".png";	
+		try{
+			Image i = new Image((String)imgLoc);			
+		rectangle = new Rectangle(xPos + 4, yPos + 4, i.getWidth()-8, i.getHeight()-8);
+		}
+		catch(Exception e){}
 	}
 	
 	//Returnerar en sträng som representerar bildens sökväg
@@ -85,15 +99,8 @@ public class PickupObject{
 	}
 	//Skapar en rektangel som är nödvändig för kollisionskontroll
 	public Rectangle getRectangle(){
-		try{
-			Image i = new Image((String)imgLoc);
 
-		Rectangle r = new Rectangle(xPos + 4, yPos + 4, i.getWidth()-8, i.getHeight()-8);
-		
-		return r;
-		}
-		catch(Exception e){}
-		return null;
+		return rectangle;
 		
 	}
 	
@@ -112,11 +119,13 @@ public class PickupObject{
 	public void newObjectPos(){		
     	setxPos(1000 + r.nextInt(500));
     	setyPos(250 + r.nextInt(150));  
+    	rectangle.setLocation(xPos, yPos);
 	}
 	
 	public void newObjectPosLong(){
 		setxPos(25000 + r.nextInt(1000));
 		setyPos(250 + r.nextInt(150));
+    	rectangle.setLocation(xPos, yPos);
 	}
 	
 	//Slumpar en ny typ av objekt, och ändrar värdet
@@ -129,6 +138,7 @@ public class PickupObject{
 	{
 		if(xPos > - 5){
 			xPos -= TheGame.gameSpeed;
+			rectangle.setX(xPos);
 
 		}else{			
 			newObjectPos();
