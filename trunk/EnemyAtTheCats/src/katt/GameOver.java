@@ -63,8 +63,8 @@ public class GameOver extends BasicGameState implements ComponentListener{
 		{
 			if(i == 0)
 			{
-			areas[i] = new MouseOverArea(container, newgame, 250, 100, 225, 52, this);
-			areas[i].setMouseOverImage(highscore);
+				areas[i] = new MouseOverArea(container, newgame, 250, 100, 225, 52, this);
+				areas[i].setMouseOverImage(highscore);
 			}
 		}
 		
