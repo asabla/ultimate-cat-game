@@ -73,6 +73,7 @@ public class TheGame extends BasicGameState {
 	float slutPXv;
 	float slutPXh;
 	float slutPy;
+	
 
 	public TheGame(int ID) {
 		super();
@@ -146,6 +147,11 @@ public class TheGame extends BasicGameState {
 		rnd = new Random();
 		gEnemy = new GroundEnemy(1);
 		gEnemyImage = new Image(gEnemy.getImgLoc());
+		startPy = 200f;
+        startPx = 200f;
+        slutPy = startPy - 100f;
+        slutPXh = startPx + 40f;
+        slutPXv = startPx - 40f;
 
 	}
 
@@ -155,7 +161,8 @@ public class TheGame extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput();
 
-		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+		if (input.isKeyPressed(Input.KEY_ESCAPE)) {			
+			StateHandler.paused = true;
 			StateHandler.paused = true;
 			game.enterState(StateHandler.menu);
 		}
@@ -189,15 +196,21 @@ public class TheGame extends BasicGameState {
 			// if outside the window print dead
 			if (playerDropOut(players[x])) {
 				System.out.println("Dead");
-
+				
 				players[x].deadPlayer();
-				// game.enterState(StateHandler.gameOver);
+				
 			}
+		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+			game.enterState(StateHandler.menu);
+			
+			
+		}
 
 			if (pointObjectPickup(players[x])) {
 				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("crush");
 				}
+
 
 				players[x].setPlayerScore(players[x].getPlayerScore()
 						+ pointObject.getValue());
