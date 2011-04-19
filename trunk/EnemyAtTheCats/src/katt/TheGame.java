@@ -125,11 +125,11 @@ public class TheGame extends BasicGameState {
 		blockMapRow[3] = new BlockMap("data/Img/room4.tmx");
 		blockMapRow[4] = new BlockMap("data/Img/room5.tmx");
 
-		playerCount = 2;
+		playerCount = 1;
 
 		players = new Player1[playerCount];
 		players[0] = new Player1(200, 400, "data/Img/cat1.png", Input.KEY_UP, 3);
-		players[1] = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_W, 3);
+		//players[1] = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_W, 3);
 
 		pointObject = new PickupObject();
 		lifeObject = new PickupObject(0, 5000, 250);
@@ -156,6 +156,7 @@ public class TheGame extends BasicGameState {
 		Input input = container.getInput();
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+			StateHandler.paused = true;
 			game.enterState(StateHandler.menu);
 		}
 
@@ -215,6 +216,9 @@ public class TheGame extends BasicGameState {
 				moveLife = true;
 				players[x].setPlayerlife(players[x].getPlayerlife() + 1);
 				lifeObject.newObjectPosLong();
+			}
+			if(players[x].getPlayerlife() == 0){
+				game.enterState(StateHandler.gameOver);
 			}
 
 			try {
@@ -316,9 +320,9 @@ public class TheGame extends BasicGameState {
 		g.drawString("Liv: " + players[0].getPlayerLife(), 10, 45);
 		g.drawString("Poäng: " + players[0].getPlayerScore(), 10, 60);
 
-		g.drawString("Player 2", 500, 30);
-		g.drawString("Liv: " + players[1].getPlayerLife(), 500, 45);
-		g.drawString("Poäng: " + players[1].getPlayerScore(), 500, 60);
+//		g.drawString("Player 2", 500, 30);
+//		g.drawString("Liv: " + players[1].getPlayerLife(), 500, 45);
+//		g.drawString("Poäng: " + players[1].getPlayerScore(), 500, 60);
 
 		g.drawString("Tid: " + this.time / 1000 + "sec", 450, 450);
 		g.drawString("Level: " + currentLevel, 550, 450);
@@ -340,6 +344,29 @@ public class TheGame extends BasicGameState {
 
 		if (StateHandler.musicOn) {
 			StateHandler.bgm.loop();
+		}
+		
+		if(StateHandler.paused){
+			
+		}
+		else{
+			currentLevel = 1;
+			levelLength = 5;
+			loopCount = 0;
+
+			currentMap = 0;
+			neighbourMap = 1;
+
+			currentMapX = 0;
+			neighbourMapX = mapWidth;
+
+			playerCount = 1;
+
+			time = 1; // Startar spelet med 1sekund
+			
+			players = new Player1[playerCount];
+			players[0] = new Player1(200, 400, "data/Img/cat1.png", Input.KEY_UP, 3);
+			//players[1] = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_W, 3);
 		}
 		// container.setVSync(true);
 		// container.setTargetFrameRate(150);

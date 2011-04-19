@@ -16,12 +16,14 @@ public final class StateHandler extends StateBasedGame {
 	public static boolean soundsOn;
 	public static boolean musicOn;
 	public static Sound bgm;
+	public static boolean paused;
     
     
 	public StateHandler() throws SlickException {
 		super("Det bra spelet");
 		soundsOn = true;
 		musicOn = true;
+		paused = false;
 		soundBank = new SFXBank();
 		bgm = new Sound("data/audio/BGMMenu.ogg");
 		this.addState(new Menu(menu));
