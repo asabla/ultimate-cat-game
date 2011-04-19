@@ -34,7 +34,7 @@ public class Pause extends BasicGameState implements ComponentListener{
 	@Override
 	public void componentActivated(AbstractComponent source) {
 		if(source == areas[0]){
-			StateHandler.paused = false;
+			StateHandler.paused = true;
 			game.enterState(StateHandler.theGame);
 		}
 	}
@@ -43,8 +43,8 @@ public class Pause extends BasicGameState implements ComponentListener{
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
 		
-		newgame = new Image("data/Img/Nyttspel1.png");
-		newgameOver = new Image("data/Img/Nyttspel2.png");
+		newgame = new Image("data/Img/Fortsatt1.png");
+		newgameOver = new Image("data/Img/Fortsatt2.png");
 		
 		//container.setMouseCursor("data/Img/cursor.png", 0, 0);
 		
