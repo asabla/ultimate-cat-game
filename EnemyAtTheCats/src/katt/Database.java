@@ -245,13 +245,13 @@ public class Database
     public String getSingleHighscoreResult()
     {
     	connectToDB();
-    	String s = "";
+    	String s = ""; //En tempsträng
 
     	try
     	{
     		System.out.println("Hämtar topresultatet ifrån servern");
     		statement = connect.createStatement();
-                statement.setMaxRows(1);
+            statement.setMaxRows(1);
     		resultset = statement.executeQuery("SELECT * FROM highscore ORDER BY highscore DESC");
     		while(resultset.next())
     		{
