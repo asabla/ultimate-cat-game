@@ -43,9 +43,9 @@ public class GameOver extends BasicGameState implements ComponentListener{
 	@Override
 	public void componentActivated(AbstractComponent source) {
 		if(source == areas[0]){
+			StateHandler.paused = false;
 			game.enterState(StateHandler.theGame);
-			
-		}
+			}
 		
 	}
 
