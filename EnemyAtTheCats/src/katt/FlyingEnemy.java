@@ -18,8 +18,8 @@ public class FlyingEnemy extends EnemyObject{
 	public FlyingEnemy(int type){
 		this.type = type;
 		setImgLoc("data/Img/flyingEnemy" + type + ".png");
-		maxYpos = getyPos() + 40;
-		minYpos = getyPos() - 40;
+		maxYpos = getPosY() + 40;
+		minYpos = getPosY() - 40;
 		upwards = true;
 	}
 	
@@ -48,11 +48,11 @@ public class FlyingEnemy extends EnemyObject{
 	public void upDateXPos()
 	{
 		//Spelar upp ett ljud när  fienden kommer in i bild
-		if(getxPos() > 640 && getxPos()< 650){
+		if(getPosX() > 640 && getPosX()< 650){
 			StateHandler.soundBank.playSound("harp1");
 		}
-		if(getxPos() > - 5){
-			setxPos(getxPos() - TheGame.gameSpeed);
+		if(getPosX() > - 5){
+			setxPos(getPosX() - TheGame.gameSpeed);
 
 		}else{			
 			newObjectPos();

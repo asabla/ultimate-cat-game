@@ -11,7 +11,7 @@ public class BlockMap {
 	private int mapWidth;
 	private int mapHeight;
 	private int square[] = { 1, 1, 15, 1, 15, 15, 1, 15 };
-	//private int square[] = { 1, 1, 31, 1, 31, 31, 1, 31 };
+	// private int square[] = { 1, 1, 31, 1, 31, 31, 1, 31 };
 	private ArrayList<Block> blockList;
 	private int tileSize;
 
@@ -26,24 +26,25 @@ public class BlockMap {
 	}
 
 	public void moveBlockMap() {
-		for(Block block : blockList) {
+		for (Block block : blockList) {
 			block.getPoly().setX // Set the position of the Block
-				(block.getPoly().getX() // Get the current position
-						- TheGame.gameSpeed); // Add the map position
-		}	
+					(block.getPoly().getX() // Get the current position
+							- TheGame.gameSpeed); // Add the map position
+		}
 	}
-	
-	
+
 	/**
 	 * Reload map Move every polygon to the left
 	 */
-	public void updateBlockMap(float currentX) {
+	public void updateBlockMap(float currentX, boolean buffer) {
 		clearBlocks();
 		loadBlocks();
-		for(Block block : blockList) {
-			block.getPoly().setX // Set the position of the Block
-				(block.getPoly().getX() // Get the current position
-						+ currentX); // Add the map position
+		if (buffer) {
+			for (Block block : blockList) {
+				block.getPoly().setX // Set the position of the Block
+						(block.getPoly().getX() // Get the current position
+								+ currentX); // Add the map position
+			}
 		}
 	}
 
@@ -68,9 +69,10 @@ public class BlockMap {
 	 */
 	public void loadBlocks() {
 		for (int x = 0; x < this.tmap.getWidth(); x++) {
-			for (int y = 0; y < this.tmap.getHeight()-1; y++) {
+			for (int y = 0; y < this.tmap.getHeight() - 1; y++) {
 				if (this.tmap.getTileId(x, y, 0) == 1) {
-					this.blockList.add(new Block(x * this.tileSize, y * this.tileSize, this.square, "square"));
+					this.blockList.add(new Block(x * this.tileSize, y
+							* this.tileSize, this.square, "square"));
 				}
 			}
 		}

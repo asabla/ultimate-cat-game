@@ -29,11 +29,11 @@ abstract public class EnemyObject {
 		collided = false;
 	}
 
-	public float getxPos() {
+	public float getPosX() {
 		return xPos;
 	}
 
-	public float getyPos() {
+	public float getPosY() {
 		return yPos;
 	}
 

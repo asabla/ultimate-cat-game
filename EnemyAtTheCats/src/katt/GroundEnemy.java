@@ -29,12 +29,12 @@ public class GroundEnemy extends EnemyObject {
 	public void upDateXPos()
 	{
 		//Spelar upp ett hundljud när fienden kommer in i bild
-		if(getxPos() < 650 && getxPos() > 640 && StateHandler.soundsOn){
+		if(getPosX() < 650 && getPosX() > 640 && StateHandler.soundsOn){
 			StateHandler.soundBank.playSound("dog1");
 		}
 		//När hunden kommit ur bild sätts den ut på en ny position
-		if(getxPos() > - 5){
-			setxPos(getxPos() - TheGame.gameSpeed);
+		if(getPosX() > - 5){
+			setxPos(getPosX() - TheGame.gameSpeed);
 		}else{			
 			newObjectPos();
 		}
