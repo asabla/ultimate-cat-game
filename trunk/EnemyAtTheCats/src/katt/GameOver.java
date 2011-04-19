@@ -11,6 +11,7 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.Game;
+import org.newdawn.slick.util.InputAdapter;
 
 public class GameOver extends BasicGameState implements ComponentListener{
 	
@@ -33,6 +34,7 @@ public class GameOver extends BasicGameState implements ComponentListener{
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawString("Game Over", 30, 30);
 		g.setBackground(Color.red);
+		
 		
 		areas[0].render(container, g);
 		//game.getState(DenBraMenyn.theGame).render(container, game, g);

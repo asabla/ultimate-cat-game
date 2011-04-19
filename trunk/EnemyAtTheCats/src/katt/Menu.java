@@ -1,5 +1,6 @@
 package katt;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -33,7 +34,7 @@ public class Menu extends BasicGameState implements ComponentListener
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException
 	{
-		back.draw(0, 0);
+		g.setBackground(Color.blue);
 		for(int i = 0; i < areas.length; i++)
 		{
 			areas[i].render(container, g);
