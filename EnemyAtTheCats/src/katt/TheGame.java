@@ -196,8 +196,10 @@ public class TheGame extends BasicGameState {
 			// if outside the window print dead
 			if (playerDropOut(players[x])) {
 				System.out.println("Dead");
-				
+				newStartAfterCatHasPassedAway();
 				players[x].deadPlayer();
+				
+				
 				
 			}
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
@@ -250,6 +252,7 @@ public class TheGame extends BasicGameState {
 					StateHandler.soundBank.playSound("crash");
 				}
 				players[x].loosePlayerLife();
+				newStartAfterCatHasPassedAway();
 			}
 		}
 	}
@@ -349,6 +352,7 @@ public class TheGame extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
+		System.out.print("aja");
 		try {
 			smoke = ParticleIO.loadConfiguredSystem("data/smokeSystem.xml");
 		} catch (IOException e) {
@@ -531,5 +535,18 @@ public class TheGame extends BasicGameState {
 		} else {
 			return false;
 		}
+	}
+	
+	private void newStartAfterCatHasPassedAway()
+	{
+		
+		loopCount = 0;
+
+		currentMap = 0;
+		neighbourMap = 1;
+
+		currentMapX = 0;
+		neighbourMapX = mapWidth;
+
 	}
 }
