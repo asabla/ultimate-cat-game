@@ -43,14 +43,14 @@ public class Menu extends BasicGameState implements ComponentListener{
 		this.game = game;
 		
 		back = new Image("data/Img/Back.png");
-		newgame = new Image("data/Img/Nytt.png");
-		highscore = new Image("data/Img/Nyttover.png");
+		newgame = new Image("data/Img/Nyttspel1.png");
+		highscore = new Image("data/Img/Nyttspel2.png");
 		
 		//container.setMouseCursor("data/Img/cursor.png", 0, 0);
 		
 		for(int i = 0; i<2; i++){
 			if(i == 0){
-			areas[i] = new MouseOverArea(container, newgame, 250, 100, 225, 52, this);
+			areas[i] = new MouseOverArea(container, newgame, 130, 100, 400, 52, this);
 			areas[i].setMouseOverImage(highscore);
 			}
 		}
