@@ -241,6 +241,32 @@ public class Database
         return rs;
     }
     
+    //Hämtar högsta resultat ifrån servern. Och returnerar denna med en sträng
+    public String getSingleHighscoreResult()
+    {
+    	connectToDB();
+    	String s = "";
+
+    	try
+    	{
+    		System.out.println("Hämtar topresultatet ifrån servern");
+    		statement = connect.createStatement();
+                statement.setMaxRows(1);
+    		resultset = statement.executeQuery("SELECT * FROM highscore ORDER BY highscore DESC");
+    		while(resultset.next())
+    		{
+                    String stemp = resultset.getString("namn");
+                    int itemp = resultset.getInt("highscore");
+                    s += "Namn: " + stemp + " Poäng: " + itemp;
+    		}
+    	}
+    	catch(SQLException e)
+    	{
+
+    	}
+    	return s;
+    }
+    
     private void connectToDB()
     {
         try
