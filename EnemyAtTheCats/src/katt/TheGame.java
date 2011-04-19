@@ -3,6 +3,7 @@ package katt;
 import java.io.IOException;
 import java.util.Random;
 
+import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -197,8 +198,7 @@ public class TheGame extends BasicGameState {
 				newStartAfterCatHasPassedAway();
 				game.enterState(StateHandler.pause);
 				players[x].deadPlayer();
-				
-				
+
 				
 				
 			}
@@ -353,7 +353,7 @@ public class TheGame extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		System.out.print("aja");
+		
 		try {
 			smoke = ParticleIO.loadConfiguredSystem("data/smokeSystem.xml");
 		} catch (IOException e) {
@@ -539,8 +539,13 @@ public class TheGame extends BasicGameState {
 	}
 	
 	private void newStartAfterCatHasPassedAway()
-	{
-		
+	{	
+		gEnemy.setxPos(0);
+		gEnemy.setyPos(0);
+		pointObject.setxPos(0);
+		pointObject.setyPos(0);
+		lifeObject.setxPos(0);
+		lifeObject.setyPos(0);
 		loopCount = 0;
 
 		currentMap = 0;
