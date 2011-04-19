@@ -207,7 +207,7 @@ public class Database
             {
                 String stemp = resultset.getString("namn");
                 int itemp = resultset.getInt("highscore");
-                arrList.add(stemp + "\t" + itemp);  //Kombinationen \t används för att göra en tabb mellan namn och highscore
+                arrList.add(stemp + "  -  " + itemp);  //Kombinationen \t används för att göra en tabb mellan namn och highscore
                 //System.out.println(stemp + "\t" + itemp);
             }
         }
