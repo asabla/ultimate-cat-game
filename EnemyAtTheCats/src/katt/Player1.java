@@ -86,7 +86,7 @@ public class Player1 implements Runnable {
 		}
 		// UP-REPEAT
 		if (input.isKeyDown(jumpControl)) {
-			if (!jumping.isAlive()) {
+			if (!jumping.isAlive() && jumps < 2) {
 				jumps++;
 				jumping = new Thread(this);
 				jumping.start();
