@@ -162,8 +162,6 @@ public class TheGame extends BasicGameState {
 		Input input = container.getInput();
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {			
-			StateHandler.paused = true;
-			StateHandler.paused = true;
 			game.enterState(StateHandler.menu);
 		}
 
