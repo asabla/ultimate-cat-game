@@ -65,7 +65,7 @@ public class Pause extends BasicGameState implements ComponentListener{
 	public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException {
 		Input input = container.getInput();
 		
-		if (input.isKeyPressed(Input.KEY_UP)) {
+		if (input.isKeyPressed(Input.KEY_RIGHT)) {
 			StateHandler.paused = true;
 			game.enterState(StateHandler.theGame);
 		}
