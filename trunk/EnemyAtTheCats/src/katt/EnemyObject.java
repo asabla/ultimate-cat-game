@@ -22,6 +22,7 @@ abstract public class EnemyObject {
 	private Random r;
 	private String imgLoc;
 	private boolean collided;
+	private Rectangle rectangle;
 	
 	public EnemyObject(){
 		r = new Random();
@@ -39,16 +40,11 @@ abstract public class EnemyObject {
 
 	//Skapar en rektangel som är nödvändig för kollisionskontroll
 	public Rectangle getRectangle(){
-		try{
-			//Objektets bild som används för att sätta storleken på rektangeln
-		Image i = new Image(imgLoc);
-
-		//Skapar en rektangel med lite mindre storlek än bilden
-		Rectangle r = new Rectangle(xPos + 5, yPos + 5, i.getWidth()-10, i.getHeight()-10);
-		return r;
-		}
-		catch(SlickException e){}
-		return null;
+		return rectangle;
+	}
+	
+	public void setRectangle(Rectangle rec){
+		rectangle = rec;
 	}
 	
 	public void setImgLoc(String loc){
@@ -77,7 +73,7 @@ abstract public class EnemyObject {
 		collided = false;
     	setxPos(3000 + r.nextInt(500));
     	setyPos(410); 
-
+    	rectangle.setLocation(xPos, yPos);
 	}
 
 	public boolean isCollided() {

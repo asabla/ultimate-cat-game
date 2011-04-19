@@ -1,5 +1,9 @@
 package katt;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+
 /*
  * klass som håller luftburna fiender
  */
@@ -16,11 +20,23 @@ public class FlyingEnemy extends EnemyObject{
 	private boolean upwards;
 	
 	public FlyingEnemy(int type){
+		super();
 		this.type = type;
 		setImgLoc("data/Img/flyingEnemy" + type + ".png");
 		maxYpos = getPosY() + 40;
 		minYpos = getPosY() - 40;
 		upwards = true;
+				
+		try{
+			//Objektets bild som används för att sätta storleken på rektangeln
+		Image i = new Image(getImgLoc());
+		//Skapar en rektangel med lite mindre storlek än bilden
+		setRectangle(new Rectangle(getPosX() + 5, getPosY() + 5, 
+				i.getWidth() - 10, i.getHeight() - 10));
+		}
+		catch(SlickException e){}
+		//Sätter ut objektet på en ny random position
+		newObjectPos();
 	}
 	
 	
@@ -53,6 +69,7 @@ public class FlyingEnemy extends EnemyObject{
 		}
 		if(getPosX() > - 5){
 			setxPos(getPosX() - TheGame.gameSpeed);
+			getRectangle().setX(getPosX());
 
 		}else{			
 			newObjectPos();
