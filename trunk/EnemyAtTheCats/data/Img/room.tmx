@@ -3,17 +3,22 @@
  <tileset firstgid="1" name="collision" tilewidth="16" tileheight="16">
   <image source="red.png" width="128" height="51"/>
  </tileset>
- <tileset firstgid="25" name="walls" tilewidth="16" tileheight="16">
-  <image source="fetch.png" width="128" height="64"/>
+ <tileset firstgid="25" name="grasstile" tilewidth="16" tileheight="16">
+  <image source="grasstile.png" width="80" height="80"/>
  </tileset>
  <layer name="collision" width="40" height="30">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3OsQ0AMAgEMdh/aZpMkG8QsqXrrwoAAOCefm3lL+Mv4y/z89eKGmy3Lr/AEgAA
   </data>
  </layer>
- <layer name="room" width="40" height="30">
+ <layer name="Grass 0" width="40" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3PsQkAIAwF0ayhWGkluP98ptA2IIKRcA+uDPyIAAAAAEA8SSveIwxdG94jDOy7w747Efflh7XVyU39tP3LBPCJk2rAEgAA
+   H4sIAAAAAAAAC+3UQQrAIAxEUY9ja1vr/S/nbLINtEUSyn8wGyEwGrAUAAAAAPifqmzRJRynckWXcHTlji7hyN6P/X6Tvd+b/dqftCtNORae2fs9mbU72exIdjYBnUY2/sASAAA=
+  </data>
+ </layer>
+ <layer name="Grass 1" width="40" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3UOwoAIQwFQO/i7/43NMVaCirINjPwmsAjqZISAADAuRwpfx8B8Jk/qUZapD+crXbudLgzADJcVEHAEgAA
   </data>
  </layer>
 </map>

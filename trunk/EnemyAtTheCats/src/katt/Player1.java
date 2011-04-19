@@ -41,6 +41,7 @@ public class Player1 implements Runnable {
 		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40,
 				0);
 		this.jumpControl = jumpControl;
+		this.currentAnimation = jump;
 
 		// Set player start coordinate
 		this.playerX = playerX;
@@ -103,9 +104,8 @@ public class Player1 implements Runnable {
 		if (input.isKeyPressed(Input.KEY_Z)) {
 			TheGame.frame.setVisible(true);
 		}
-		
-		//Slår av musik
-		if (input.isKeyPressed(Input.KEY_M)) {
+
+		if (input.isKeyPressed(Input.KEY_S)) {
 			if (StateHandler.musicOn) {
 				StateHandler.musicOn = false;
 				if (StateHandler.bgm.playing()) {
@@ -115,19 +115,6 @@ public class Player1 implements Runnable {
 				StateHandler.musicOn = true;
 				StateHandler.bgm.loop();
 			}
-		}
-					
-		//Slår av ljudeffekter
-		if (input.isKeyPressed(Input.KEY_S)) {
-			if (StateHandler.soundsOn) {
-				StateHandler.soundsOn = false;
-
-			} else {
-				StateHandler.soundsOn = true;				
-			}
-		}
-		if(input.isKeyPressed(Input.KEY_R)){
-			TheGame.smokeOn = !TheGame.smokeOn;
 		}
 
 	}
