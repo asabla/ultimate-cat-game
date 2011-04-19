@@ -181,9 +181,11 @@ public class Player1 implements Runnable {
 	}
 
 	public void deadPlayer() {
+		
 		this.loosePlayerLife();
 		this.setPlayerX(200);
 		this.setPlayerY(200);
+		
 	}
 
 	public int getPlayerLife() {
