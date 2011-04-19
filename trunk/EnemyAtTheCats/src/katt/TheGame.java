@@ -540,12 +540,11 @@ public class TheGame extends BasicGameState {
 	
 	private void newStartAfterCatHasPassedAway()
 	{	
-		gEnemy.setxPos(0);
-		gEnemy.setyPos(0);
-		pointObject.setxPos(0);
-		pointObject.setyPos(0);
-		lifeObject.setxPos(0);
-		lifeObject.setyPos(0);
+		gEnemy.newObjectPos();
+
+		pointObject.newObjectPos();
+		
+		lifeObject.newObjectPos();
 		loopCount = 0;
 
 		currentMap = 0;
