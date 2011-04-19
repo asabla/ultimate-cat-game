@@ -195,7 +195,9 @@ public class TheGame extends BasicGameState {
 			if (playerDropOut(players[x])) {
 				System.out.println("Dead");
 				newStartAfterCatHasPassedAway();
+				game.enterState(StateHandler.pause);
 				players[x].deadPlayer();
+				
 				
 				
 				
@@ -251,6 +253,7 @@ public class TheGame extends BasicGameState {
 				}
 				players[x].loosePlayerLife();
 				newStartAfterCatHasPassedAway();
+				game.enterState(StateHandler.pause);
 			}
 		}
 	}
