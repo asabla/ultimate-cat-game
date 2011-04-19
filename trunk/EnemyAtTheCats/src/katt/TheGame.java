@@ -370,7 +370,7 @@ public class TheGame extends BasicGameState {
 			currentLevel = 1;
 			levelLength = 5;
 			loopCount = 0;
-
+			gameSpeed = 2f;
 			currentMap = 0;
 			neighbourMap = 1;
 
