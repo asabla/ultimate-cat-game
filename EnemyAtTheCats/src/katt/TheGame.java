@@ -510,13 +510,13 @@ public class TheGame extends BasicGameState
 		{
 			if (entityCollisionWith(pl.getPlayerBox(), map))
 			{
-				if (pl.getPlayerX() + 51 < collisonBlock.getX()
-						&& !(pl.getPlayerY() + 51 < collisonBlock.getY()))
+				if (wallHit(map, pl))
 				{
 					System.out.println("Wall");
 					pl.setPlayerX(pl.getPlayerX() - 2 * gameSpeed);
 				}
-				if (pl.getPlayerY() + 50 > collisonBlock.getY())
+				if (pl.getPlayerY() + 50 > collisonBlock.getY()
+						&& !wallHit(map, pl))
 				{
 					System.out.println("Floor");
 					pl.setOnGround(true);
@@ -641,9 +641,7 @@ public class TheGame extends BasicGameState
 
 
 
-	private void newStartAfterCatHasPassedAway()
-
-	{
+	private void newStartAfterCatHasPassedAway()	
 	{
 		gEnemy.newObjectPos();
 
@@ -658,7 +656,27 @@ public class TheGame extends BasicGameState
 
 		currentMapX = 0;
 		neighbourMapX = mapWidth;
-
 	}
+	
+	
+	public boolean wallHit(BlockMap bMap, Player1 pl) {
+		float rightPos = pl.getPlayerBox().getMaxX();
+		float topPos = pl.getPlayerBox().getMinY() + 8;
+		float bottomPos = pl.getPlayerBox().getMaxY() - 8;
+		
+	for (int i = 0; i < bMap.getEntities().size(); i++) {
+		Block entity1 = bMap.getEntities().get(i);
+		if (rightPos < entity1.getPoly().getMinX() + 5 &&
+				rightPos > entity1.getPoly().getMinX() - 5){
+			if(topPos > entity1.getPoly().getMinY() && 
+			   topPos < entity1.getPoly().getMaxY() ||
+			   bottomPos > entity1.getPoly().getMinY() &&
+			   bottomPos < entity1.getPoly().getMaxY()){
+				
+			return true;
+			}
+	}
+	}	
+	return false;
 	}
 }
