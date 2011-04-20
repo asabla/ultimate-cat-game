@@ -19,11 +19,38 @@ public class Player1 implements Runnable  {
 	private int jumpControl;
 	private long playerScore;
 	private int playerlife;
-	private static boolean threadDone = false;
+	//private static boolean threadDone = false;
 	//private int score;
 	private Thread falling;
 
 	private float gravityEffect;
+	
+	public Player1(int playerX, int playerY, String pngDir, int jumpControl, int plife, long playerScore){
+		super();
+		this.playerScore = playerScore;
+		this.spriteSizeX = 50;
+		this.spriteSizeY = 50;
+		this.isOnGround = false;
+		this.playerlife = plife;
+		gravityEffect = TheGame.gravity;
+		jumping = new Thread(this);
+		falling = new Thread(this);
+		// Load all animations
+		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40, 0);
+		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY+10, 0, 1, 40, 1);
+		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY+10, 0, 1, 40, 2);
+		this.jumpControl = jumpControl;
+		this.currentAnimation = run;
+
+		// Set player start coordinate
+		this.playerX = playerX;
+		this.playerY = playerY;
+
+		// Set player hitbox
+		playerBox = new Polygon(new float[] { playerX, playerY,
+				playerX + spriteSizeX, playerY, playerX + spriteSizeX,
+				playerY + spriteSizeY, playerX, playerY + spriteSizeY });
+	}
 
 	public Player1(int playerX, int playerY, String pngDir, int jumpControl,
 			int plife)  {
@@ -128,7 +155,8 @@ public class Player1 implements Runnable  {
 		// Jumping begins
 
 		currentAnimation = jump;
-		while (!isOnGround && !threadDone ) {
+		while (!isOnGround) {       // && !threadDone
+
 
 			playerY += jumpPower; // Increment the jump
 			jumpPower++;
@@ -191,13 +219,13 @@ public class Player1 implements Runnable  {
 	}
 
 	public void deadPlayer() {
-		threadDone = true; 
+		//threadDone = true; 
 		this.loosePlayerLife();
 		this.setPlayerX(200);
 		this.setPlayerY(200);
 	}
 	public static void threadDone(){
-		threadDone= false;
+		//threadDone= false;
 	}
 	
 
