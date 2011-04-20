@@ -46,7 +46,8 @@ public class PauseMenu extends BasicGameState implements ComponentListener
 	{
 		if (source == areas[0])//Nytt spel
 		{
-			StateHandler.paused = false;
+			StateHandler.paused = true;
+			StateHandler.dead = false;
 			game.enterState(StateHandler.theGame);
 		}
 		if(source == areas[1])//Visa Highscore - INTE KLAR
@@ -102,6 +103,7 @@ public class PauseMenu extends BasicGameState implements ComponentListener
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 		{
 			StateHandler.paused = true;
+			StateHandler.dead = false;
 			game.enterState(StateHandler.theGame);
 		}
 	}

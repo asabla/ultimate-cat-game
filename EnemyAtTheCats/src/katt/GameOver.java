@@ -72,11 +72,11 @@ public class GameOver extends BasicGameState implements ComponentListener{
                 if(source == areas[0])
                 {
                         StateHandler.paused = false;
+                        StateHandler.dead = false;
                         game.enterState(StateHandler.theGame);
                 }
                 if(source == areas[1])
                 {
-                        StateHandler.paused = false;
                         game.enterState(StateHandler.menu);
                 }
                 if(source == areas[2])
