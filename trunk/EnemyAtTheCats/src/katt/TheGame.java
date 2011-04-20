@@ -218,7 +218,7 @@ public class TheGame extends BasicGameState
 			{
 				System.out.println("Dead");
 				newStartAfterCatHasPassedAway();
-				game.enterState(StateHandler.pause);
+				game.enterState(StateHandler.deadMenu);
 				players[x].deadPlayer();
 			}
 			if (input.isKeyPressed(Input.KEY_ESCAPE))
@@ -283,7 +283,7 @@ public class TheGame extends BasicGameState
 				}
 				players[x].loosePlayerLife();
 				newStartAfterCatHasPassedAway();
-				game.enterState(StateHandler.pause);
+				game.enterState(StateHandler.deadMenu);
 			}
 		}
 		
