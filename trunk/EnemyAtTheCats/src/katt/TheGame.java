@@ -179,20 +179,7 @@ public class TheGame extends BasicGameState
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 		{
-<<<<<<< .mine
-			game.enterState(StateHandler.menu);
-=======
-			
 			game.enterState(StateHandler.pause);
->>>>>>> .r108
-//			if(players[0].getJumping().isAlive()){
-//				try {
-//					players[0].getJumping().wait();
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				}
 		}
 		
 		smoke.update(delta);
@@ -407,9 +394,7 @@ public class TheGame extends BasicGameState
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException
 	{
-//		if(players[0].getJumping().isAlive()){
-//			players[0].getJumping().notify();
-//		}
+
 
 		try
 		{
