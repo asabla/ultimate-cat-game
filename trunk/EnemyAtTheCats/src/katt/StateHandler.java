@@ -7,7 +7,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 public final class StateHandler extends StateBasedGame {
-	private final static int screenWidth = 640;
+	private final static int screenWidth = 720;
     private final static int screenHeight = 480;
     public static final int menu = 0;
     public static final int theGame = 1;
