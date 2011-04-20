@@ -74,12 +74,14 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 		//integers som beskriver vart texten skall renderas
 		int x = 100;
 		int y = 100;
+		int pos = 1;
 		
 		// Loopar igenom arraylisten
 		for(String s : highscores)
 		{
-			g.drawString(s, x, y);  //Renderar varje highscore som hämtas
+			g.drawString(pos + ": " + s, x, y);  //Renderar varje highscore som hämtas
 			y += 20;
+			pos++;
 		}
 	}
 
