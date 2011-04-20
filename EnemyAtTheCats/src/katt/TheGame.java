@@ -182,7 +182,7 @@ public class TheGame extends BasicGameState
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 		{
-			game.enterState(StateHandler.menu);
+			game.enterState(StateHandler.pause);
 		}
 		
 		smoke.update(delta);
