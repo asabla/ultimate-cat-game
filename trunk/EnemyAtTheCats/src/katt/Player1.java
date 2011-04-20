@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Polygon;
 
-public class Player1 implements Runnable {
+public class Player1 implements Runnable  {
 	private SpriteSheet sheet;
 	private Polygon playerBox;
 	private float playerX, playerY;
@@ -19,13 +19,14 @@ public class Player1 implements Runnable {
 	private int jumpControl;
 	private long playerScore;
 	private int playerlife;
+	private static boolean threadDone = false;
 	//private int score;
 	private Thread falling;
 
 	private float gravityEffect;
 
 	public Player1(int playerX, int playerY, String pngDir, int jumpControl,
-			int plife) {
+			int plife)  {
 		super();
 		this.playerScore = 0;
 		this.spriteSizeX = 50;
@@ -73,7 +74,8 @@ public class Player1 implements Runnable {
 	public void keyPressed(Input input) {
 
 		// UP
-		if (input.isKeyPressed(jumpControl)) {
+		
+		 if(input.isKeyPressed(jumpControl)) {
 			setOnGround(false);
 			if (jumps < 2) {
 				jumps++;
@@ -82,6 +84,7 @@ public class Player1 implements Runnable {
 				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("jump");
 				}
+			
 			}
 		}
 		// UP-REPEAT
@@ -101,6 +104,7 @@ public class Player1 implements Runnable {
 
 			}
 		}
+		
 		if (input.isKeyPressed(Input.KEY_Z)) {
 			TheGame.frame.setVisible(true);
 		}
@@ -116,7 +120,7 @@ public class Player1 implements Runnable {
 				StateHandler.bgm.loop();
 			}
 		}
-
+		
 	}
 
 	public void jump() {
@@ -124,7 +128,7 @@ public class Player1 implements Runnable {
 		float sleep = 21f - TheGame.gameSpeed;
 		// Jumping begins
 		currentAnimation = jump;
-		while (!isOnGround) {
+		while (!isOnGround && !threadDone ) {
 			playerY += jumpPower; // Increment the jump
 			jumpPower++;
 
@@ -181,12 +185,15 @@ public class Player1 implements Runnable {
 	}
 
 	public void deadPlayer() {
-		
+		threadDone = true; 
 		this.loosePlayerLife();
 		this.setPlayerX(200);
 		this.setPlayerY(200);
-		
 	}
+	public static void threadDone(){
+		threadDone= false;
+	}
+	
 
 	public int getPlayerLife() {
 		return this.playerlife;
