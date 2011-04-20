@@ -140,7 +140,7 @@ public class TheGame extends BasicGameState
 		playerCount = 1;
 
 		players = new Player1[playerCount];
-		players[0] = new Player1(200, 400, "data/Img/cat1.png", Input.KEY_UP, 3);
+		players[0] = new Player1(200, 400, "data/Img/totalCat.png", Input.KEY_UP, 3);
 		// players[1] = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_W,
 		// 3);
 
@@ -175,7 +175,6 @@ public class TheGame extends BasicGameState
 	{
 
 		Input input = container.getInput();
-	
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 		{
@@ -296,8 +295,8 @@ public class TheGame extends BasicGameState
 		blockMapRow[neighbourMap].getTmap().render((int) neighbourMapX,
 				(int) posY);
 
-		// blockMapRow[currentMap].drawHitBox(g, currentMapX);
-		// blockMapRow[neighbourMap].drawHitBox(g, neighbourMapX);
+		blockMapRow[currentMap].drawHitBox(g, currentMapX);
+		blockMapRow[neighbourMap].drawHitBox(g, neighbourMapX);
 		// smoke.render();
 
 		// ********************************************************
@@ -384,8 +383,7 @@ public class TheGame extends BasicGameState
 		g.drawString("Tid: " + this.time / 1000 + "sec", 450, 450);
 		g.drawString("Level: " + currentLevel, 550, 450);
 
-		g.drawImage(pointObjectImage, pointObject.getxPos(),
-				pointObject.getyPos());
+		g.drawImage(pointObjectImage, pointObject.getxPos(),pointObject.getyPos());
 		g.drawImage(lifeObjectImage, lifeObject.getxPos(), lifeObject.getyPos());
 		
 	}
@@ -394,6 +392,11 @@ public class TheGame extends BasicGameState
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException
 	{
+		blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+//		if(players[0].getJumping().isAlive()){
+//			players[0].getJumping().notify();
+//		}
+
 
 
 		try
@@ -441,7 +444,7 @@ public class TheGame extends BasicGameState
 			time = 1; // Startar spelet med 1sekund
 
 			players = new Player1[playerCount];
-			players[0] = new Player1(200, 400, "data/Img/cat1.png",
+			players[0] = new Player1(200, 400, "data/Img/totalCat.png",
 					Input.KEY_UP, 3);
 			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
 			// Input.KEY_W, 3);
