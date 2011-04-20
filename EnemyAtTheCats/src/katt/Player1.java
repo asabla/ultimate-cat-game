@@ -198,9 +198,9 @@ public class Player1 implements Runnable  {
 //		this.score += p / 2;
 //	}
 //
-//	public int getScore() {
-//		return this.score;
-//	}
+	public long getScore() {
+		return this.playerScore;
+	}
 
 	public void setPlayerLife(int life) {
 		this.playerlife = life;

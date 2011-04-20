@@ -207,7 +207,7 @@ public class TheGame extends BasicGameState {
 				input.clearKeyPressedRecord();
 				System.out.println("Dead");
 				newStartAfterCatHasPassedAway();
-				GameOver.setPScore("" + players[x].getScore());
+				GameOver.setPScore("" + players[x].getPlayerScore());
 				game.enterState(StateHandler.deadMenu);
 				players[x].deadPlayer();
 
@@ -377,13 +377,32 @@ public class TheGame extends BasicGameState {
 		}
 
 		if (StateHandler.paused) {
+			
 		} 
-		else {
+		else if (StateHandler.dead){
 			gEnemy.newObjectPos();
 			pointObject.newObjectPos();
 			lifeObject.newObjectPos();
+			
+			currentMap = 0;
+			neighbourMap = 1;
 
-			if (!StateHandler.paused) {
+			currentMapX = 0;
+			neighbourMapX = mapWidth;
+			
+			int playerX = (int) players[0].getPlayerX();
+			int playerY = (int) players[0].getPlayerY();
+			int playerLife  = players[0].getPlayerlife();
+			long playerScore = players[0].getPlayerScore();
+			
+			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+			
+			players = new Player1[playerCount];
+			players[0] = new Player1(playerX, playerY, "data/Img/totalCat.png",
+					Input.KEY_UP, playerLife, playerScore);
+		}
+		
+		else {
 
 				currentLevel = 1;
 				levelLength = 5;
@@ -402,7 +421,7 @@ public class TheGame extends BasicGameState {
 				players = new Player1[playerCount];
 				players[0] = new Player1(200, 400, "data/Img/totalCat.png",
 						Input.KEY_UP, 3);
-				players[0].setOnGround(false);
+				//players[0].setOnGround(false);
 				blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 				// players[1] = new Player1(200, 400, "data/Img/cat2.png",
 				// Input.KEY_W, 3);
@@ -411,7 +430,7 @@ public class TheGame extends BasicGameState {
 		// container.setVSync(true);
 		// container.setTargetFrameRate(150);
 
-	}
+
 
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)
