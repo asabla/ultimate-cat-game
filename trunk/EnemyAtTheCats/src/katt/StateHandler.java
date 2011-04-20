@@ -14,6 +14,7 @@ public final class StateHandler extends StateBasedGame {
     public static final int gameOver = 2;
     public static final int deadMenu = 3;
     public static final int highscore = 4;
+    public static final int pause = 5;
 	public static SFXBank soundBank;
 	public static boolean soundsOn;
 	public static boolean musicOn;
@@ -33,6 +34,7 @@ public final class StateHandler extends StateBasedGame {
 		this.addState(new GameOver(gameOver));
 		this.addState(new DeadMenu(deadMenu));
 		this.addState(new Menu_Highscore(highscore));
+		this.addState(new PauseMenu(pause));
 		this.enterState(menu);
 		
 	}
