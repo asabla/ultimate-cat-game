@@ -69,7 +69,7 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 		if (input.isKeyPressed(Input.KEY_RIGHT)) {
 			StateHandler.paused = true;
 			game.enterState(StateHandler.theGame);
-			Player1.threadDone();
+			//Player1.threadDone();
 		}
 	}
 
