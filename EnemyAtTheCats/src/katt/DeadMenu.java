@@ -42,7 +42,7 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
-		
+
 		newgame = new Image("data/Img/Fortsatt1.png");
 		newgameOver = new Image("data/Img/Fortsatt2.png");
 		
@@ -68,6 +68,7 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 		if (input.isKeyPressed(Input.KEY_RIGHT)) {
 			StateHandler.paused = true;
 			game.enterState(StateHandler.theGame);
+			Player1.threadDone();
 		}
 	}
 
