@@ -1,5 +1,6 @@
 package katt;
 
+import java.awt.Container;
 import java.io.IOException;
 import java.util.Random;
 
@@ -174,16 +175,16 @@ public class TheGame extends BasicGameState
 	{
 
 		Input input = container.getInput();
-
 	
-		
-		
-
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 		{
+<<<<<<< .mine
+			game.enterState(StateHandler.menu);
+=======
 			
 			game.enterState(StateHandler.pause);
+>>>>>>> .r108
 //			if(players[0].getJumping().isAlive()){
 //				try {
 //					players[0].getJumping().wait();
@@ -225,10 +226,13 @@ public class TheGame extends BasicGameState
 			// if outside the window print dead
 			if (playerDropOut(players[x]))
 			{
+				input.clearKeyPressedRecord();
 				System.out.println("Dead");
 				newStartAfterCatHasPassedAway();
 				game.enterState(StateHandler.deadMenu);
 				players[x].deadPlayer();
+							
+				
 			}
 
 			if (pointObjectPickup(players[x]))
@@ -281,6 +285,7 @@ public class TheGame extends BasicGameState
 
 			if (gEnemyHit(players[x]))
 			{
+				input.clearKeyPressedRecord();
 				if (StateHandler.soundsOn)
 				{
 					StateHandler.soundBank.playSound("crash");
@@ -290,7 +295,7 @@ public class TheGame extends BasicGameState
 				game.enterState(StateHandler.deadMenu);
 			}
 		}
-		
+//		System.out.print(input.);
 	}
 
 	/**
@@ -299,7 +304,7 @@ public class TheGame extends BasicGameState
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 	{
 		drawBackgrounds();
-
+		
 		blockMapRow[currentMap].getTmap().render((int) currentMapX, (int) posY);
 		blockMapRow[neighbourMap].getTmap().render((int) neighbourMapX,
 				(int) posY);
@@ -694,5 +699,9 @@ public class TheGame extends BasicGameState
 	}	
 	return false;
 	}
+<<<<<<< .mine
+	
+=======
 
+>>>>>>> .r108
 }
