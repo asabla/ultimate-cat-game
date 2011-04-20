@@ -31,7 +31,7 @@ public final class StateHandler extends StateBasedGame {
 		this.addState(new Menu(menu));
 		this.addState(new TheGame(theGame));
 		this.addState(new GameOver(gameOver));
-		this.addState(new Pause(pause));
+		this.addState(new DeadMenu(pause));
 		this.addState(new Menu_Highscore(highscore));
 		this.enterState(menu);
 		
