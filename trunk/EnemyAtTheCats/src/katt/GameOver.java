@@ -19,142 +19,165 @@ import org.newdawn.slick.Game;
 import org.newdawn.slick.util.InputAdapter;
 
 public class GameOver extends BasicGameState implements ComponentListener{
-	
-	private Image back = null;
-	private Image newgame = null;
-	private Image newgameOver = null;
-	private Image backOver = null;
-	private MouseOverArea[] areas = new MouseOverArea[3];
-	private GameContainer gameContainer;
-	private Game ettGame;
-	private StateBasedGame game;
-	private int ID = -1;
-	private UnicodeFont myFont;
-	private TextField f_namn;
-	private TextField f_email;
-	private TextField f_telefon;
-	private TextField f_points;
-	private String message = "google";
-	private static String pscore;
-	private Image sendScore;
-	private Database db;
-	
-	public GameOver(int ID)
-	{
-		super();
-		this.ID = ID;
-	}
+        
+        private Image back = null;
+        private Image newgame = null;
+        private Image newgameOver = null;
+        private Image backOver = null;
+        private MouseOverArea[] areas = new MouseOverArea[3];
+        private GameContainer gameContainer;
+        private Game ettGame;
+        private StateBasedGame game;
+        private int ID = -1;
+        private UnicodeFont myFont;
+        private TextField f_namn;
+        private TextField f_email;
+        private TextField f_telefon;
+        private TextField f_points;
+        private String message = "google";
+        private static String pscore;
+        private Image sendScore;
+        private Database db;
+        
+        public GameOver(int ID)
+        {
+                super();
+                this.ID = ID;
+        }
 
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
-	{
-		g.drawString("Game Over", 300, 50);
-		g.setBackground(Color.magenta);
-		
-		areas[0].render(container, g);
-		areas[1].render(container, g);
-		areas[2].render(container, g);
-		
-		//myFont.drawString(0,0,"test");  //G√•r att anv√§nda fonten till att skriva ut 
-		
-		f_namn.render(container, g);
-		f_email.render(container, g);
-		f_telefon.render(container, g);
-		f_points.render(container, g);
-		
-		g.setFont(myFont);
-		g.drawString(message, 200, 550);
-	}
+        @Override
+        public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
+        {
+                g.drawString("Game Over", 300, 50);
+                g.setBackground(Color.magenta);
+                
+                areas[0].render(container, g);
+                areas[1].render(container, g);
+                areas[2].render(container, g);
+                
+                //myFont.drawString(0,0,"test");  //GÂr att anv‰nda fonten till att skriva ut 
+                
+                f_namn.render(container, g);
+                f_email.render(container, g);
+                f_telefon.render(container, g);
+                f_points.render(container, g);
+                
+                g.setFont(myFont);
+                g.drawString(message, 200, 550);
+        }
 
-	@Override
-	public void componentActivated(AbstractComponent source) 
-	{
-		if(source == areas[0])
-		{
-			StateHandler.paused = false;
-			StateHandler.dead = false;
-			game.enterState(StateHandler.theGame);
-			//Player1.threadDone();
-			}
-		}
-		if(source == areas[1])
-		{
-			//StateHandler.paused = false;
-			game.enterState(StateHandler.menu);
-		}
-		if(source == areas[2])
-		{
-			int tmp = Integer.parseInt(f_points.getText());  //Parsar om texten ifr√•n highscore till en int
-			db.sendHighscore(f_namn.getText(), tmp, f_email.getText(), f_telefon.getText()); //Testar att skicka in resultatet
-		}
-		
-	}
+        @Override
+        public void componentActivated(AbstractComponent source) 
+        {
+                if(source == areas[0])
+                {
+                        StateHandler.paused = false;
+                        game.enterState(StateHandler.theGame);
+                }
+                if(source == areas[1])
+                {
+                        StateHandler.paused = false;
+                        game.enterState(StateHandler.menu);
+                }
+                if(source == areas[2])
+                {
+                        int tmp = Integer.parseInt(f_points.getText());  //Parsar om texten ifrÂn highscore till en int
+                        db.sendHighscore(f_namn.getText(), tmp, f_email.getText(), f_telefon.getText()); //Testar att skicka in resultatet
+                }
+                
+                if(source == f_namn)
+                {
+                        f_email.setFocus(true);
+                }
+                if(source == f_email)
+                {
+                        f_telefon.setFocus(true);
+                }
+                if(source == f_telefon)
+                {
+                        //setPoints
+                }
+        }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		this.game = game;
-		
-		back = new Image("data/Img/Back.png");
-		newgame = new Image("data/Img/nyttspel1.png");
-		newgameOver = new Image("data/Img/nyttspel2.png");
-		back = new Image("data/Img/tillbaka1.png");
-		backOver = new Image("data/Img/tillbaka2.png");
-		
-		//container.setMouseCursor("data/Img/cursor.png", 0, 0);
-		
-		for(int i = 0; i<2; i++)
-		{
-			if(i == 0)
-			{
-				areas[i] = new MouseOverArea(container, newgame, 130, 100, 400, 52, this);
-				areas[i].setMouseOverImage(newgameOver);
-			}
-			if(i == 1)
-			{
-				areas[i] = new MouseOverArea(container, back, 135, 200, 400, 52, this);
-				areas[i].setMouseOverImage(backOver);
-			}
-		}
-		
-		
-		field = new TextField(container, myFont, 130, 300, 300, 72, new ComponentListener()
-		{
-			public void componentActivated(AbstractComponent source)
-			{
-				message = "borg";
-				field.setFocus(true);
-			}
-		});
-		
-		
-		
-	}
+        @SuppressWarnings("deprecation")
+        @Override
+        public void init(GameContainer container, StateBasedGame game) throws SlickException 
+        {
+                this.game = game;
+                
+                back = new Image("data/Img/Back.png");
+                newgame = new Image("data/Img/nyttspel1.png");
+                newgameOver = new Image("data/Img/nyttspel2.png");
+                back = new Image("data/Img/tillbaka1.png");
+                backOver = new Image("data/Img/tillbaka2.png");
+                sendScore = new Image("data/Img/object1.png");
+                
+                //container.setMouseCursor("data/Img/cursor.png", 0, 0);
+                
+                for(int i = 0; i < 3; i++)
+                {
+                        if(i == 0)
+                        {
+                                areas[i] = new MouseOverArea(container, newgame, 130, 100, 400, 52, this);
+                                areas[i].setMouseOverImage(newgameOver);
+                        }
+                        if(i == 1)
+                        {
+                                areas[i] = new MouseOverArea(container, back, 135, 200, 400, 52, this);
+                                areas[i].setMouseOverImage(backOver);
+                        }
+                        if(i == 2)
+                        {
+                                areas[i] = new MouseOverArea(container, sendScore, 150,410, 100, 52, this);
+                        }
+                }
+                
+                myFont = getNewFont("Arial", 24);
+        }
 
-	@Override
-	public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException {
-		
-		myFont.loadGlyphs(1);
-	}
+        @Override
+        public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException 
+        {
+                myFont.loadGlyphs();
+        }
 
-
-	@Override
-	public int getID() {
-		// TODO Auto-generated method stub
-		return ID;
-	}
-	
-	@Override
-	public void leave(GameContainer container, StateBasedGame game)
-			throws SlickException {
-		
-	}
-	
-	public UnicodeFont getNewFont(String fontName, int fontSize) { 
-	      UnicodeFont font = new UnicodeFont(new Font(fontName, Font.PLAIN, fontSize)); 
-	      font.getEffects().add(new ColorEffect(java.awt.Color.white)); 
-//	      font.getEffects().add(new ShadowEffect(java.awt.Color.black, 5, 5, 0.5f)); 
-	      return (font); 
-	   } 
-	
+        @Override
+        public int getID() 
+        {
+                // TODO Auto-generated method stub
+                return ID;
+        }
+        
+        public static void setPScore(String score)
+        {
+                pscore = score;
+        }
+        
+        public void enter(GameContainer container, StateBasedGame game) throws SlickException
+        {
+                f_namn = new TextField(container, myFont, 150,270,200,35);
+                f_email = new TextField(container, myFont, 150,310,200,35);
+                f_telefon = new TextField(container, myFont, 150,350,200,35);
+                f_points = new TextField(container, myFont, 150,390,200,35);
+                db = new Database();
+                
+                f_namn.setText("Gurkmannen");  //S‰tter spelarens namn fˆrdefinerat
+                f_email.setText("enMain@mm.se");  //S‰tter spelarens email
+                f_telefon.setText("324-234234");  //S‰tter spelarens telefon
+                f_points.setText(GameOver.pscore);  //H‰mtar spelarens po‰ng n‰r denne fˆrlorar
+                f_namn.setFocus(true);
+        }
+        
+        @Override
+        public void leave(GameContainer container, StateBasedGame game)throws SlickException 
+        {
+                
+        }
+        public UnicodeFont getNewFont(String fontName, int fontSize) 
+        { 
+              UnicodeFont font = new UnicodeFont(new Font(fontName, Font.PLAIN, fontSize)); 
+              font.addGlyphs("@");
+              font.getEffects().add(new ColorEffect(java.awt.Color.white)); //MÂste vara minst en effekt aktiverad fˆr att det ska fungera
+              return (font); 
+        } 
 }
