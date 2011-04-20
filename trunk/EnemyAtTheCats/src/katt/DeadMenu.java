@@ -11,7 +11,7 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Pause extends BasicGameState implements ComponentListener{
+public class DeadMenu extends BasicGameState implements ComponentListener{
 	
 	private Image newgame = null;
 	private Image newgameOver = null;
@@ -20,7 +20,7 @@ public class Pause extends BasicGameState implements ComponentListener{
 	private int ID = -1;
 	
 	
-	public Pause(int ID){
+	public DeadMenu(int ID){
 		super();
 		this.ID = ID;
 	}
