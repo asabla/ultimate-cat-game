@@ -684,9 +684,4 @@ public class TheGame extends BasicGameState
 	}	
 	return false;
 	}
-<<<<<<< .mine
-	
-=======
-
->>>>>>> .r108
 }
