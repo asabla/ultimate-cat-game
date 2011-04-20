@@ -398,7 +398,7 @@ public class TheGame extends BasicGameState {
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 			
 			players = new Player1[playerCount];
-			players[0] = new Player1(playerX, playerY, "data/Img/totalCat.png",
+			players[0] = new Player1(200, 400, "data/Img/totalCat.png",
 					Input.KEY_UP, playerLife, playerScore);
 		}
 		

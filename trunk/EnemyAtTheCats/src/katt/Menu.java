@@ -106,6 +106,7 @@ public class Menu extends BasicGameState implements ComponentListener
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 		{
 			StateHandler.paused = true;
+			StateHandler.dead = false;
 			game.enterState(StateHandler.theGame);
 		}
 	}
