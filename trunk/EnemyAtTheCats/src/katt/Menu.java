@@ -47,7 +47,9 @@ public class Menu extends BasicGameState implements ComponentListener
 		if (source == areas[0])//Nytt spel
 		{
 			StateHandler.paused = false;
+			StateHandler.dead = false;
 			game.enterState(StateHandler.theGame);
+			//Player1.threadDone();
 		}
 		if(source == areas[1])//Visa Highscore - INTE KLAR
 		{

@@ -20,6 +20,7 @@ public final class StateHandler extends StateBasedGame {
 	public static boolean musicOn;
 	public static Sound bgm;
 	public static boolean paused;
+	public static boolean dead;
     
     
 	public StateHandler() throws SlickException {
@@ -27,6 +28,7 @@ public final class StateHandler extends StateBasedGame {
 		soundsOn = true;
 		musicOn = true;
 		paused = false;
+		dead = false;
 		soundBank = new SFXBank();
 		bgm = new Sound("data/audio/BGMMenu.ogg");
 		this.addState(new Menu(menu));
