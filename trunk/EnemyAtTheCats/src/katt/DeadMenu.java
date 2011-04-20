@@ -34,9 +34,9 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 	@Override
 	public void componentActivated(AbstractComponent source) {
 		if(source == areas[0]){
-			StateHandler.paused = true;
+			StateHandler.dead = true;
 			game.enterState(StateHandler.theGame);
-			Player1.threadDone();
+			//Player1.threadDone();
 		}
 	}
 
@@ -66,10 +66,13 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 	public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException {
 		Input input = container.getInput();
 		
+		//game.getState(StateHandler.theGame).update(container, game, delta);
+		
 		if (input.isKeyPressed(Input.KEY_RIGHT)) {
-			StateHandler.paused = true;
+			StateHandler.dead = true;
+			StateHandler.paused = false;
 			game.enterState(StateHandler.theGame);
-			Player1.threadDone();
+			//Player1.threadDone();
 		}
 	}
 
