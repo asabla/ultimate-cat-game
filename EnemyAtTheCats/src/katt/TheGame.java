@@ -207,6 +207,7 @@ public class TheGame extends BasicGameState {
 				input.clearKeyPressedRecord();
 				System.out.println("Dead");
 				newStartAfterCatHasPassedAway();
+				GameOver.setPScore("" + players[x].getScore());
 				game.enterState(StateHandler.deadMenu);
 				players[x].deadPlayer();
 
