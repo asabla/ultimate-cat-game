@@ -71,6 +71,7 @@ public class GameOver extends BasicGameState implements ComponentListener{
 		if(source == areas[0]){
 			StateHandler.paused = false;
 			game.enterState(StateHandler.theGame);
+			Player1.threadDone();
 			}
 		if(source == areas[1])
 		{

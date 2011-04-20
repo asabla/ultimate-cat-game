@@ -36,6 +36,7 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 		if(source == areas[0]){
 			StateHandler.paused = true;
 			game.enterState(StateHandler.theGame);
+			Player1.threadDone();
 		}
 	}
 
