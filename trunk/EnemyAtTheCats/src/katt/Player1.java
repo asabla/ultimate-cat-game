@@ -11,7 +11,7 @@ public class Player1 implements Runnable  {
 	private Polygon playerBox;
 	private float playerX, playerY;
 	private int spriteSizeX, spriteSizeY;
-	private Animation run, jump, die;
+	private Animation run, jump, fall;
 	private Animation currentAnimation;
 	private int jumps;
 	private Thread jumping;
@@ -37,12 +37,11 @@ public class Player1 implements Runnable  {
 		jumping = new Thread(this);
 		falling = new Thread(this);
 		// Load all animations
-		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40,
-				0);
-		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40,
-				0);
+		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40, 0);
+		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY+10, 0, 1, 40, 1);
+		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY+10, 0, 1, 40, 2);
 		this.jumpControl = jumpControl;
-		this.currentAnimation = jump;
+		this.currentAnimation = run;
 
 		// Set player start coordinate
 		this.playerX = playerX;
@@ -127,10 +126,16 @@ public class Player1 implements Runnable  {
 		float jumpPower = -15f;
 		float sleep = 21f - TheGame.gameSpeed;
 		// Jumping begins
+
 		currentAnimation = jump;
 		while (!isOnGround && !threadDone ) {
 			playerY += jumpPower; // Increment the jump
 			jumpPower++;
+			
+			if(jumpPower < 5)
+				currentAnimation = jump;
+			else
+				currentAnimation = fall;
 
 			try {
 				Thread.sleep((long) sleep);
@@ -245,14 +250,6 @@ public class Player1 implements Runnable  {
 
 	public void setJump(Animation jump) {
 		this.jump = jump;
-	}
-
-	public Animation getDie() {
-		return die;
-	}
-
-	public void setDie(Animation die) {
-		this.die = die;
 	}
 
 	public Animation getCurrentAnimation() {
