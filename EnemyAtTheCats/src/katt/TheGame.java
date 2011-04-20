@@ -515,21 +515,28 @@ public class TheGame extends BasicGameState
 	{
 		try
 		{
-			if (entityCollisionWith(pl.getPlayerBox(), map))
+			//kollar om spelaren har "gått in i väggen"
+			if (wallHit(map, pl))
 			{
-				if (wallHit(map, pl))
-				{
-					System.out.println("Wall");
-					pl.setPlayerX(pl.getPlayerX() - 2 * gameSpeed);
-				}
-				if (pl.getPlayerY() + 50 > collisonBlock.getY()
-						&& !wallHit(map, pl))
+				//System.out.println("Wall");
+				pl.setPlayerX(pl.getPlayerX() - 2 * gameSpeed);
+			}
+			
+			//Kollar om en annan typ av kollision har skett
+			if (entityCollisionWith(pl.getPlayerBox(), map))
+			{				
+				//Kollar om katten står på ett block
+				if (pl.getPlayerBox().getMaxY() > collisonBlock.getMinY()
+						&& pl.getPlayerBox().getMaxY() < collisonBlock.getMaxY() + 10
+						//&&
+						//!wallHit(map, pl)
+						)
 				{
 					System.out.println("Floor");
 					pl.setOnGround(true);
 
 					// Put Player above the collisionBlock
-					pl.setPlayerY(collisonBlock.getY() - 50);
+					pl.setPlayerY(collisonBlock.getY() - pl.getPlayerBox().getHeight());
 
 					// Reset the GravityEffect
 					pl.setGravityEffect(gravity);
@@ -686,4 +693,5 @@ public class TheGame extends BasicGameState
 	}	
 	return false;
 	}
+
 }
