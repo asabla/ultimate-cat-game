@@ -72,11 +72,12 @@ public class TheGame extends BasicGameState
 	Image gEnemyImage = null;
 
 	float posY = 0;
-	float startPy;
-	float startPx;
-	float slutPXv;
-	float slutPXh;
-	float slutPy;
+	float startPy;// start pos Y för i väg flygande objekt
+	float startPx;//start pos X för i väg flygande objekt
+	float slutPXv;// gräns för flygande objekt vänster
+	float slutPXh;// gräns för flygande objekt höger
+	float slutPy;// gräns för flygande objekt på Y axel
+
 
 	public TheGame(int ID)
 	{
@@ -168,15 +169,22 @@ public class TheGame extends BasicGameState
 	/**
 	 * Inputs and modifications
 	 */
+		
 	public void update(GameContainer container, StateBasedGame game, int delta)
 	{
+
 		Input input = container.getInput();
+
+	
+		
+		
+
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 		{
 			game.enterState(StateHandler.menu);
 		}
-
+		
 		smoke.update(delta);
 		time += delta; // Tilldelar tid till variabeln
 
@@ -212,7 +220,6 @@ public class TheGame extends BasicGameState
 				newStartAfterCatHasPassedAway();
 				game.enterState(StateHandler.pause);
 				players[x].deadPlayer();
-
 			}
 			if (input.isKeyPressed(Input.KEY_ESCAPE))
 			{
@@ -279,6 +286,7 @@ public class TheGame extends BasicGameState
 				game.enterState(StateHandler.pause);
 			}
 		}
+		
 	}
 
 	/**
@@ -383,7 +391,7 @@ public class TheGame extends BasicGameState
 		g.drawImage(pointObjectImage, pointObject.getxPos(),
 				pointObject.getyPos());
 		g.drawImage(lifeObjectImage, lifeObject.getxPos(), lifeObject.getyPos());
-
+		
 	}
 
 	@Override
@@ -404,11 +412,23 @@ public class TheGame extends BasicGameState
 			StateHandler.bgm.loop();
 		}
 
+
 		if (StateHandler.paused)
 		{
 
 		} else
 		{
+			gEnemy.newObjectPos();
+			pointObject.newObjectPos();		
+			lifeObject.newObjectPos();
+
+
+		if (StateHandler.paused)
+		{
+
+		} else
+		{
+
 			currentLevel = 1;
 			levelLength = 5;
 			loopCount = 0;
@@ -428,6 +448,7 @@ public class TheGame extends BasicGameState
 					Input.KEY_UP, 3);
 			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
 			// Input.KEY_W, 3);
+		}
 		}
 		// container.setVSync(true);
 		// container.setTargetFrameRate(150);
@@ -615,12 +636,20 @@ public class TheGame extends BasicGameState
 		}
 	}
 
+	// Sätter banan och poäng när katten börjar om efter att ha dött, så 
+	// att det inte finns några poäng och att katten börjar på första banan på den leveln katten har dött
+
+
+
 	private void newStartAfterCatHasPassedAway()
+
+	{
 	{
 		gEnemy.newObjectPos();
 
 		pointObject.newObjectPos();
-
+		gEnemy.newObjectPos();
+		pointObject.newObjectPos();		
 		lifeObject.newObjectPos();
 		loopCount = 0;
 
@@ -630,5 +659,6 @@ public class TheGame extends BasicGameState
 		currentMapX = 0;
 		neighbourMapX = mapWidth;
 
+	}
 	}
 }
