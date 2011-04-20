@@ -18,8 +18,7 @@ import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class TheGame extends BasicGameState
-{
+public class TheGame extends BasicGameState {
 	public static TestFrame frame;
 	public static float gameSpeed = 2f;
 	public int ID;
@@ -61,6 +60,7 @@ public class TheGame extends BasicGameState
 	private boolean movePoint;
 	private boolean moveLife;
 
+
 	/*
 	 * Deklaration av variablerna för spelets olika bakgrund bgLayerX - Olika
 	 * bakgrundslager float posXLayerX - Start position för bakgrundslagren
@@ -74,20 +74,18 @@ public class TheGame extends BasicGameState
 
 	float posY = 0;
 	float startPy;// start pos Y för i väg flygande objekt
-	float startPx;//start pos X för i väg flygande objekt
+	float startPx;// start pos X för i väg flygande objekt
 	float slutPXv;// gräns för flygande objekt vänster
 	float slutPXh;// gräns för flygande objekt höger
 	float slutPy;// gräns för flygande objekt på Y axel
 
-
-	public TheGame(int ID)
-	{
+	public TheGame(int ID) {
 		super();
 
 		this.ID = ID;
 
 		frame = new TestFrame();
-		
+
 		db = new Database();
 	}
 
@@ -95,12 +93,11 @@ public class TheGame extends BasicGameState
 	 * Set the start values of the project Read only in start of the project
 	 */
 	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException
-	{
+			throws SlickException {
 		currentLevel = 1;
 		levelLength = 5;
 		loopCount = 0;
-		
+
 		topScore = db.getSingleHighscoreResult();
 
 		backgroundPos = new float[4];
@@ -140,7 +137,8 @@ public class TheGame extends BasicGameState
 		playerCount = 1;
 
 		players = new Player1[playerCount];
-		players[0] = new Player1(200, 400, "data/Img/totalCat.png", Input.KEY_UP, 3);
+		players[0] = new Player1(200, 400, "data/Img/totalCat.png",
+				Input.KEY_UP, 3);
 		// players[1] = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_W,
 		// 3);
 
@@ -170,17 +168,14 @@ public class TheGame extends BasicGameState
 	/**
 	 * Inputs and modifications
 	 */
-		
-	public void update(GameContainer container, StateBasedGame game, int delta)
-	{
 
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput();
 
-		if (input.isKeyPressed(Input.KEY_ESCAPE))
-		{
+		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			game.enterState(StateHandler.pause);
 		}
-		
+
 		smoke.update(delta);
 		time += delta; // Tilldelar tid till variabeln
 
@@ -191,15 +186,13 @@ public class TheGame extends BasicGameState
 
 		mapHandler();
 
-		for (int x = 0; x < 4; x++)
-		{
+		for (int x = 0; x < 4; x++) {
 			backgroundPos[x] = updateGraphicElement(backgroundPos[x],
 					backgroundSpeed[x], 1280);
 		}
 
 		// *********************** Player ***********************
-		for (int x = 0; x < playerCount; x++)
-		{
+		for (int x = 0; x < playerCount; x++) {
 			players[x].keyPressed(input);
 			players[x].setPlayerScore(players[x].getPlayerScore()
 					+ (time / 1000 + (int) gameSpeed) / 2); // Tilldelar poäng
@@ -210,21 +203,17 @@ public class TheGame extends BasicGameState
 			players[x].getPlayerBox().setX(players[x].getPlayerX());
 
 			// if outside the window print dead
-			if (playerDropOut(players[x]))
-			{
+			if (playerDropOut(players[x])) {
 				input.clearKeyPressedRecord();
 				System.out.println("Dead");
 				newStartAfterCatHasPassedAway();
 				game.enterState(StateHandler.deadMenu);
 				players[x].deadPlayer();
-							
-				
+
 			}
 
-			if (pointObjectPickup(players[x]))
-			{
-				if (StateHandler.soundsOn)
-				{
+			if (pointObjectPickup(players[x])) {
+				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("crush");
 				}
 
@@ -233,47 +222,37 @@ public class TheGame extends BasicGameState
 				movePoint = true;
 				pointObject = new PickupObject();
 
-				try
-				{
+				try {
 					pointObjectImage = new Image(pointObject.getImgLoc());
-				} catch (SlickException e)
-				{
+				} catch (SlickException e) {
 				}
 			}
-			if (lifeObjectPickup(players[x]))
-			{
-				if (StateHandler.soundsOn)
-				{
+			if (lifeObjectPickup(players[x])) {
+				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("happy");
 				}
 				moveLife = true;
 				players[x].setPlayerlife(players[x].getPlayerlife() + 1);
 				lifeObject.newObjectPosLong();
 			}
-			if (players[x].getPlayerlife() == 0)
-			{
+			if (players[x].getPlayerlife() == 0) {
 				game.enterState(StateHandler.gameOver);
 			}
 
-			try
-			{
+			try {
 				// Check if any collision is made && no jumping is active
 				if (!entityCollisionWith(players[x].getPlayerBox(),
 						blockMapRow[currentMap])
-						&& !players[x].getJumping().isAlive())
-				{
+						&& !players[x].getJumping().isAlive()) {
 					players[x].beginFall();
 				}
-			} catch (SlickException e)
-			{
+			} catch (SlickException e) {
 				e.printStackTrace();
 			}
 
-			if (gEnemyHit(players[x]))
-			{
+			if (gEnemyHit(players[x])) {
 				input.clearKeyPressedRecord();
-				if (StateHandler.soundsOn)
-				{
+				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("crash");
 				}
 				players[x].loosePlayerLife();
@@ -281,16 +260,15 @@ public class TheGame extends BasicGameState
 				game.enterState(StateHandler.deadMenu);
 			}
 		}
-//		System.out.print(input.);
+		// System.out.print(input.);
 	}
 
 	/**
 	 * Draws everything in the container of the game
 	 */
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-	{
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		drawBackgrounds();
-		
+
 		blockMapRow[currentMap].getTmap().render((int) currentMapX, (int) posY);
 		blockMapRow[neighbourMap].getTmap().render((int) neighbourMapX,
 				(int) posY);
@@ -306,19 +284,16 @@ public class TheGame extends BasicGameState
 		// movePoint är true om katten tagit ett objekt,moveLife är true om
 		// katten tagit ett liv,
 		String lifePoint = "";
-		if (movePoint)
-		{
+		if (movePoint) {
 			lifePoint = "" + pointObject.getValue();
 		}
-		if (moveLife)
-		{
+		if (moveLife) {
 			lifePoint = "1 UP";
 		}
 		// {
 		// gogo är en koll att så den fortsätter tills den nåt max pos på X
 		// kollar om den har nått slutPy
-		if (startPy == slutPy)
-		{
+		if (startPy == slutPy) {
 			g.drawString(lifePoint, startPx, slutPy);
 			movePoint = false;
 			moveLife = false;
@@ -328,28 +303,22 @@ public class TheGame extends BasicGameState
 		}
 		// Kollar att den den inte gått för mycket åt höger, körs tills den
 		// når slutPXH = den högra gränsen på X
-		else if (startPx > slutPXh || (gogo))
-		{
+		else if (startPx > slutPXh || (gogo)) {
 
 			g.drawString(lifePoint, startPx--, (startPy--));
-			if (startPx > slutPXv)
-			{
+			if (startPx > slutPXv) {
 				gogo = true;
-			} else
-			{
+			} else {
 				gogo = false;
 			}
 		}
 		// Kollar att den den inte gått för mycket åt vänster, körs tills
 		// den når slutPXv = den vänstra gränsen på X
-		else if (startPx < slutPXv || (!gogo))
-		{
+		else if (startPx < slutPXv || (!gogo)) {
 			g.drawString(lifePoint, startPx++, (startPy--));
-			if (startPx < slutPXh)
-			{
+			if (startPx < slutPXh) {
 				gogo = false;
-			} else
-			{
+			} else {
 				gogo = true;
 			}
 		}
@@ -357,8 +326,7 @@ public class TheGame extends BasicGameState
 
 		// ********************************************************
 
-		for (Player1 pl : players)
-		{
+		for (Player1 pl : players) {
 			pl.updateAnimationSpeed();
 			g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
 					pl.getPlayerY());
@@ -373,7 +341,7 @@ public class TheGame extends BasicGameState
 		g.drawString("Player 1", 10, 30);
 		g.drawString("Liv: " + players[0].getPlayerLife(), 10, 45);
 		g.drawString("Poäng: " + players[0].getPlayerScore(), 10, 60);
-		
+
 		g.drawString("Topscore: " + topScore, 150, 10);
 
 		// g.drawString("Player 2", 500, 30);
@@ -383,72 +351,61 @@ public class TheGame extends BasicGameState
 		g.drawString("Tid: " + this.time / 1000 + "sec", 450, 450);
 		g.drawString("Level: " + currentLevel, 550, 450);
 
-		g.drawImage(pointObjectImage, pointObject.getxPos(),pointObject.getyPos());
+		g.drawImage(pointObjectImage, pointObject.getxPos(),
+				pointObject.getyPos());
 		g.drawImage(lifeObjectImage, lifeObject.getxPos(), lifeObject.getyPos());
-		
+
 	}
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
-			throws SlickException
-	{
-		blockMapRow[currentMap].updateBlockMap(currentMapX, true);
-//		if(players[0].getJumping().isAlive()){
-//			players[0].getJumping().notify();
-//		}
+			throws SlickException {
+		
+		// if(players[0].getJumping().isAlive()){
+		// players[0].getJumping().notify();
+		// }
 
-
-
-		try
-		{
+		try {
 			smoke = ParticleIO.loadConfiguredSystem("data/smokeSystem.xml");
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			throw new SlickException("Failed to load particle systems", e);
 		}
 
-		if (StateHandler.musicOn)
-		{
+		if (StateHandler.musicOn) {
 			StateHandler.bgm.loop();
 		}
 
-
-		if (StateHandler.paused)
-		{
-
-		} else
-		{
+		if (StateHandler.paused) {
+		} 
+		else {
 			gEnemy.newObjectPos();
-			pointObject.newObjectPos();		
+			pointObject.newObjectPos();
 			lifeObject.newObjectPos();
 
+			if (!StateHandler.paused) {
 
-		if (StateHandler.paused)
-		{
+				currentLevel = 1;
+				levelLength = 5;
+				loopCount = 0;
+				gameSpeed = 2f;
+				currentMap = 0;
+				neighbourMap = 1;
 
-		} else
-		{
+				currentMapX = 0;
+				neighbourMapX = mapWidth;
 
-			currentLevel = 1;
-			levelLength = 5;
-			loopCount = 0;
-			gameSpeed = 2f;
-			currentMap = 0;
-			neighbourMap = 1;
+				playerCount = 1;
 
-			currentMapX = 0;
-			neighbourMapX = mapWidth;
+				time = 1; // Startar spelet med 1sekund
 
-			playerCount = 1;
-
-			time = 1; // Startar spelet med 1sekund
-
-			players = new Player1[playerCount];
-			players[0] = new Player1(200, 400, "data/Img/totalCat.png",
-					Input.KEY_UP, 3);
-			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
-			// Input.KEY_W, 3);
-		}
+				players = new Player1[playerCount];
+				players[0] = new Player1(200, 400, "data/Img/totalCat.png",
+						Input.KEY_UP, 3);
+				players[0].setOnGround(false);
+				blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+				// players[1] = new Player1(200, 400, "data/Img/cat2.png",
+				// Input.KEY_W, 3);
+			}
 		}
 		// container.setVSync(true);
 		// container.setTargetFrameRate(150);
@@ -457,26 +414,21 @@ public class TheGame extends BasicGameState
 
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)
-			throws SlickException
-	{
-		if (StateHandler.bgm.playing())
-		{
+			throws SlickException {
+		if (StateHandler.bgm.playing()) {
 			StateHandler.bgm.stop();
 		}
 	}
 
-	/**ad
-	 * Controls if target player collides with anything in chosen blockmap
+	/**
+	 * ad Controls if target player collides with anything in chosen blockmap
 	 * returns a boolean
 	 */
 	private boolean entityCollisionWith(Shape shp, BlockMap bMap)
-			throws SlickException
-	{
-		for (int i = 0; i < bMap.getEntities().size(); i++)
-		{
+			throws SlickException {
+		for (int i = 0; i < bMap.getEntities().size(); i++) {
 			Block entity1 = (Block) bMap.getEntities().get(i);
-			if (shp.intersects(entity1.getPoly()))
-			{
+			if (shp.intersects(entity1.getPoly())) {
 				collisonBlock = entity1.getPoly();
 				return true;
 			}
@@ -485,112 +437,93 @@ public class TheGame extends BasicGameState
 	}
 
 	private float updateGraphicElement(float layerPos, float moveSpeed,
-			int screenUpdate)
-	{
+			int screenUpdate) {
 		layerPos -= moveSpeed * gameSpeed;
-		if (layerPos <= -screenUpdate)
-		{
+		if (layerPos <= -screenUpdate) {
 			return screenUpdate;
 		}
 		return layerPos;
 	}
 
-	private void drawBackgrounds()
-	{
+	private void drawBackgrounds() {
 		bgSky.draw(0, 0);
-		for (int x = 0; x < 4; x++)
-		{
+		for (int x = 0; x < 4; x++) {
 			backgrounds[x].draw(backgroundPos[x], posY);
 		}
 	}
 
-	private void collisionHandler(Player1 pl, BlockMap map)
-	{
-		try
-		{
-			//kollar om spelaren har "gått in i väggen"
-			if (wallHit(map, pl))
-			{
-				//System.out.println("Wall");
+	private void collisionHandler(Player1 pl, BlockMap map) {
+		try {
+			// kollar om spelaren har "gått in i väggen"
+			if (wallHit(map, pl)) {
+				// System.out.println("Wall");
 				pl.setPlayerX(pl.getPlayerX() - 2 * gameSpeed);
 			}
-			
-			//Kollar om en annan typ av kollision har skett
-			if (entityCollisionWith(pl.getPlayerBox(), map))
-			{				
-				//Kollar om katten står på ett block
+
+			// Kollar om en annan typ av kollision har skett
+			if (entityCollisionWith(pl.getPlayerBox(), map)) {
+				// Kollar om katten står på ett block
 				if (pl.getPlayerBox().getMaxY() > collisonBlock.getMinY()
-						&& pl.getPlayerBox().getMaxY() < collisonBlock.getMaxY() + 10
-						//&&
-						//!wallHit(map, pl)
-						)
-				{
+						&& pl.getPlayerBox().getMaxY() < collisonBlock
+								.getMaxY() + 10
+				// &&
+				// !wallHit(map, pl)
+				) {
 					System.out.println("Floor");
 					pl.setOnGround(true);
 
 					// Put Player above the collisionBlock
-					pl.setPlayerY(collisonBlock.getY() - pl.getPlayerBox().getHeight());
+					pl.setPlayerY(collisonBlock.getY()
+							- pl.getPlayerBox().getHeight());
 
 					// Reset the GravityEffect
 					pl.setGravityEffect(gravity);
 				}
 			}
-		} catch (SlickException e1)
-		{
+		} catch (SlickException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
 	}
 
-	private boolean playerDropOut(Player1 pl)
-	{
+	private boolean playerDropOut(Player1 pl) {
 		return pl.getPlayerBox().getX() < 0 || pl.getPlayerBox().getY() > 480;
 	}
 
 	@Override
-	public int getID()
-	{
+	public int getID() {
 		// TODO Auto-generated method stub
 		return ID;
 	}
 
-	public boolean pointObjectPickup(Player1 pl)
-	{
-		if (pl.getPlayerBox().intersects(pointObject.getRectangle()))
-		{
+	public boolean pointObjectPickup(Player1 pl) {
+		if (pl.getPlayerBox().intersects(pointObject.getRectangle())) {
 			return true;
-		} else
-		{
+		} else {
 			return false;
 		}
 	}
 
-	public boolean lifeObjectPickup(Player1 pl)
-	{
-		if (pl.getPlayerBox().intersects(lifeObject.getRectangle()))
-		{
+	public boolean lifeObjectPickup(Player1 pl) {
+		if (pl.getPlayerBox().intersects(lifeObject.getRectangle())) {
 			return true;
-		} else
-		{
+		} else {
 			return false;
 		}
 	}
 
-	private void mapHandler()
-	{
+	private void mapHandler() {
 		currentMapX -= gameSpeed;
 		neighbourMapX -= gameSpeed;
 
-		for (int x = 0; x < playerCount; x++)
-		{
+		for (int x = 0; x < playerCount; x++) {
 			collisionHandler(players[x], blockMapRow[currentMap]);
 			collisionHandler(players[x], blockMapRow[neighbourMap]);
 		}
 
 		// if(currentMapX + mapWidth < 0){
-		if (currentMapX + mapWidth < players[0].getPlayerBox().getCenterX())
-		{
+		if (currentMapX + mapWidth < players[0].getPlayerBox().getCenterX()) {
 			int temp = currentMap;
 			currentMap = neighbourMap;
 			neighbourMap = temp;
@@ -600,12 +533,10 @@ public class TheGame extends BasicGameState
 			neighbourMapX = temp2;
 		}
 
-		if (neighbourMapX + mapWidth <= 0)
-		{
+		if (neighbourMapX + mapWidth <= 0) {
 			// if(neighbourMapX + mapWidth <= 0){
 			neighbourMap = rnd.nextInt(mapCount - 1);
-			while (neighbourMap == currentMap)
-			{
+			while (neighbourMap == currentMap) {
 				neighbourMap = rnd.nextInt(mapCount - 1);
 			}
 
@@ -613,10 +544,8 @@ public class TheGame extends BasicGameState
 
 			loopCount++;
 
-			if (loopCount >= levelLength)
-			{
-				if (gameSpeed + speedAcc <= 10)
-				{
+			if (loopCount >= levelLength) {
+				if (gameSpeed + speedAcc <= 10) {
 					currentLevel++;
 					gameSpeed += speedAcc;
 					System.out.println("Currengamespeed: " + gameSpeed);
@@ -630,32 +559,27 @@ public class TheGame extends BasicGameState
 
 	}
 
-	private boolean gEnemyHit(Player1 pl)
-	{
+	private boolean gEnemyHit(Player1 pl) {
 		if (pl.getPlayerBox().intersects(gEnemy.getRectangle())
-				&& !gEnemy.isCollided())
-		{
+				&& !gEnemy.isCollided()) {
 			gEnemy.setCollided(true);
 			return true;
-		} else
-		{
+		} else {
 			return false;
 		}
 	}
 
-	// Sätter banan och poäng när katten börjar om efter att ha dött, så 
-	// att det inte finns några poäng och att katten börjar på första banan på den leveln katten har dött
+	// Sätter banan och poäng när katten börjar om efter att ha dött, så
+	// att det inte finns några poäng och att katten börjar på första banan på
+	// den leveln katten har dött
 
+	private void newStartAfterCatHasPassedAway() {
 
-
-	private void newStartAfterCatHasPassedAway()	
-	{
-		
 		gEnemy.newObjectPos();
 
 		pointObject.newObjectPos();
 		gEnemy.newObjectPos();
-		pointObject.newObjectPos();		
+		pointObject.newObjectPos();
 		lifeObject.newObjectPos();
 		loopCount = 0;
 
@@ -665,26 +589,25 @@ public class TheGame extends BasicGameState
 		currentMapX = 0;
 		neighbourMapX = mapWidth;
 	}
-	
-	
+
 	public boolean wallHit(BlockMap bMap, Player1 pl) {
 		float rightPos = pl.getPlayerBox().getMaxX();
 		float topPos = pl.getPlayerBox().getMinY() + 8;
 		float bottomPos = pl.getPlayerBox().getMaxY() - 8;
-		
-	for (int i = 0; i < bMap.getEntities().size(); i++) {
-		Block entity1 = bMap.getEntities().get(i);
-		if (rightPos < entity1.getPoly().getMinX() + 5 &&
-				rightPos > entity1.getPoly().getMinX() - 5){
-			if(topPos > entity1.getPoly().getMinY() && 
-			   topPos < entity1.getPoly().getMaxY() ||
-			   bottomPos > entity1.getPoly().getMinY() &&
-			   bottomPos < entity1.getPoly().getMaxY()){
-				
-			return true;
+
+		for (int i = 0; i < bMap.getEntities().size(); i++) {
+			Block entity1 = bMap.getEntities().get(i);
+			if (rightPos < entity1.getPoly().getMinX() + 5
+					&& rightPos > entity1.getPoly().getMinX() - 5) {
+				if (topPos > entity1.getPoly().getMinY()
+						&& topPos < entity1.getPoly().getMaxY()
+						|| bottomPos > entity1.getPoly().getMinY()
+						&& bottomPos < entity1.getPoly().getMaxY()) {
+
+					return true;
+				}
 			}
-	}
-	}	
-	return false;
+		}
+		return false;
 	}
 }

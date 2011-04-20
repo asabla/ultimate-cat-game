@@ -74,10 +74,8 @@ public class PauseMenu extends BasicGameState implements ComponentListener
 
 		for (int i = 0; i < 2; i++)
 		{
-			if (i == 0)
-			{
-				areas[i] = new MouseOverArea(container, newgame, 130, 100, 400,
-						52, this);
+			if (i == 0){
+				areas[i] = new MouseOverArea(container, newgame, 130, 100, 400, 52, this);
 				areas[i].setMouseOverImage(newgameOver);
 			}
 			if( i == 1)
