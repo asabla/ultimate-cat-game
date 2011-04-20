@@ -129,6 +129,7 @@ public class Player1 implements Runnable  {
 
 		currentAnimation = jump;
 		while (!isOnGround && !threadDone ) {
+
 			playerY += jumpPower; // Increment the jump
 			jumpPower++;
 			
