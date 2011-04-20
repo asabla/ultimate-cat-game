@@ -472,7 +472,7 @@ public class TheGame extends BasicGameState
 		}
 	}
 
-	/**
+	/**ad
 	 * Controls if target player collides with anything in chosen blockmap
 	 * returns a boolean
 	 */
@@ -657,6 +657,7 @@ public class TheGame extends BasicGameState
 
 	private void newStartAfterCatHasPassedAway()	
 	{
+		
 		gEnemy.newObjectPos();
 
 		pointObject.newObjectPos();
