@@ -7,7 +7,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Player1 implements Runnable  {
+public class Player1 implements Runnable {
 	private SpriteSheet sheet;
 	private Polygon playerBox;
 	private float playerX, playerY;
@@ -20,14 +20,15 @@ public class Player1 implements Runnable  {
 	private int jumpControl;
 	private long playerScore;
 	private int playerlife;
-	//private static boolean threadDone = false;
-	//private int score;
+	// private static boolean threadDone = false;
+	// private int score;
 	private Thread falling;
 	private Rectangle topHitBox, bottomHitBox, frontHitBox;
 	private float gravityEffect;
 	boolean print = true;
-	
-	public Player1(int playerX, int playerY, String pngDir, int jumpControl, int plife, long playerScore){
+
+	public Player1(int playerX, int playerY, String pngDir, int jumpControl,
+			int plife, long playerScore) {
 		super();
 		this.playerScore = playerScore;
 		this.spriteSizeX = 50;
@@ -38,9 +39,12 @@ public class Player1 implements Runnable  {
 		jumping = new Thread(this);
 		falling = new Thread(this);
 		// Load all animations
-		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40, 0);
-		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY+10, 0, 1, 40, 1);
-		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY+10, 0, 1, 40, 2);
+		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40,
+				0);
+		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 0,
+				1, 40, 1);
+		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 0,
+				1, 40, 2);
 		this.jumpControl = jumpControl;
 		this.currentAnimation = run;
 
@@ -52,14 +56,14 @@ public class Player1 implements Runnable  {
 		playerBox = new Polygon(new float[] { playerX, playerY,
 				playerX + spriteSizeX, playerY, playerX + spriteSizeX,
 				playerY + spriteSizeY, playerX, playerY + spriteSizeY });
-		
-		this.topHitBox = createRectangle(playerX,playerY, 25, 5);
-		  this.bottomHitBox = createRectangle(playerX,35+playerY, 25,20);
-		  this.frontHitBox = createRectangle(spriteSizeX-5,25+playerY, 5, 30);
+
+		this.topHitBox = createRectangle(playerX, playerY, 25, 5);
+		this.bottomHitBox = createRectangle(playerX, 35 + playerY, 25, 20);
+		this.frontHitBox = createRectangle(spriteSizeX - 5, 25 + playerY, 5, 30);
 	}
 
 	public Player1(int playerX, int playerY, String pngDir, int jumpControl,
-			int plife)  {
+			int plife) {
 		super();
 		this.playerScore = 0;
 		this.spriteSizeX = 50;
@@ -70,9 +74,12 @@ public class Player1 implements Runnable  {
 		jumping = new Thread(this);
 		falling = new Thread(this);
 		// Load all animations
-		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40, 0);
-		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY+10, 0, 1, 40, 1);
-		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY+10, 0, 1, 40, 2);
+		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40,
+				0);
+		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 0,
+				1, 40, 1);
+		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 0,
+				1, 40, 2);
 		this.jumpControl = jumpControl;
 		this.currentAnimation = run;
 
@@ -84,16 +91,16 @@ public class Player1 implements Runnable  {
 		playerBox = new Polygon(new float[] { playerX, playerY,
 				playerX + spriteSizeX, playerY, playerX + spriteSizeX,
 				playerY + spriteSizeY, playerX, playerY + spriteSizeY });
-		
-		this.topHitBox = createRectangle(playerX,playerY, 25, 5);
-		  this.bottomHitBox = createRectangle(playerX,35+playerY, 25,20);
-		  this.frontHitBox = createRectangle(spriteSizeX-5,25+playerY, 5, 30);
+
+		this.topHitBox = createRectangle(playerX, playerY, 25, 5);
+		this.bottomHitBox = createRectangle(playerX, 35 + playerY, 25, 20);
+		this.frontHitBox = createRectangle(spriteSizeX - 5, 25 + playerY, 5, 30);
 	}
 
-	 private Rectangle createRectangle(int xPos, int yPos, int xWidth,int yWidth){
-		   return new Rectangle(xPos, yPos, xWidth,yWidth);
-		 }
-	
+	private Rectangle createRectangle(int xPos, int yPos, int xWidth, int yWidth) {
+		return new Rectangle(xPos, yPos, xWidth, yWidth);
+	}
+
 	private Animation createAnimation(String fileDirectory, int sSizeX,
 			int sSizeY, int aniStart, int aniStop, float speed, int count) {
 		SpriteSheet sheet = null;
@@ -114,8 +121,8 @@ public class Player1 implements Runnable  {
 	public void keyPressed(Input input) {
 
 		// UP
-		
-		 if(input.isKeyPressed(jumpControl)) {
+
+		if (input.isKeyPressed(jumpControl)) {
 			setOnGround(false);
 			if (jumps < 2) {
 				jumps++;
@@ -124,7 +131,7 @@ public class Player1 implements Runnable  {
 				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("jump");
 				}
-			
+
 			}
 		}
 		// UP-REPEAT
@@ -144,7 +151,7 @@ public class Player1 implements Runnable  {
 
 			}
 		}
-		
+
 		if (input.isKeyPressed(Input.KEY_Z)) {
 			TheGame.frame.setVisible(true);
 		}
@@ -160,7 +167,7 @@ public class Player1 implements Runnable  {
 				StateHandler.bgm.loop();
 			}
 		}
-		
+
 	}
 
 	public void jump() {
@@ -169,13 +176,12 @@ public class Player1 implements Runnable  {
 		// Jumping begins
 
 		currentAnimation = jump;
-		while (!isOnGround) {       // && !threadDone
-
+		while (!isOnGround) { // && !threadDone
 
 			playerY += jumpPower; // Increment the jump
 			jumpPower++;
-			
-			if(jumpPower < 5)
+
+			if (jumpPower < 5)
 				currentAnimation = jump;
 			else
 				currentAnimation = fall;
@@ -195,26 +201,25 @@ public class Player1 implements Runnable  {
 	public void beginFall() {
 		falling = new Thread(this);
 		falling.start();
-		
+
 	}
 
 	public void fall() {
 		playerY += (gravityEffect / 2) * TheGame.gameSpeed;
 		gravityEffect++;
 
-		
 		System.out.println("Falling");
-	
 
 		try {
 			Thread.sleep(20);
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException e) {
+		}
 	}
 
-//	public void setScore(int p) {
-//		this.score += p / 2;
-//	}
-//
+	// public void setScore(int p) {
+	// this.score += p / 2;
+	// }
+	//
 	public long getScore() {
 		return this.playerScore;
 	}
@@ -236,15 +241,15 @@ public class Player1 implements Runnable  {
 	}
 
 	public void deadPlayer() {
-		//threadDone = true; 
+		// threadDone = true;
 		this.loosePlayerLife();
 		this.setPlayerX(200);
 		this.setPlayerY(200);
 	}
-	public static void threadDone(){
-		//threadDone= false;
+
+	public static void threadDone() {
+		// threadDone= false;
 	}
-	
 
 	public int getPlayerLife() {
 		return this.playerlife;
@@ -317,8 +322,8 @@ public class Player1 implements Runnable  {
 	public Thread getJumping() {
 		return jumping;
 	}
-	
-	public Thread getFalling(){
+
+	public Thread getFalling() {
 		return falling;
 	}
 
@@ -358,8 +363,9 @@ public class Player1 implements Runnable  {
 
 	public void setGravityEffect(float gravity) {
 		this.gravityEffect = gravity;
-		
+
 	}
+
 	public int getPlayerlife() {
 		return playerlife;
 	}
@@ -367,29 +373,29 @@ public class Player1 implements Runnable  {
 	public void setPlayerlife(int playerlife) {
 		this.playerlife = playerlife;
 	}
-	
-	 public Rectangle getTopHitBox() {
-		  return topHitBox;
-		 }
 
-		 public void setTopHitBox(Rectangle topHitBox) {
-		  this.topHitBox = topHitBox;
-		 }
+	public Rectangle getTopHitBox() {
+		return topHitBox;
+	}
 
-		 public Rectangle getBottomHitBox() {
-		  return bottomHitBox;
-		 }
+	public void setTopHitBox(Rectangle topHitBox) {
+		this.topHitBox = topHitBox;
+	}
 
-		 public void setBottomHitBox(Rectangle bottomHitBox) {
-		  this.bottomHitBox = bottomHitBox;
-		 }
+	public Rectangle getBottomHitBox() {
+		return bottomHitBox;
+	}
 
-		 public Rectangle getFrontHitBox() {
-		  return frontHitBox;
-		 }
+	public void setBottomHitBox(Rectangle bottomHitBox) {
+		this.bottomHitBox = bottomHitBox;
+	}
 
-		 public void setFrontHitBox(Rectangle frontHitBox) {
-		  this.frontHitBox = frontHitBox;
-		 }
+	public Rectangle getFrontHitBox() {
+		return frontHitBox;
+	}
+
+	public void setFrontHitBox(Rectangle frontHitBox) {
+		this.frontHitBox = frontHitBox;
+	}
 
 }

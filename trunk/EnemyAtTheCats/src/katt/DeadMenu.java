@@ -11,8 +11,8 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class DeadMenu extends BasicGameState implements ComponentListener{
-	
+public class DeadMenu extends BasicGameState implements ComponentListener {
+
 	private Image newgame = null;
 	private Image newgameOver = null;
 	private MouseOverArea[] areas = new MouseOverArea[2];
@@ -21,33 +21,34 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 	private float[] backgroundPos;
 	private Image[] backgrounds;
 	private Image bgSky;
-	
-	
-	public DeadMenu(int ID){
+
+	public DeadMenu(int ID) {
 		super();
 		this.ID = ID;
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g)
+			throws SlickException {
 		game.getState(StateHandler.theGame).render(container, game, g);
 		areas[0].render(container, g);
 	}
 
 	@Override
 	public void componentActivated(AbstractComponent source) {
-		if(source == areas[0]){
+		if (source == areas[0]) {
 			StateHandler.dead = true;
 			StateHandler.paused = false;
 			game.enterState(StateHandler.theGame);
-			//Player1.threadDone();
+			// Player1.threadDone();
 		}
 	}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game)
+			throws SlickException {
 		this.game = game;
-		
+
 		backgroundPos = new float[4];
 		backgroundPos[0] = 0;
 		backgroundPos[1] = 1280;
@@ -63,33 +64,36 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 
 		newgame = new Image("data/Img/Fortsatt1.png");
 		newgameOver = new Image("data/Img/Fortsatt2.png");
-		
-		//container.setMouseCursor("data/Img/cursor.png", 0, 0);
-		
-		for(int i = 0; i<2; i++){
-			if(i == 0){
-			areas[i] = new MouseOverArea(container, newgame, 130, 100, 400, 52, this);
-			areas[i].setMouseOverImage(newgameOver);
+
+		// container.setMouseCursor("data/Img/cursor.png", 0, 0);
+
+		for (int i = 0; i < 2; i++) {
+			if (i == 0) {
+				areas[i] = new MouseOverArea(container, newgame, 130, 100, 400,
+						52, this);
+				areas[i].setMouseOverImage(newgameOver);
 			}
-			//if(i == 1){
-			//areas[i] = new MouseOverArea(container, newgame, 130, 100, 400, 52, this);
-			//areas[i].setMouseOverImage(newgameOver);
-			//}
+			// if(i == 1){
+			// areas[i] = new MouseOverArea(container, newgame, 130, 100, 400,
+			// 52, this);
+			// areas[i].setMouseOverImage(newgameOver);
+			// }
 		}
-		
+
 	}
 
 	@Override
-	public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta)
+			throws SlickException {
 		Input input = container.getInput();
-		
-		//game.getState(StateHandler.theGame).update(container, game, delta);
-		
+
+		// game.getState(StateHandler.theGame).update(container, game, delta);
+
 		if (input.isKeyPressed(Input.KEY_RIGHT)) {
 			StateHandler.dead = true;
 			StateHandler.paused = false;
 			game.enterState(StateHandler.theGame);
-			//Player1.threadDone();
+			// Player1.threadDone();
 		}
 	}
 
@@ -97,12 +101,11 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 	public int getID() {
 		return ID;
 	}
-	
+
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		
-		
+
 	}
-	
+
 }
