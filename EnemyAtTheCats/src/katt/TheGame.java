@@ -168,6 +168,7 @@ public class TheGame extends BasicGameState {
 		Input input = container.getInput();
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+			players[0].setOnGround(true);
 			game.enterState(StateHandler.pause);
 		}
 
@@ -405,7 +406,22 @@ public class TheGame extends BasicGameState {
 		}
 
 		if (StateHandler.paused) {
+			
+			
+			int playerX = (int) players[0].getPlayerX();
+			int playerY = (int) players[0].getPlayerY();
+			int playerLife = players[0].getPlayerlife();
+			long playerScore = players[0].getPlayerScore();
+			
 
+			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+
+			players = new Player1[playerCount];
+			players[0] = new Player1(playerX, playerY, "data/Img/totalCat.png",
+					Input.KEY_UP, playerLife, playerScore);
+			
+			players[0].beginFall();
+			
 		} else if (StateHandler.dead) {
 			pointObject.newObjectPos();
 			gEnemy.newObjectPos();
@@ -418,8 +434,6 @@ public class TheGame extends BasicGameState {
 			currentMapX = 0;
 			neighbourMapX = mapWidth;
 
-			int playerX = (int) players[0].getPlayerX();
-			int playerY = (int) players[0].getPlayerY();
 			int playerLife = players[0].getPlayerlife();
 			long playerScore = players[0].getPlayerScore();
 
@@ -667,29 +681,6 @@ public class TheGame extends BasicGameState {
 	// Sätter banan och poäng när katten börjar om efter att ha dött, så
 	// att det inte finns några poäng och att katten börjar på första banan på
 	// den leveln katten har dött
-	private void newStart() {
-		pointObject.newObjectPos();
-		gEnemy.newObjectPos();
-		lifeObject.newObjectPos();
-		loopCount = 0;
-
-		currentMap = 0;
-		neighbourMap = 1;
-
-		currentMapX = 0;
-		neighbourMapX = mapWidth;
-
-		int playerX = (int) players[0].getPlayerX();
-		int playerY = (int) players[0].getPlayerY();
-		int playerLife = players[0].getPlayerlife();
-		long playerScore = players[0].getPlayerScore();
-
-		blockMapRow[currentMap].updateBlockMap(currentMapX, true);
-
-		players = new Player1[playerCount];
-		players[0] = new Player1(200, 400, "data/Img/totalCat.png",
-				Input.KEY_UP, playerLife, playerScore);
-	}
 
 	public boolean wallHit(BlockMap bMap, Player1 pl) {
 		float rightPos = pl.getPlayerBox().getMaxX();
