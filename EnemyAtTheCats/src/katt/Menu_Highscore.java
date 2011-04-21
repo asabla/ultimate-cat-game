@@ -37,7 +37,6 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	
 	public void setHighscores(ArrayList<String> scores)
 	{
-		highscores.clear();  //Rensar ur arraylist
 		highscores = scores;
 	}
 	
