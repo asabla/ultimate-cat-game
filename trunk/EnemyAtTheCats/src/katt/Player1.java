@@ -373,6 +373,10 @@ public class Player1 implements Runnable {
 	public void setPlayerlife(int playerlife) {
 		this.playerlife = playerlife;
 	}
+	
+	public int getJumps(){
+		return jumps;
+	}
 
 	public Rectangle getTopHitBox() {
 		return topHitBox;
