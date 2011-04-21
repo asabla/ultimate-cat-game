@@ -72,7 +72,7 @@ public class TheGame extends BasicGameState {
 	Image lifeObjectImage = null;
 	Image gEnemyImage = null;
 
-	float posY = 0;
+	public static float posY = 0;
 	float startPy;// start pos Y för i väg flygande objekt
 	float startPx;// start pos X för i väg flygande objekt
 	float slutPXv;// gräns för flygande objekt vänster
@@ -286,14 +286,14 @@ public class TheGame extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		drawBackgrounds();
-
+		if(game.getState(StateHandler.theGame) == game.getCurrentState()){
 		blockMapRow[currentMap].getTmap().render((int) currentMapX, (int) posY);
 		blockMapRow[neighbourMap].getTmap().render((int) neighbourMapX,
 				(int) posY);
 
 		blockMapRow[currentMap].drawHitBox(g, currentMapX);
 		blockMapRow[neighbourMap].drawHitBox(g, neighbourMapX);
-		
+		}
 		
 		// smoke.render();
 
@@ -345,7 +345,7 @@ public class TheGame extends BasicGameState {
 		// }
 
 		// ********************************************************
-
+if(game.getState(StateHandler.theGame) == game.getCurrentState()){
 		for (Player1 pl : players) {
 			pl.updateAnimationSpeed();
 			g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
@@ -357,7 +357,14 @@ public class TheGame extends BasicGameState {
 			   g.draw(pl.getTopHitBox());
 			   g.draw(pl.getFrontHitBox());
 		}
+		
+		g.drawImage(pointObjectImage, pointObject.getxPos(),
+				pointObject.getyPos());
+		g.drawImage(lifeObjectImage, lifeObject.getxPos(), lifeObject.getyPos());
+		
 		g.drawImage(gEnemyImage, gEnemy.getPosX(), gEnemy.getPosY());
+}
+		
 
 		// draw chosen player with current animation and current coordinate
 
@@ -374,9 +381,7 @@ public class TheGame extends BasicGameState {
 		g.drawString("Tid: " + this.time / 1000 + "sec", 450, 450);
 		g.drawString("Level: " + currentLevel, 550, 450);
 
-		g.drawImage(pointObjectImage, pointObject.getxPos(),
-				pointObject.getyPos());
-		g.drawImage(lifeObjectImage, lifeObject.getxPos(), lifeObject.getyPos());
+		
 
 		
 	
@@ -699,4 +704,6 @@ public class TheGame extends BasicGameState {
 		}
 		return false;
 	}
+	
+	
 }
