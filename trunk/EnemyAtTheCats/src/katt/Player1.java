@@ -5,6 +5,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Player1 implements Runnable  {
 	private SpriteSheet sheet;
@@ -22,8 +23,9 @@ public class Player1 implements Runnable  {
 	//private static boolean threadDone = false;
 	//private int score;
 	private Thread falling;
-
+	private Rectangle topHitBox, bottomHitBox, frontHitBox;
 	private float gravityEffect;
+	boolean print = true;
 	
 	public Player1(int playerX, int playerY, String pngDir, int jumpControl, int plife, long playerScore){
 		super();
@@ -50,6 +52,10 @@ public class Player1 implements Runnable  {
 		playerBox = new Polygon(new float[] { playerX, playerY,
 				playerX + spriteSizeX, playerY, playerX + spriteSizeX,
 				playerY + spriteSizeY, playerX, playerY + spriteSizeY });
+		
+		this.topHitBox = createRectangle(playerX,playerY, 25, 5);
+		  this.bottomHitBox = createRectangle(playerX,35+playerY, 25,20);
+		  this.frontHitBox = createRectangle(spriteSizeX-5,25+playerY, 5, 30);
 	}
 
 	public Player1(int playerX, int playerY, String pngDir, int jumpControl,
@@ -78,8 +84,16 @@ public class Player1 implements Runnable  {
 		playerBox = new Polygon(new float[] { playerX, playerY,
 				playerX + spriteSizeX, playerY, playerX + spriteSizeX,
 				playerY + spriteSizeY, playerX, playerY + spriteSizeY });
+		
+		this.topHitBox = createRectangle(playerX,playerY, 25, 5);
+		  this.bottomHitBox = createRectangle(playerX,35+playerY, 25,20);
+		  this.frontHitBox = createRectangle(spriteSizeX-5,25+playerY, 5, 30);
 	}
 
+	 private Rectangle createRectangle(int xPos, int yPos, int xWidth,int yWidth){
+		   return new Rectangle(xPos, yPos, xWidth,yWidth);
+		 }
+	
 	private Animation createAnimation(String fileDirectory, int sSizeX,
 			int sSizeY, int aniStart, int aniStop, float speed, int count) {
 		SpriteSheet sheet = null;
@@ -181,13 +195,16 @@ public class Player1 implements Runnable  {
 	public void beginFall() {
 		falling = new Thread(this);
 		falling.start();
+		
 	}
 
 	public void fall() {
-		playerY += (gravityEffect / 6) * TheGame.gameSpeed;
+		playerY += (gravityEffect / 2) * TheGame.gameSpeed;
 		gravityEffect++;
 
+		
 		System.out.println("Falling");
+	
 
 		try {
 			Thread.sleep(20);
@@ -300,6 +317,10 @@ public class Player1 implements Runnable  {
 	public Thread getJumping() {
 		return jumping;
 	}
+	
+	public Thread getFalling(){
+		return falling;
+	}
 
 	public void setJumping(Thread jumping) {
 		this.jumping = jumping;
@@ -346,5 +367,29 @@ public class Player1 implements Runnable  {
 	public void setPlayerlife(int playerlife) {
 		this.playerlife = playerlife;
 	}
+	
+	 public Rectangle getTopHitBox() {
+		  return topHitBox;
+		 }
+
+		 public void setTopHitBox(Rectangle topHitBox) {
+		  this.topHitBox = topHitBox;
+		 }
+
+		 public Rectangle getBottomHitBox() {
+		  return bottomHitBox;
+		 }
+
+		 public void setBottomHitBox(Rectangle bottomHitBox) {
+		  this.bottomHitBox = bottomHitBox;
+		 }
+
+		 public Rectangle getFrontHitBox() {
+		  return frontHitBox;
+		 }
+
+		 public void setFrontHitBox(Rectangle frontHitBox) {
+		  this.frontHitBox = frontHitBox;
+		 }
 
 }

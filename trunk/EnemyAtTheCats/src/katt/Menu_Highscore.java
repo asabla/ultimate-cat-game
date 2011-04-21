@@ -32,8 +32,7 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 		this.ID = ID;
 		
 		db = new Database();
-		highscores = new ArrayList<String>();
-		highscores = db.getHighscoreToArrayList(10, false);
+		
 	}
 	
 	public void setHighscores(ArrayList<String> scores)
@@ -99,6 +98,12 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 		{
 			game.enterState(StateHandler.menu);
 		}
+	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+		highscores = new ArrayList<String>();
+		highscores = db.getHighscoreToArrayList(10, false);
 	}
 
 	@Override
