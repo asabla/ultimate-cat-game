@@ -18,6 +18,9 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 	private MouseOverArea[] areas = new MouseOverArea[2];
 	private StateBasedGame game;
 	private int ID = -1;
+	private float[] backgroundPos;
+	private Image[] backgrounds;
+	private Image bgSky;
 	
 	
 	public DeadMenu(int ID){
@@ -44,6 +47,19 @@ public class DeadMenu extends BasicGameState implements ComponentListener{
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
+		
+		backgroundPos = new float[4];
+		backgroundPos[0] = 0;
+		backgroundPos[1] = 1280;
+		backgroundPos[2] = 0;
+		backgroundPos[3] = 1280;
+
+		backgrounds = new Image[4];
+		bgSky = new Image("data/Img/img_bg_sky.png");
+		backgrounds[0] = new Image("data/Img/img_bg_layer1.png");
+		backgrounds[1] = new Image("data/Img/img_bg_layer1.png");
+		backgrounds[2] = new Image("data/Img/img_bg_layer2.png");
+		backgrounds[3] = new Image("data/Img/img_bg_layer2.png");
 
 		newgame = new Image("data/Img/Fortsatt1.png");
 		newgameOver = new Image("data/Img/Fortsatt2.png");
