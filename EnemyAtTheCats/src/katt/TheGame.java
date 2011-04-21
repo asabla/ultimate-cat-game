@@ -206,7 +206,8 @@ public class TheGame extends BasicGameState {
 			if (playerDropOut(players[x])) {
 				input.clearKeyPressedRecord();
 				System.out.println("Dead");
-				newStartAfterCatHasPassedAway();
+				System.out.println("Ramlade ut " + players[x].getPlayerY());
+				//newStartAfterCatHasPassedAway();
 				GameOver.setPScore("" + players[x].getPlayerScore());
 				game.enterState(StateHandler.deadMenu);
 				players[x].deadPlayer();
@@ -257,7 +258,8 @@ public class TheGame extends BasicGameState {
 					StateHandler.soundBank.playSound("crash");
 				}
 				players[x].loosePlayerLife();
-				newStartAfterCatHasPassedAway();
+				System.out.println("Träffade fiende");
+				//newStartAfterCatHasPassedAway();
 				game.enterState(StateHandler.deadMenu);
 			}
 		}
@@ -380,10 +382,11 @@ public class TheGame extends BasicGameState {
 			
 		} 
 		else if (StateHandler.dead){
-			gEnemy.newObjectPos();
 			pointObject.newObjectPos();
+			gEnemy.newObjectPos();
 			lifeObject.newObjectPos();
-			
+			loopCount = 0;
+
 			currentMap = 0;
 			neighbourMap = 1;
 
@@ -438,6 +441,7 @@ public class TheGame extends BasicGameState {
 		if (StateHandler.bgm.playing()) {
 			StateHandler.bgm.stop();
 		}
+		blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 	}
 
 	/**
@@ -592,23 +596,6 @@ public class TheGame extends BasicGameState {
 	// Sätter banan och poäng när katten börjar om efter att ha dött, så
 	// att det inte finns några poäng och att katten börjar på första banan på
 	// den leveln katten har dött
-
-	private void newStartAfterCatHasPassedAway() {
-
-		gEnemy.newObjectPos();
-
-		pointObject.newObjectPos();
-		gEnemy.newObjectPos();
-		pointObject.newObjectPos();
-		lifeObject.newObjectPos();
-		loopCount = 0;
-
-		currentMap = 0;
-		neighbourMap = 1;
-
-		currentMapX = 0;
-		neighbourMapX = mapWidth;
-	}
 
 	public boolean wallHit(BlockMap bMap, Player1 pl) {
 		float rightPos = pl.getPlayerBox().getMaxX();
