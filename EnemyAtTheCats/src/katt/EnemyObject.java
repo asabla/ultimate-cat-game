@@ -1,9 +1,6 @@
 package katt;
 
 import java.util.Random;
-
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 /*Klass som håller ett fiendeobjekt. Klassen är abstrakt och subklasserna är 
@@ -11,20 +8,19 @@ import org.newdawn.slick.geom.Rectangle;
  * FlyingEnemy(för fiender i luften)
  */
 abstract public class EnemyObject {
-/*xPos, yPos = kordinater för objektet
- * r = en randomgenerator
- * imgLoc = sökvägen där bilden för objektet ligger
- * collided = variabel som håller reda på om spelarobjektet krockat med fiendeobjektet 
- * eller inte
- */
+	/*
+	 * xPos, yPos = kordinater för objektet r = en randomgenerator imgLoc =
+	 * sökvägen där bilden för objektet ligger collided = variabel som håller
+	 * reda på om spelarobjektet krockat med fiendeobjektet eller inte
+	 */
 	private float xPos;
 	private float yPos;
 	private Random r;
 	private String imgLoc;
 	private boolean collided;
 	private Rectangle rectangle;
-	
-	public EnemyObject(){
+
+	public EnemyObject() {
 		r = new Random();
 		newObjectPos();
 		collided = false;
@@ -38,23 +34,23 @@ abstract public class EnemyObject {
 		return yPos;
 	}
 
-	//Skapar en rektangel som är nödvändig för kollisionskontroll
-	public Rectangle getRectangle(){
+	// Skapar en rektangel som är nödvändig för kollisionskontroll
+	public Rectangle getRectangle() {
 		return rectangle;
 	}
-	
-	public void setRectangle(Rectangle rec){
+
+	public void setRectangle(Rectangle rec) {
 		rectangle = rec;
 	}
-	
-	public void setImgLoc(String loc){
+
+	public void setImgLoc(String loc) {
 		imgLoc = loc;
 	}
-	
-	public String getImgLoc(){
+
+	public String getImgLoc() {
 		return imgLoc;
 	}
-	
+
 	public void setxPos(float xPos) {
 		this.xPos = xPos;
 	}
@@ -62,18 +58,17 @@ abstract public class EnemyObject {
 	public void setyPos(float yPos) {
 		this.yPos = yPos;
 	}
-	
 
-	public Random getRandom(){
+	public Random getRandom() {
 		return r;
 	}
-	
-	//Skapar en ny slumpmässigt vald position för objektet
-	public void newObjectPos(){
+
+	// Skapar en ny slumpmässigt vald position för objektet
+	public void newObjectPos() {
 		collided = false;
-    	setxPos(3000 + r.nextInt(500));
-    	setyPos(410); 
-    	rectangle.setLocation(xPos, yPos);
+		setxPos(3000 + r.nextInt(500));
+		setyPos(410);
+		rectangle.setLocation(xPos, yPos);
 	}
 
 	public boolean isCollided() {
@@ -83,8 +78,8 @@ abstract public class EnemyObject {
 	public void setCollided(boolean collided) {
 		this.collided = collided;
 	}
-	
-	public boolean getCollided(){
+
+	public boolean getCollided() {
 		return collided;
 	}
 }

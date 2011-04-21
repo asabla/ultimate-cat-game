@@ -8,21 +8,20 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public final class StateHandler extends StateBasedGame {
 	private final static int screenWidth = 720;
-    private final static int screenHeight = 480;
-    public static final int menu = 0;
-    public static final int theGame = 1;
-    public static final int gameOver = 2;
-    public static final int deadMenu = 3;
-    public static final int highscore = 4;
-    public static final int pause = 5;
+	private final static int screenHeight = 480;
+	public static final int menu = 0;
+	public static final int theGame = 1;
+	public static final int gameOver = 2;
+	public static final int deadMenu = 3;
+	public static final int highscore = 4;
+	public static final int pause = 5;
 	public static SFXBank soundBank;
 	public static boolean soundsOn;
 	public static boolean musicOn;
 	public static Sound bgm;
 	public static boolean paused;
 	public static boolean dead;
-    
-    
+
 	public StateHandler() throws SlickException {
 		super("Det bra spelet");
 		soundsOn = true;
@@ -38,7 +37,7 @@ public final class StateHandler extends StateBasedGame {
 		this.addState(new Menu_Highscore(highscore));
 		this.addState(new PauseMenu(pause));
 		this.enterState(menu);
-		
+
 	}
 
 	@Override
@@ -50,8 +49,8 @@ public final class StateHandler extends StateBasedGame {
 	}
 
 	public static void main(String[] argv) throws SlickException {
-        AppGameContainer appContainer = new AppGameContainer(new StateHandler());
-        appContainer.setDisplayMode(screenWidth, screenHeight, false);
-        appContainer.start();
+		AppGameContainer appContainer = new AppGameContainer(new StateHandler());
+		appContainer.setDisplayMode(screenWidth, screenHeight, false);
+		appContainer.start();
 	}
 }

@@ -8,15 +8,13 @@ import org.newdawn.slick.Image;
  * 
  */
 
-public class PickupObject{
+public class PickupObject {
 	/*
-	 *objectType = typ av objekt. Ett heltal mellan 0-9 där 0=livobjekt
-	 *1-9 = poängobjekt av olika värden (*1000)
-	 *xPos = objektets position i våglängd
-	 *yPos = objektets position i höjdlängd
-	 *value = objektets värde 
+	 * objectType = typ av objekt. Ett heltal mellan 0-9 där 0=livobjekt1-9 =
+	 * poängobjekt av olika värden (*1000)xPos = objektets position i våglängd
+	 * yPos = objektets position i höjdlängdvalue = objektets värde
 	 */
-	private int objectType;	
+	private int objectType;
 	private float xPos;
 	private float yPos;
 	private int value;
@@ -24,64 +22,72 @@ public class PickupObject{
 	private String imgLoc;
 	private Rectangle rectangle;
 
-	//Skapar ett objekt av slumpmässig typ(ej livobjekt) på en slumpmässig plats
-	public PickupObject(){
-		
-		r = new Random();	
+	// Skapar ett objekt av slumpmässig typ(ej livobjekt) på en slumpmässig
+	// plats
+	public PickupObject() {
+
+		r = new Random();
 
 		objectType = r.nextInt(5);
-		if(objectType == 0){
+		if (objectType == 0) {
 			objectType = 1;
 		}
-			value = objectType * 1000;
+		value = objectType * 1000;
 
-		imgLoc = "data/Img/object" + objectType +".png";
-		//Skapar en rektangel för objektet med samma storlek som bilden för objektet
-		try{
-			Image i = new Image((String)imgLoc);			
-		rectangle = new Rectangle(xPos + 4, yPos + 4, i.getWidth()-8, i.getHeight()-8);
+		imgLoc = "data/Img/object" + objectType + ".png";
+		// Skapar en rektangel för objektet med samma storlek som bilden för
+		// objektet
+		try {
+			Image i = new Image((String) imgLoc);
+			rectangle = new Rectangle(xPos + 4, yPos + 4, i.getWidth() - 8,
+					i.getHeight() - 8);
+		} catch (Exception e) {
 		}
-		catch(Exception e){}
-		
+
 		newObjectPos();
 	}
-	/*Skapar ett objekt av bestämd typ och bestämd plats
+
+	/*
+	 * Skapar ett objekt av bestämd typ och bestämd plats
+	 * 
 	 * @param type = ett heltal mellan 0-9
+	 * 
 	 * @param xPos = objektets position i sidled
+	 * 
 	 * @param yPos = objektets position i höjdled
 	 */
-	
-	public PickupObject(int type, float xPos, float yPos){
+
+	public PickupObject(int type, float xPos, float yPos) {
 		r = new Random();
 		this.xPos = xPos;
 		this.yPos = yPos;
-		
-		if(type >= 0 && type <=3){
+
+		if (type >= 0 && type <= 3) {
 			objectType = type;
-			}
-		else{
+		} else {
 			objectType = 3;
 		}
-		
-		if(objectType > 0){
+
+		if (objectType > 0) {
 			value = objectType * 1000;
-		} else if(objectType == 0){
+		} else if (objectType == 0) {
 			value = 1;
 		}
-		imgLoc = "data/Img/object" + objectType +".png";	
-		try{
-			Image i = new Image((String)imgLoc);			
-		rectangle = new Rectangle(xPos + 4, yPos + 4, i.getWidth()-8, i.getHeight()-8);
+		imgLoc = "data/Img/object" + objectType + ".png";
+		try {
+			Image i = new Image((String) imgLoc);
+			rectangle = new Rectangle(xPos + 4, yPos + 4, i.getWidth() - 8,
+					i.getHeight() - 8);
+		} catch (Exception e) {
 		}
-		catch(Exception e){}
 	}
-	
-	//Returnerar en sträng som representerar bildens sökväg
-	public String getImgLoc(){
+
+	// Returnerar en sträng som representerar bildens sökväg
+	public String getImgLoc() {
 		return imgLoc;
 	}
-	
-	//returnerar objekttypen
+
+	// returnerar objekttypen
 	public int getObjectType() {
 		return objectType;
 	}
@@ -97,13 +103,14 @@ public class PickupObject{
 	public int getValue() {
 		return value;
 	}
-	//Skapar en rektangel som är nödvändig för kollisionskontroll
-	public Rectangle getRectangle(){
+
+	// Skapar en rektangel som är nödvändig för kollisionskontroll
+	public Rectangle getRectangle() {
 
 		return rectangle;
-		
+
 	}
-	
+
 	public void setxPos(float xPos) {
 		this.xPos = xPos;
 	}
@@ -115,32 +122,32 @@ public class PickupObject{
 	public void setValue(int value) {
 		this.value = value;
 	}
-	//Skapar en ny slumpmässigt vald position för objektet
-	public void newObjectPos(){		
-    	setxPos(1000 + r.nextInt(500));
-    	setyPos(250 + r.nextInt(150));  
-    	rectangle.setLocation(xPos, yPos);
+
+	// Skapar en ny slumpmässigt vald position för objektet
+	public void newObjectPos() {
+		setxPos(1000 + r.nextInt(500));
+		setyPos(250 + r.nextInt(150));
+		rectangle.setLocation(xPos, yPos);
 	}
-	
-	public void newObjectPosLong(){
+
+	public void newObjectPosLong() {
 		setxPos(25000 + r.nextInt(1000));
 		setyPos(250 + r.nextInt(150));
-    	rectangle.setLocation(xPos, yPos);
+		rectangle.setLocation(xPos, yPos);
 	}
-	
-	//Slumpar en ny typ av objekt, och ändrar värdet
-	public void newObjectType(){
+
+	// Slumpar en ny typ av objekt, och ändrar värdet
+	public void newObjectType() {
 		objectType = r.nextInt(9);
-		value = objectType*1000;
+		value = objectType * 1000;
 	}
-	
-	public void upDateXPos()
-	{
-		if(xPos > - 5){
+
+	public void upDateXPos() {
+		if (xPos > -5) {
 			xPos -= TheGame.gameSpeed;
 			rectangle.setX(xPos);
 
-		}else{			
+		} else {
 			newObjectPos();
 		}
 	}
