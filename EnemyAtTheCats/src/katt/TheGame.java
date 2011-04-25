@@ -19,7 +19,6 @@ public class TheGame extends BasicGameState {
 	public static float gameSpeed = 2f;
 	public int ID;
 
-	private Player1 mr;
 	private int mapWidth = 720;
 	private Polygon collisonBlock;
 	private ParticleSystem smoke;
@@ -408,7 +407,8 @@ public class TheGame extends BasicGameState {
 
 			players = new Player1[playerCount];
 			players[0] = new Player1(playerX, playerY, "data/Img/totalCat.png",
-					Input.KEY_UP, playerLife, playerScore);
+					Input.KEY_UP, playerLife);
+			players[0].setPlayerScore(playerScore);
 			
 			players[0].beginFall();
 			
@@ -431,26 +431,8 @@ public class TheGame extends BasicGameState {
 
 			players = new Player1[playerCount];
 			players[0] = new Player1(200, 400, "data/Img/totalCat.png",
-					Input.KEY_UP, playerLife, playerScore);
-
-			int hitBoxPushY = 10;
-			int spriteSizeX = 20;
-			int spriteSizeY = 35;
-
-			players[0].getBottomHitBox().setX(
-					players[0].getPlayerX() + spriteSizeX);
-			players[0].getBottomHitBox().setY(
-					players[0].getPlayerY() + spriteSizeY - 5);
-
-			players[0].getTopHitBox().setX(
-					players[0].getPlayerX() + spriteSizeX);
-			players[0].getTopHitBox().setY(
-					players[0].getPlayerY() + hitBoxPushY);
-
-			players[0].getFrontHitBox().setX(
-					players[0].getPlayerX() + 25 + spriteSizeX);
-			players[0].getFrontHitBox().setY(
-					players[0].getPlayerY() + hitBoxPushY + 5);
+					Input.KEY_UP, playerLife);
+			players[0].setPlayerScore(playerScore);
 		}
 
 		else {
@@ -470,29 +452,12 @@ public class TheGame extends BasicGameState {
 			time = 1; // Startar spelet med 1sekund
 
 			players = new Player1[playerCount];
-			players[0] = new Player1(200, 400, "data/Img/totalCat.png",
-					Input.KEY_UP, 3);
-			// players[0].setOnGround(false);
+			players[0] = new Player1(200, 400, "data/Img/totalCat.png", Input.KEY_UP, 3);
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
 			// Input.KEY_W, 3);
-			int hitBoxPushY = 10;
-			int spriteSizeX = 20;
-			int spriteSizeY = 35;
-
-			players[0].getBottomHitBox().setX(players[0].getPlayerX() + spriteSizeX);
-			players[0].getBottomHitBox().setY(players[0].getPlayerY() + spriteSizeY - 5);
-
-			players[0].getTopHitBox().setX(players[0].getPlayerX() + spriteSizeX);
-			players[0].getTopHitBox().setY(players[0].getPlayerY() + hitBoxPushY);
-
-			players[0].getFrontHitBox().setX(players[0].getPlayerX() + 25 + spriteSizeX);
-			players[0].getFrontHitBox().setY(players[0].getPlayerY() + hitBoxPushY + 5);
 		}
 	}
-
-	// container.setVSync(true);
-	// container.setTargetFrameRate(150);
 
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)
@@ -500,7 +465,6 @@ public class TheGame extends BasicGameState {
 		if (StateHandler.bgm.playing()) {
 			StateHandler.bgm.stop();
 		}
-		// blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 	}
 
 	/**
@@ -626,7 +590,7 @@ public class TheGame extends BasicGameState {
 			collisionHandler(players[x], blockMapRow[neighbourMap]);
 		}
 
-		// if(currentMapX + mapWidth < 0){
+		//if(currentMapX + mapWidth < 0){
 		if (currentMapX + mapWidth < players[0].getPlayerBox().getCenterX()) {
 			int temp = currentMap;
 			currentMap = neighbourMap;
