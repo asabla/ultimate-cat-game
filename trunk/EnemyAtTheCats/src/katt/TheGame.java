@@ -20,7 +20,7 @@ public class TheGame extends BasicGameState {
 	public int ID;
 
 	private Player1 mr;
-	private int mapWidth = 640;
+	private int mapWidth = 720;
 	private Polygon collisonBlock;
 	private ParticleSystem smoke;
 	private final float speedAcc = 0.2f;
