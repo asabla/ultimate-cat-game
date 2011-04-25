@@ -38,13 +38,11 @@ public class Player1 implements Runnable {
 		gravityEffect = TheGame.gravity;
 		jumping = new Thread(this);
 		falling = new Thread(this);
-		// Load all animations
-		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40,
-				0);
-		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 0,
-				1, 40, 1);
-		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 0,
-				1, 40, 2);
+		
+		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 6, 40,0);
+		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 1, 40, 1);
+		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 1, 40, 2);
+		
 		this.jumpControl = jumpControl;
 		this.currentAnimation = run;
 
@@ -73,13 +71,11 @@ public class Player1 implements Runnable {
 		gravityEffect = TheGame.gravity;
 		jumping = new Thread(this);
 		falling = new Thread(this);
+		
 		// Load all animations
-		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 0, 6, 40,
-				0);
-		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 0,
-				1, 40, 1);
-		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 0,
-				1, 40, 2);
+		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 6, 40,0);
+		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 1, 40, 1);
+		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 1, 40, 2);
 		this.jumpControl = jumpControl;
 		this.currentAnimation = run;
 
@@ -97,25 +93,71 @@ public class Player1 implements Runnable {
 		this.frontHitBox = createRectangle(spriteSizeX - 5, 25 + playerY, 5, 30);
 	}
 
+	/**
+	 *Create a player hitbox
+	 *@param xPos Set shape start x-coordinate
+	 *@param yPos Set shape start y-coordinate
+	 *@param xWidth Set shape width
+	 *@param yWidth Set shape height
+	 *@return new shape
+	 *@author Jonathan B, Henrik
+	 */
 	private Rectangle createRectangle(int xPos, int yPos, int xWidth, int yWidth) {
 		return new Rectangle(xPos, yPos, xWidth, yWidth);
 	}
 
-	private Animation createAnimation(String fileDirectory, int sSizeX,
-			int sSizeY, int aniStart, int aniStop, float speed, int count) {
-		SpriteSheet sheet = null;
+
+	/**
+	 *Reads image and split it into frames that is added to an Animation object and returned
+	 *@param fileDirectory The directory of the spritesheet
+	 *@param sSizeX The width of each animation frame
+	 *@param sSizeY The height of each animation frame
+	 *@param frameCount Number of frames in target animation
+	 *@param speed The delay between frames
+	 *@param animationYPos Sets where in the image the animation starts
+	 *@return new Animation
+	 *@author Jonathan B
+	 */
+	private Animation createAnimation(String fileDirectory, int sSizeX, 
+			int sSizeY, int frameCount, float speed, int animationYPos) {
+		
+		return addFramesToAnimation(createSheet(fileDirectory, sSizeX, sSizeY), frameCount, speed, animationYPos);
+	}
+	
+	/**
+	 *Loads each frame in the SpriteSheet and store it each fram in a animation Object
+	 *@param sht Target SpriteSheet
+	 *@param frameCount Number of frames in animation
+	 *@param speed The delay between frames
+	 *@return animationYPos where in the SpriteSheet the animation starts
+	 *@author Jonathan B  
+	 */
+	private Animation addFramesToAnimation(SpriteSheet sht, int frameCount, float speed, int animationYPos){
 		Animation tempAnim = new Animation();
-		try {
-			// load sprite sheet and put in list
-			sheet = new SpriteSheet(fileDirectory, sSizeX, sSizeY);
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		for (int frame = aniStart; frame < aniStop; frame++) {
-			// add frames to the animation object
-			tempAnim.addFrame(sheet.getSprite(count, frame), (int) speed);
+		for (int frame = 0; frame < frameCount; frame++) {
+			tempAnim.addFrame(sht.getSprite(animationYPos, frame), (int) speed);
 		}
 		return tempAnim;
+		
+	}
+	
+	/**
+	 *Convert png image to a SpriteSheet object
+	 *@param fileDir The directory of the image
+	 *@param frameWidth The width of each frame in the sheet
+	 *@param frameHeight The height of each frame in the sheet
+	 *@return New SpriteSheet object
+	 *@author Jonathan B  
+	 */
+	private SpriteSheet createSheet(String fileDir, int frameWidth, int frameHeight){
+		// load sprite sheet and put in list
+		try {
+			return sheet = new SpriteSheet(fileDir, frameWidth, frameHeight);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public void keyPressed(Input input) {
@@ -198,12 +240,20 @@ public class Player1 implements Runnable {
 		jumps = 0;
 	}
 
+	/**
+	 *Starts a new falling thread
+	 *@author Oskar, Thomas
+	 */
 	public void beginFall() {
 		falling = new Thread(this);
 		falling.start();
 
 	}
 
+	/**
+	 *Method for falling
+	 *@author Oskar, Thomas
+	 */
 	public void fall() {
 		playerY += (gravityEffect / 2) * TheGame.gameSpeed;
 		gravityEffect++;
@@ -216,10 +266,7 @@ public class Player1 implements Runnable {
 		}
 	}
 
-	// public void setScore(int p) {
-	// this.score += p / 2;
-	// }
-	//
+
 	public long getScore() {
 		return this.playerScore;
 	}
