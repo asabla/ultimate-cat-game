@@ -188,40 +188,30 @@ public class TheGame extends BasicGameState {
 		}
 
 		// *********************** Player ***********************
+		int spriteSizeX = 20;
+		float currentPlX = players[0].getPlayerX();
+		float currentPlY = players[0].getPlayerY();
+		
 		for (int x = 0; x < playerCount; x++) {
 			players[x].keyPressed(input);
-			players[x].setPlayerScore(players[x].getPlayerScore()
-					+ (time / 1000 + (int) gameSpeed) / 2); // Tilldelar poäng
-															// till spelaren
+			players[x].setPlayerScore(
+					players[x].getPlayerScore()+ 
+					(time / 1000 + (int) gameSpeed) / 2);
 
 			// Update hitbox location
 			players[x].getPlayerBox().setY(players[x].getPlayerY());
 			players[x].getPlayerBox().setX(players[x].getPlayerX());
 
-			int hitBoxPushY = 10;
-			int spriteSizeX = 20;
-			int spriteSizeY = 35;
-
-			players[x].getBottomHitBox().setX(
-					players[x].getPlayerX() + spriteSizeX);
-			players[x].getBottomHitBox().setY(
-					players[x].getPlayerY() + spriteSizeY - 5);
-
-			players[x].getTopHitBox().setX(
-					players[x].getPlayerX() + spriteSizeX);
-			players[x].getTopHitBox().setY(
-					players[x].getPlayerY() + hitBoxPushY);
-
-			players[x].getFrontHitBox().setX(
-					players[x].getPlayerX() + 25 + spriteSizeX);
-			players[x].getFrontHitBox().setY(
-					players[x].getPlayerY() + hitBoxPushY + 5);
+			players[x].getBottomHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 30);
+			players[x].getTopHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 10);
+			players[x].getFrontHitBox().setLocation(currentPlX + spriteSizeX + 25 , currentPlY + 15);
 
 			// if outside the window print dead
 			if (playerDropOut(players[x])) {
 				input.clearKeyPressedRecord();
 				System.out.println("Dead");
 				System.out.println("Ramlade ut " + players[x].getPlayerY());
+				
 				// newStartAfterCatHasPassedAway();
 				players[x].setOnGround(true);
 				GameOver.setPScore("" + players[x].getPlayerScore());
@@ -230,13 +220,12 @@ public class TheGame extends BasicGameState {
 
 			}
 
-			if (pointObjectPickup(players[x])) {
+			if (objectCollide(players[x], pointObject.getRectangle())) {
 				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("crush");
 				}
 
-				players[x].setPlayerScore(players[x].getPlayerScore()
-						+ pointObject.getValue());
+				players[x].setPlayerScore(players[x].getPlayerScore() + pointObject.getValue());
 				movePoint = true;
 				pointObject = new PickupObject();
 
@@ -245,7 +234,8 @@ public class TheGame extends BasicGameState {
 				} catch (SlickException e) {
 				}
 			}
-			if (lifeObjectPickup(players[x])) {
+			
+			if (objectCollide(players[x], lifeObject.getRectangle())) {
 				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("happy");
 				}
@@ -269,7 +259,7 @@ public class TheGame extends BasicGameState {
 				e.printStackTrace();
 			}
 
-			if (gEnemyHit(players[x])) {
+			if (objectCollide(players[x],gEnemy.getRectangle())) {
 				input.clearKeyPressedRecord();
 				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("crash");
@@ -490,20 +480,14 @@ public class TheGame extends BasicGameState {
 			int spriteSizeX = 20;
 			int spriteSizeY = 35;
 
-			players[0].getBottomHitBox().setX(
-					players[0].getPlayerX() + spriteSizeX);
-			players[0].getBottomHitBox().setY(
-					players[0].getPlayerY() + spriteSizeY - 5);
+			players[0].getBottomHitBox().setX(players[0].getPlayerX() + spriteSizeX);
+			players[0].getBottomHitBox().setY(players[0].getPlayerY() + spriteSizeY - 5);
 
-			players[0].getTopHitBox().setX(
-					players[0].getPlayerX() + spriteSizeX);
-			players[0].getTopHitBox().setY(
-					players[0].getPlayerY() + hitBoxPushY);
+			players[0].getTopHitBox().setX(players[0].getPlayerX() + spriteSizeX);
+			players[0].getTopHitBox().setY(players[0].getPlayerY() + hitBoxPushY);
 
-			players[0].getFrontHitBox().setX(
-					players[0].getPlayerX() + 25 + spriteSizeX);
-			players[0].getFrontHitBox().setY(
-					players[0].getPlayerY() + hitBoxPushY + 5);
+			players[0].getFrontHitBox().setX(players[0].getPlayerX() + 25 + spriteSizeX);
+			players[0].getFrontHitBox().setY(players[0].getPlayerY() + hitBoxPushY + 5);
 		}
 	}
 
@@ -520,8 +504,11 @@ public class TheGame extends BasicGameState {
 	}
 
 	/**
-	 * ad Controls if target player collides with anything in chosen blockmap
-	 * returns a boolean
+	 * Controls if target playershape collides with anything in chosen blockmap
+	 * @param shp The playershape to make collision control with 
+	 * @param bMap The BlockMap that objectshape collides with
+	 * @return true : if shape collides with mapelement, false : if shape dont collide with mapElement 
+	 * @author Jonathan B
 	 */
 	private boolean entityCollisionWith(Shape shp, BlockMap bMap)
 			throws SlickException {
@@ -535,6 +522,14 @@ public class TheGame extends BasicGameState {
 		return false;
 	}
 
+	/**
+	 * Updates the position of the background
+	 * @param layerPos current position of the background
+	 * @param moveSpeed The movmentspeed of the background
+	 * @param screenUpdate The width of the background and when it shall reloop
+	 * @return The new position of the background 
+	 * @author Jonathan B
+	 */
 	private float updateGraphicElement(float layerPos, float moveSpeed,
 			int screenUpdate) {
 		layerPos -= moveSpeed * gameSpeed;
@@ -544,6 +539,10 @@ public class TheGame extends BasicGameState {
 		return layerPos;
 	}
 
+	/**
+	 * Draw all backgrounds with current position
+	 * @author Jonathan B
+	 */
 	private void drawBackgrounds() {
 		bgSky.draw(0, 0);
 		for (int x = 0; x < 4; x++) {
@@ -551,6 +550,12 @@ public class TheGame extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Handels the events if a player collides with a mapElement
+	 * @param pl Target player
+	 * @param map Target map
+	 * @author Jonathan B, Oskar, Thomas
+	 */
 	private void collisionHandler(Player1 pl, BlockMap map) {
 		try {
 			if (entityCollisionWith(pl.getBottomHitBox(), map)) {
@@ -568,27 +573,6 @@ public class TheGame extends BasicGameState {
 					&& !entityCollisionWith(pl.getBottomHitBox(), map)) {
 				pl.setPlayerX(collisonBlock.getMinX() - 50);
 			}
-
-			// if (entityCollisionWith(pl.getPlayerBox(), map)) {
-			//
-			// if (wallHit(map, pl))
-			// {
-			// System.out.println("Wall");
-			// pl.setPlayerX(pl.getPlayerX() - 2 * gameSpeed);
-			// }
-			// if (pl.getPlayerY() + 50 > collisonBlock.getY()
-			// && !wallHit(map, pl))
-			// {
-			// System.out.println("Floor");
-			// pl.setOnGround(true);
-			//
-			// // Put Player above the collisionBlock
-			// pl.setPlayerY(collisonBlock.getY() - 50);
-			//
-			// // Reset the GravityEffect
-			// pl.setGravityEffect(gravity);
-			// }
-			// }
 		} catch (SlickException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -596,6 +580,12 @@ public class TheGame extends BasicGameState {
 
 	}
 
+	/**
+	 * Returns true if player is outside the screen
+	 * @param pl Target player
+	 * @return true if outside the screen, false if not
+	 * @author Jonathan B
+	 */
 	private boolean playerDropOut(Player1 pl) {
 		return pl.getPlayerBox().getX() < 0 || pl.getPlayerBox().getY() > 480;
 	}
@@ -605,23 +595,28 @@ public class TheGame extends BasicGameState {
 		// TODO Auto-generated method stub
 		return ID;
 	}
-
-	public boolean pointObjectPickup(Player1 pl) {
-		if (pl.getPlayerBox().intersects(pointObject.getRectangle())) {
+	
+	/**
+	 * Returns true if player collide with a objectshape
+	 * @param pl Target player
+	 * @param shp Target objectshape
+	 * @return true if collide, false if not
+	 * @author Jonathan B, Viktor
+	 */
+	private boolean objectCollide(Player1 pl, Shape shp) {
+		if (pl.getTopHitBox().intersects(shp)
+				|| pl.getFrontHitBox().intersects(shp)
+				|| pl.getBottomHitBox().intersects(shp)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean lifeObjectPickup(Player1 pl) {
-		if (pl.getPlayerBox().intersects(lifeObject.getRectangle())) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
+	/**
+	 * Handels the moving, buffering and looping of maps. Update positions of collisionblocks
+	 * @author Jonathan B
+	 */
 	private void mapHandler() {
 		currentMapX -= gameSpeed;
 		neighbourMapX -= gameSpeed;
@@ -667,40 +662,4 @@ public class TheGame extends BasicGameState {
 		blockMapRow[neighbourMap].updateBlockMap(neighbourMapX, true);
 
 	}
-
-	private boolean gEnemyHit(Player1 pl) {
-		if (pl.getPlayerBox().intersects(gEnemy.getRectangle())
-				&& !gEnemy.isCollided()) {
-			gEnemy.setCollided(true);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	// Sätter banan och poäng när katten börjar om efter att ha dött, så
-	// att det inte finns några poäng och att katten börjar på första banan på
-	// den leveln katten har dött
-
-	public boolean wallHit(BlockMap bMap, Player1 pl) {
-		float rightPos = pl.getPlayerBox().getMaxX();
-		float topPos = pl.getPlayerBox().getMinY() + 8;
-		float bottomPos = pl.getPlayerBox().getMaxY() - 8;
-
-		for (int i = 0; i < bMap.getEntities().size(); i++) {
-			Block entity1 = bMap.getEntities().get(i);
-			if (rightPos < entity1.getPoly().getMinX() + 5
-					&& rightPos > entity1.getPoly().getMinX() - 5) {
-				if (topPos > entity1.getPoly().getMinY()
-						&& topPos < entity1.getPoly().getMaxY()
-						|| bottomPos > entity1.getPoly().getMinY()
-						&& bottomPos < entity1.getPoly().getMaxY()) {
-
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 }
