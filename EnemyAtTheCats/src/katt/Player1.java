@@ -140,9 +140,8 @@ public class Player1 implements Runnable {
 				jumps++;
 				jumping = new Thread(this);
 				jumping.start();
-				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("jump");
-				}
+
 			}
 			setOnGround(false);
 		}
@@ -153,9 +152,9 @@ public class Player1 implements Runnable {
 				jumps++;
 				jumping = new Thread(this);
 				jumping.start();
-				if (StateHandler.soundsOn) {
+
 					StateHandler.soundBank.playSound("jump");
-				}
+
 				setOnGround(false);
 			}
 		}
@@ -167,11 +166,13 @@ public class Player1 implements Runnable {
 		if (input.isKeyPressed(Input.KEY_S)) {
 			if (StateHandler.musicOn) {
 				StateHandler.musicOn = false;
+				StateHandler.soundsOn = false;
 				if (StateHandler.bgm.playing()) {
 					StateHandler.bgm.stop();
 				}
 			} else {
 				StateHandler.musicOn = true;
+				StateHandler.soundsOn = true;
 				StateHandler.bgm.loop();
 			}
 		}

@@ -250,9 +250,8 @@ public class TheGame extends BasicGameState {
 			}
 
 			if (objectCollide(players[x], pointObject.getRectangle())) {
-				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("crush");
-				}
+
 
 				players[x].setPlayerScore(players[x].getPlayerScore() + pointObject.getValue());
 				movePoint = true;
@@ -265,9 +264,8 @@ public class TheGame extends BasicGameState {
 			}
 			
 			if (objectCollide(players[x], lifeObject.getRectangle())) {
-				if (StateHandler.soundsOn) {
 					StateHandler.soundBank.playSound("happy");
-				}
+
 				moveLife = true;
 				players[x].setPlayerlife(players[x].getPlayerlife() + 1);
 				lifeObject.newObjectPosLong();
@@ -290,9 +288,9 @@ public class TheGame extends BasicGameState {
 
 			if (objectCollide(players[x],gEnemy.getRectangle())) {
 				input.clearKeyPressedRecord();
-				if (StateHandler.soundsOn) {
+
 					StateHandler.soundBank.playSound("crash");
-				}
+
 				players[x].loosePlayerLife();
 				System.out.println("Träffade fiende");
 				players[x].setOnGround(true);
@@ -302,9 +300,8 @@ public class TheGame extends BasicGameState {
 			//Kontrollerar att inte alla raketdelar har passerat och om katten kolliderat med någon
 			if(rocketPart != null){
 			if (objectCollide(players[x], rocketPart.getRectangle())){
-				if(StateHandler.soundsOn = true){
-					StateHandler.soundBank.playSound("Harp1");
-				}
+   		     StateHandler.soundBank.playSound("Harp1");
+
 				//Sparar att raketdelen är tagen, i vår Array
 				rocketParts[rocketPart.getObjectType() - 7] =
 					true;
