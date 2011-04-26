@@ -24,32 +24,36 @@ public class Highscores
 		get();
 	}
 
-	public void check(Score nytt)
+	public String check(Score nytt)
 	{
 		Score highscore1 = high;
 		Score highscore2 = mid;
 		Score highscore3 = low;
+		String stemp = "";
 
 		if (nytt.getPoints() < low.getPoints())
 		{
 			System.out.print("Du lyckades tyvärr inte slå något nytt rekord");
+			stemp = "Du lyckades tyvärr inte slå något nytt rekord";
 		}
 
 		else if (nytt.getPoints() < mid.getPoints())
 		{
 			highscore3 = nytt;
+			stemp = "Du har lyckats att tagit dig upp på tredje plats!";
 		}
 
 		else if (nytt.getPoints() < high.getPoints())
 		{
 			highscore3 = highscore2;
 			highscore2 = nytt;
+			stemp = "Du har lyckats att tagit dig upp på andra plats!";
 		} else
 		{
 			highscore3 = highscore2;
 			highscore2 = highscore1;
 			highscore1 = nytt;
-
+			stemp = "Du har tagit dig till första plats!";
 		}
 
 		high = highscore1;
@@ -57,6 +61,8 @@ public class Highscores
 		low = highscore3;
 
 		write();
+		
+		return stemp;
 	}
 
 	public void write()

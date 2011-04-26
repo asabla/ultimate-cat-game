@@ -87,12 +87,9 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 		// Loopar igenom arraylisten
 		for(String s : highscores)
 		{
-			if(s.length() > 20){
 			g.drawString(pos + ": " + s, x, y);  //Renderar varje highscore som h‰mtas
 			y += 20;
 			pos++;
-			}
-			
 		}
 		
 		g.drawString(lokal, 400, 80);
@@ -119,7 +116,7 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		highscores = new ArrayList<String>();
-		highscores = db.getHighscoreToArrayList(10, false, false);
+		highscores = db.getHighscoreToArrayList(10, false, true);
 		hogsta = hs.tillString();
 	}
 

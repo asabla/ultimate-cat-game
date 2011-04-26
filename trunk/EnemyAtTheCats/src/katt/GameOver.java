@@ -40,6 +40,9 @@ public class GameOver extends BasicGameState implements ComponentListener {
 	private Image sendScore;
 	private Database db;
 	private Functions func;
+	private Highscores scores;
+	private String superName;
+	private Score ss;
 
 	public GameOver(int ID) {
 		super();
@@ -49,7 +52,7 @@ public class GameOver extends BasicGameState implements ComponentListener {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.drawString("Game Over", 300, 50);
+		
 		g.setBackground(Color.magenta);
 
 		areas[0].render(container, g);
@@ -65,7 +68,9 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		f_telefon.render(container, g);
 //		f_points.render(container, g);
 
+		g.drawString(superName, 280, 50);
 		g.setFont(myFont);
+		g.drawString("Game Over", 300, 20);
 		g.drawString(message, 200, 550);
 		
 		g.drawString(snabel, 355, 310);
@@ -166,6 +171,9 @@ public class GameOver extends BasicGameState implements ComponentListener {
 //		f_points = new TextField(container, myFont, 150, 390, 200, 35);
 		db = new Database();
 		func = new Functions();
+		scores = new Highscores();
+		ss = new Score(Long.parseLong(pscore));
+		superName = scores.check(ss);
 
 		f_namn.setText(func.getPlayerName()); // S‰tter spelarens namn fˆrdefinerat
 		f_email1.setText("mail"); // S‰tter spelarens email
