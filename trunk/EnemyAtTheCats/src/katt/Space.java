@@ -18,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Space extends BasicGameState {
 	private int ID = -1;
 	private StateBasedGame game;
-	private ParticleSystem smoke;
+	private ParticleSystem rocketFire;
 	private Player1[] players;
 	private static int time;
 	private Image cat;
@@ -46,7 +46,7 @@ public class Space extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		try {
-			smoke = ParticleIO.loadConfiguredSystem("data/smokeSystem.xml");
+			rocketFire = ParticleIO.loadConfiguredSystem("data/rocketSystem.xml");
 		} catch (IOException e) {
 			throw new SlickException("Failed to load particle systems", e);
 		}
@@ -86,7 +86,7 @@ public class Space extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		
-		cat = new Image("data/Img/cat3.png");
+		cat = new Image("data/Img/catRocket.png");
 		game.getState(StateHandler.theGame).render(container, game, g);
 		//g.drawImage(cat, catPosx, catPosy);
 			// ((ConfigurableEmitter)
@@ -113,9 +113,9 @@ public class Space extends BasicGameState {
 
 					g.drawImage(cat, startPx++, startPy--);
 					 ((ConfigurableEmitter)
-					 smoke.getEmitter(0)).setPosition((startPx + 25),
-					startPy + 40);
-					 smoke.render();
+					 rocketFire.getEmitter(0)).setPosition((startPx + 20),
+					startPy + 25);
+					 rocketFire.render();
 					if (startPx > slutPXv) {
 						gogo = true;
 					} else {
@@ -128,9 +128,9 @@ public class Space extends BasicGameState {
 					g.drawString("Bonus GAAAAAAAAAAMMMEEE", 200, 200);
 					g.drawImage(cat, startPx++, startPy--);
 					 ((ConfigurableEmitter)
-					 smoke.getEmitter(0)).setPosition((startPx + 25),
-				     startPy + 40);
-					smoke.render();
+					 rocketFire.getEmitter(0)).setPosition((startPx + 20),
+				     startPy + 25);
+					rocketFire.render();
 					if (startPx < slutPXh) {
 						gogo = false;
 					} else {
@@ -147,7 +147,7 @@ public class Space extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		
-		smoke.update(delta);
+		rocketFire.update(delta);
 		time += delta;
 		// TODO Auto-generated method stub
 

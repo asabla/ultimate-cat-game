@@ -176,6 +176,12 @@ public class Player1 implements Runnable {
 				StateHandler.bgm.loop();
 			}
 		}
+		if (input.isKeyPressed(Input.KEY_X)){
+			if(!currentAnimation.equals(rocket))
+				currentAnimation = rocket;
+			else
+				currentAnimation = run;
+		} 
 
 	}
 
@@ -409,6 +415,14 @@ public class Player1 implements Runnable {
 
 	public void setFrontHitBox(Rectangle frontHitBox) {
 		this.frontHitBox = frontHitBox;
+	}
+
+	public Animation getRocket() {
+		return rocket;
+	}
+
+	public void setRocket(Animation rocket) {
+		this.rocket = rocket;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.particles.ConfigurableEmitter;
 import org.newdawn.slick.particles.ParticleIO;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.state.BasicGameState;
@@ -21,7 +22,7 @@ public class TheGame extends BasicGameState {
 
 	private int mapWidth = 720;
 	private Polygon collisonBlock;
-	private ParticleSystem smoke;
+	private ParticleSystem rocketFire;
 	
 
 	private final float speedAcc = 0.2f;
@@ -199,7 +200,7 @@ public class TheGame extends BasicGameState {
 		}
 		
 
-//		smoke.update(delta);
+		rocketFire.update(delta);
 		time += delta; // Tilldelar tid till variabeln
 
 		pointObject.upDateXPos();
@@ -322,14 +323,13 @@ public class TheGame extends BasicGameState {
 			}
 			}
 			if(rocketAssembled() && !bonusPlayed){
-				//StateHandler.soundBank.playSound("spaceflight");
-				//game.enterState(StateHandler.space);
-				//spaceRide = true;
+				StateHandler.soundBank.playSound("spaceflight");
+				game.enterState(StateHandler.space);
+				spaceRide = true;
 				System.err.println("Bonus activated!");
 				bonusPlayed = true;
 			}
 		}
-		// System.out.print(input.);
 	}
 
 	/**
@@ -347,12 +347,12 @@ public class TheGame extends BasicGameState {
 					(int) posY);
 
 
-			blockMapRow[currentMap].drawHitBox(g, currentMapX);
-			blockMapRow[neighbourMap].drawHitBox(g, neighbourMapX);
+//			blockMapRow[currentMap].drawHitBox(g, currentMapX);
+//			blockMapRow[neighbourMap].drawHitBox(g, neighbourMapX);
 		}
 
 		
-//		 smoke.render();
+		rocketFire.render();
 		
 
 		// ********************************************************
@@ -368,7 +368,7 @@ public class TheGame extends BasicGameState {
 		if (moveLife) {
 			lifePoint = "1 UP";
 		}
-		// {
+		
 		// gogo är en koll att så den fortsätter tills den nåt max pos på X
 		// kollar om den har nått slutPy
 		if (startPy == slutPy) {
@@ -400,7 +400,7 @@ public class TheGame extends BasicGameState {
 				gogo = true;
 			}
 		}
-		// }
+
 
 		// ********************************************************
 
@@ -408,27 +408,20 @@ public class TheGame extends BasicGameState {
 
 		if (game.getState(StateHandler.theGame) == game.getCurrentState()) {
 			for (Player1 pl : players) {
+				if(pl.getCurrentAnimation().equals(pl.getRocket())){
+					((ConfigurableEmitter)
+						    rocketFire.getEmitter(0)).setPosition(pl.getPlayerX() + 25,
+									 pl.getPlayerY() + 25);
+				}
 				pl.updateAnimationSpeed();
 				g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
 						pl.getPlayerY());
-//				 ((ConfigurableEmitter)
-//				 smoke.getEmitter(0)).setPosition(pl.getPlayerX() + 30,
-//				 pl.getPlayerY() + 15);
-				g.draw(pl.getBottomHitBox());
-				g.draw(pl.getTopHitBox());
-				g.draw(pl.getFrontHitBox());
+
+//				g.draw(pl.getBottomHitBox());
+//				g.draw(pl.getTopHitBox());
+//				g.draw(pl.getFrontHitBox());
 			}
 		}
-		
-
-
-//		for (Player1 pl : players) {
-//			pl.updateAnimationSpeed();
-//			g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
-//					pl.getPlayerY());
-////			 ((ConfigurableEmitter)
-//			 smoke.getEmitter(0)).setPosition(pl.getPlayerX() + 30,
-//			 pl.getPlayerY() + 15);
 		
 
 			g.drawImage(pointObjectImage, pointObject.getxPos(),
@@ -458,6 +451,7 @@ public class TheGame extends BasicGameState {
 
 		g.drawString("Tid: " + this.time / 1000 + "sec", 450, 450);
 		g.drawString("Level: " + currentLevel, 550, 450);
+		
 		//Ritar ut bonusrutor, och de raketdelar som hittils är tagna
 		g.drawString("BONUS", 550, 40);
 		g.drawRect(550, 10, rocket1.getWidth(), rocket1.getHeight());
@@ -479,12 +473,8 @@ public class TheGame extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
 
-		// if(players[0].getJumping().isAlive()){
-		// players[0].getJumping().notify();
-		// }
-
 		try {
-			smoke = ParticleIO.loadConfiguredSystem("data/smokeSystem.xml");
+			rocketFire = ParticleIO.loadConfiguredSystem("data/rocketSystem.xml");
 		} catch (IOException e) {
 			throw new SlickException("Failed to load particle systems", e);
 		}
