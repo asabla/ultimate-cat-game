@@ -57,7 +57,12 @@ public class TheGame extends BasicGameState {
 	private boolean movePoint;
 	private boolean moveLife;
 	
-
+	//En raketdel
+	private PickupObject rocketPart;	
+	//en array som ska hålla tagna raketdelar
+	private boolean[] rocketParts;
+	//Variabel som håller reda på om bonusbanan är spelad
+	private boolean bonusPlayed;
 	/*
 	 * Deklaration av variablerna för spelets olika bakgrund bgLayerX - Olika
 	 * bakgrundslager float posXLayerX - Start position för bakgrundslagren
@@ -68,6 +73,12 @@ public class TheGame extends BasicGameState {
 	Image pointObjectImage = null;
 	Image lifeObjectImage = null;
 	Image gEnemyImage = null;
+	Image rocketPartImage = null;
+	
+	Image rocket1 = null;
+	Image rocket2 = null;
+	Image rocket3 = null;
+
 
 	public static float posY = 0;
 	float startPy;// start pos Y för i väg flygande objekt
@@ -141,6 +152,10 @@ public class TheGame extends BasicGameState {
 
 		pointObject = new PickupObject();
 		lifeObject = new PickupObject(0, 5000, 250);
+		
+		rocketPart = new PickupObject(7, 720, 300);		
+		rocketParts = new boolean[]{false, false, false};
+		bonusPlayed = false;
 
 		time = 1; // Startar spelet med 1sekund
 
@@ -149,6 +164,11 @@ public class TheGame extends BasicGameState {
 
 		pointObjectImage = new Image((String) pointObject.getImgLoc());
 		lifeObjectImage = new Image("data/Img/object0.png");
+		rocketPartImage = new Image((String) rocketPart.getImgLoc());
+		
+		rocket1 = new Image("data/Img/object7.png");
+		rocket2 = new Image("data/Img/object8.png");
+		rocket3 = new Image("data/Img/object9.png");
 
 		// mr = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_UP, 3);
 		rnd = new Random();
@@ -184,8 +204,10 @@ public class TheGame extends BasicGameState {
 
 		pointObject.upDateXPos();
 		lifeObject.upDateXPos();
-
 		gEnemy.upDateXPos();
+		if(rocketPart != null){
+			rocketPart.upDateXPos();
+			}
 
 		mapHandler();
 
@@ -276,6 +298,35 @@ public class TheGame extends BasicGameState {
 				players[x].setOnGround(true);
 				// newStartAfterCatHasPassedAway();
 				game.enterState(StateHandler.deadMenu);
+			}
+			//Kontrollerar att inte alla raketdelar har passerat och om katten kolliderat med någon
+			if(rocketPart != null){
+			if (objectCollide(players[x], rocketPart.getRectangle())){
+				if(StateHandler.soundsOn = true){
+					StateHandler.soundBank.playSound("Harp1");
+				}
+				//Sparar att raketdelen är tagen, i vår Array
+				rocketParts[rocketPart.getObjectType() - 7] =
+					true;
+				
+				if(rocketPart.getObjectType() >= 7 && rocketPart.getObjectType()<9){
+				rocketPart = new PickupObject(rocketPart.getObjectType() + 1, 
+						640, 300);
+				try{
+				rocketPartImage = new Image((String)rocketPart.getImgLoc());
+				}
+				catch(SlickException e){
+					System.out.println(e.getMessage());
+				}
+				}
+				else{
+					rocketPart = null;
+				}				
+			}
+			}
+			if(rocketAssembled() && !bonusPlayed){
+				System.err.println("Bonus activated!");
+				bonusPlayed = true;
 			}
 		}
 		// System.out.print(input.);
@@ -386,6 +437,10 @@ public class TheGame extends BasicGameState {
 					lifeObject.getyPos());
 
 			g.drawImage(gEnemyImage, gEnemy.getPosX(), gEnemy.getPosY());
+			
+			if(rocketPart != null){
+				g.drawImage(rocketPartImage, rocketPart.getxPos(), rocketPart.getyPos());
+				}
 
 		}
 
@@ -403,6 +458,20 @@ public class TheGame extends BasicGameState {
 
 		g.drawString("Tid: " + this.time / 1000 + "sec", 450, 450);
 		g.drawString("Level: " + currentLevel, 550, 450);
+		//Ritar ut bonusrutor, och de raketdelar som hittils är tagna
+		g.drawString("BONUS", 550, 40);
+		g.drawRect(550, 10, rocket1.getWidth(), rocket1.getHeight());
+		g.drawRect(590, 10, rocket1.getWidth(), rocket1.getHeight());
+		g.drawRect(630, 10, rocket1.getWidth(), rocket1.getHeight());
+		if(rocketParts[0] == true){
+			g.drawImage(rocket1, 550, 10);
+		}
+		if(rocketParts[1] == true){
+			g.drawImage(rocket2, 590, 10);
+		}		
+		if(rocketParts[2] == true){
+			g.drawImage(rocket3, 630, 10);
+		}
 		}
 	
 
@@ -606,6 +675,18 @@ public class TheGame extends BasicGameState {
 			return false;
 		}
 	}
+	//Kontrollerar om raketen är ihopsatt
+	private boolean rocketAssembled(){
+		if(rocketParts[0] == true && 
+				rocketParts[1] == true &&
+				rocketParts[2] == true){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 
 	/**
 	 * Handels the moving, buffering and looping of maps. Update positions of collisionblocks
