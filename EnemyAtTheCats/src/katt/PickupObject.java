@@ -145,7 +145,7 @@ public class PickupObject{
 
 	public void upDateXPos() {
 		//Om poängobjekt åker utanför skärmen så ska de sättas på en ny position
-		if (xPos > - width) {
+		if (xPos > -width) {
 			xPos -= TheGame.gameSpeed;
 			rectangle.setX(xPos);
 
@@ -154,19 +154,14 @@ public class PickupObject{
 			 if(objectType < 7){
 			newObjectPos();
 			 }
-			 //om objektet är en raketdel, och inte den sista av raketdelar
-			 else if(objectType >= 7 && objectType < 9){
-				 objectType++;
-				 value = objectType * 1000;
-				 newObjectPos();
-			 }
-			 //om objektet är sista raketdelen som åkt utanför skärmen ska den stanna där
-			 else if(objectType == 9){
-				 xPos = (-width -50);
-			 }
 		}
 		
 		
+	}
+	
+	public void upDatePartPos(){
+		xPos -= TheGame.gameSpeed;
+		rectangle.setX(xPos);
 	}
 
 	public void setWidth(float width) {
