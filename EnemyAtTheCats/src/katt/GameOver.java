@@ -30,10 +30,12 @@ public class GameOver extends BasicGameState implements ComponentListener {
 	private int ID = -1;
 	private UnicodeFont myFont;
 	private TextField f_namn;
-	private TextField f_email;
+	private TextField f_email1;
+	private TextField f_email2;
 	private TextField f_telefon;
 	private TextField f_points;
 	private String message = "google";
+	private String snabel = "@";
 	private static String pscore;
 	private Image sendScore;
 	private Database db;
@@ -53,20 +55,26 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		areas[1].render(container, g);
 		areas[2].render(container, g);
 
-		// myFont.drawString(0,0,"test"); //Går att använda fonten till att
+		// myFont.drawString(0,0,"test"); //GÂr att anv‰nda fonten till att
 		// skriva ut
 
 		f_namn.render(container, g);
-		f_email.render(container, g);
+		f_email1.render(container, g);
+		f_email2.render(container, g);
 		f_telefon.render(container, g);
-		f_points.render(container, g);
+//		f_points.render(container, g);
 
 		g.setFont(myFont);
 		g.drawString(message, 200, 550);
+		
+		g.drawString(snabel, 355, 310);
+		g.drawString(pscore, 150, 390);
 	}
 
 	@Override
 	public void componentActivated(AbstractComponent source) {
+		
+		
 		if (source == areas[0]) {
 			StateHandler.paused = false;
 			StateHandler.dead = false;
@@ -76,17 +84,20 @@ public class GameOver extends BasicGameState implements ComponentListener {
 			game.enterState(StateHandler.menu);
 		}
 		if (source == areas[2]) {
-			int tmp = Integer.parseInt(f_points.getText()); // Parsar om texten
-															// ifrån highscore
+			int tmp = Integer.parseInt(pscore); // Parsar om texten
+			String mail = f_email1.getText() + "@" + f_email2.getText();												// ifrÂn highscore
 															// till en int
-			db.sendHighscore(f_namn.getText(), tmp, f_email.getText(),
+			db.sendHighscore(f_namn.getText(), tmp, mail,
 					f_telefon.getText()); // Testar att skicka in resultatet
 		}
 
 		if (source == f_namn) {
-			f_email.setFocus(true);
+			f_email1.setFocus(true);
 		}
-		if (source == f_email) {
+		if (source == f_email1) {
+			f_email2.setFocus(true);
+		}
+		if(source == f_email2);{
 			f_telefon.setFocus(true);
 		}
 		if (source == f_telefon) {
@@ -148,17 +159,19 @@ public class GameOver extends BasicGameState implements ComponentListener {
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		f_namn = new TextField(container, myFont, 150, 270, 200, 35);
-		f_email = new TextField(container, myFont, 150, 310, 200, 35);
+		f_email1 = new TextField(container, myFont, 150, 310, 200, 35);
+		f_email2 = new TextField(container, myFont, 385, 310, 200, 35);
 		f_telefon = new TextField(container, myFont, 150, 350, 200, 35);
-		f_points = new TextField(container, myFont, 150, 390, 200, 35);
+//		f_points = new TextField(container, myFont, 150, 390, 200, 35);
 		db = new Database();
 
-		f_namn.setText("Gurkmannen"); // Sätter spelarens namn fördefinerat
-		f_email.setText("enMain@mm.se"); // Sätter spelarens email
-		f_telefon.setText("324-234234"); // Sätter spelarens telefon
-		f_points.setText(GameOver.pscore); // Hämtar spelarens poäng när denne
-											// förlorar
-		f_namn.setFocus(true);
+		f_namn.setText("Gurkmannen"); // S‰tter spelarens namn fˆrdefinerat
+		f_email1.setText("mail"); // S‰tter spelarens email
+		f_email2.setText("gmail.com");//Sätter vad som ska stå efter @
+		f_telefon.setText("324-234234"); // S‰tter spelarens telefon
+//		f_points.setText(GameOver.pscore); // H‰mtar spelarens po‰ng n‰r denne
+										   // fˆrlorar
+//		f_namn.setFocus(true);
 	}
 
 	@Override
@@ -171,13 +184,13 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		UnicodeFont font = new UnicodeFont(new Font(fontName, Font.PLAIN,
 				fontSize));
 		font.addGlyphs("@");
-		font.getEffects().add(new ColorEffect(java.awt.Color.white)); // Måste
+		font.getEffects().add(new ColorEffect(java.awt.Color.white)); // MÂste
 																		// vara
 																		// minst
 																		// en
 																		// effekt
 																		// aktiverad
-																		// för
+																		// fˆr
 																		// att
 																		// det
 																		// ska

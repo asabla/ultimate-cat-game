@@ -24,6 +24,9 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	private Image backOver = null;
 	private MouseOverArea[] areas = new MouseOverArea[2];
 	private StateBasedGame game;
+	private Highscores hs;
+	
+	private String hogsta;
 	
 
 	public Menu_Highscore(int ID)
@@ -32,6 +35,9 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 		this.ID = ID;
 		
 		db = new Database();
+		hs = new Highscores();
+		
+		
 		
 	}
 	
@@ -45,10 +51,10 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	{
 		this.game = game;
 		back = new Image("data/Img/tillbaka1.png");  //Tillbakaknappen
-		backOver = new Image("data/Img/tillbaka2.png");  //Om musen är över så byter bild
+		backOver = new Image("data/Img/tillbaka2.png");  //Om musen ‰r ˆver sÂ byter bild
 		
 		
-		//Lägger alla bilder i en array, samt definerar areas och bildernas position. Samt storlek på mouse over
+		//L‰gger alla bilder i en array, samt definerar areas och bildernas position. Samt storlek pÂ mouse over
 		for (int i = 0; i < 2; i++)
 		{
 			if(i == 0)
@@ -62,11 +68,11 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException
 	{
-		g.setBackground(Color.blue); //Sätter bakgrundsfärg
+		g.setBackground(Color.blue); //S‰tter bakgrundsf‰rg
 		for(int i = 0; i < areas.length; i++)
 		{
 			//renderar knappen
-			areas[0].render(container, g); //Skall vara i istället för noll om det finns fler knappar
+			areas[0].render(container, g); //Skall vara i ist‰llet fˆr noll om det finns fler knappar
 		}
 		
 		//integers som beskriver vart texten skall renderas
@@ -74,13 +80,24 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 		int y = 100;
 		int pos = 1;
 		
+		String global = "Globalt:";
+		String lokal = "Lokalt:";
+		
+		g.drawString(global, 100, 80);
 		// Loopar igenom arraylisten
 		for(String s : highscores)
 		{
-			g.drawString(pos + ": " + s, x, y);  //Renderar varje highscore som hämtas
+			if(s.length() > 20){
+			g.drawString(pos + ": " + s, x, y);  //Renderar varje highscore som h‰mtas
 			y += 20;
 			pos++;
+			}
+			
 		}
+		
+		g.drawString(lokal, 400, 80);
+		g.drawString(hogsta, 400, 100);
+		
 	}
 
 	@Override
@@ -92,7 +109,7 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	@Override
 	public void componentActivated(AbstractComponent source)
 	{
-		// Används för att kontrollera om användare klickar på någon av knapparna
+		// Anv‰nds fˆr att kontrollera om anv‰ndare klickar pÂ nÂgon av knapparna
 		if (source == areas[0])//Nytt spel
 		{
 			game.enterState(StateHandler.menu);
@@ -103,6 +120,7 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		highscores = new ArrayList<String>();
 		highscores = db.getHighscoreToArrayList(10, false);
+		hogsta = hs.tillString();
 	}
 
 	@Override
