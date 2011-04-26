@@ -12,7 +12,7 @@ public class Player1 implements Runnable {
 	private Polygon playerBox;
 	private float playerX, playerY;
 	private int spriteSizeX, spriteSizeY;
-	private Animation run, jump, fall;
+	private Animation run, jump, fall, rocket;
 	private Animation currentAnimation;
 	private int jumps;
 	private Thread jumping;
@@ -40,6 +40,8 @@ public class Player1 implements Runnable {
 		this.run = createAnimation(pngDir, spriteSizeX, spriteSizeY, 6, 40,0);
 		this.jump = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 1, 40, 1);
 		this.fall = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 1, 40, 2);
+		this.rocket = createAnimation(pngDir, spriteSizeX, spriteSizeY + 10, 1, 40, 3);
+		
 		this.jumpControl = jumpControl;
 		this.currentAnimation = run;
 
@@ -177,7 +179,7 @@ public class Player1 implements Runnable {
 	}
 
 	public void jump() {
-		float jumpPower = -15f;
+		float jumpPower = -14f;
 		float sleep = 26f - TheGame.gameSpeed*2.2f;
 		// Jumping begins
 
