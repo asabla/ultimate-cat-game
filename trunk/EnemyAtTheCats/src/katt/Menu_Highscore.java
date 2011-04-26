@@ -119,7 +119,7 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		highscores = new ArrayList<String>();
-		highscores = db.getHighscoreToArrayList(10, false);
+		highscores = db.getHighscoreToArrayList(10, false, false);
 		hogsta = hs.tillString();
 	}
 

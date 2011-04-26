@@ -50,7 +50,7 @@ public class Menu extends BasicGameState implements ComponentListener {
 		if (source == areas[1])// Visa Highscore - INTE KLAR
 		{
 			Menu_Highscore hs = new Menu_Highscore(StateHandler.highscore);
-			hs.setHighscores(db.getHighscoreToArrayList(10, false));
+			hs.setHighscores(db.getHighscoreToArrayList(10, false, false));
 
 			game.enterState(StateHandler.highscore);
 		}
