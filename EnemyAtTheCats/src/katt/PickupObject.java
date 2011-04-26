@@ -8,10 +8,12 @@ import org.newdawn.slick.Image;
  * 
  */
 
-public class PickupObject {
+public class PickupObject{
 	/*
-	 * objectType = typ av objekt. Ett heltal mellan 0-9 där 0=livobjekt1-9 =
-	 * poängobjekt av olika värden (*1000)xPos = objektets position i våglängd
+	 * objectType = typ av objekt. Ett heltal mellan 0-9 där 0=livobjekt 1-6 =
+	 * poängobjekt av olika värden (*1000)
+	 * 7-9 = raketdelar
+	 * xPos = objektets position i våglängd
 	 * yPos = objektets position i höjdlängdvalue = objektets värde
 	 */
 	private int objectType;
@@ -21,6 +23,7 @@ public class PickupObject {
 	private Random r;
 	private String imgLoc;
 	private Rectangle rectangle;
+	private float width;
 
 	// Skapar ett objekt av slumpmässig typ(ej livobjekt) på en slumpmässig
 	// plats
@@ -41,6 +44,7 @@ public class PickupObject {
 			Image i = new Image((String) imgLoc);
 			rectangle = new Rectangle(xPos + 4, yPos + 4, i.getWidth() - 8,
 					i.getHeight() - 8);
+			width = i.getWidth();
 		} catch (Exception e) {
 		}
 
@@ -62,11 +66,8 @@ public class PickupObject {
 		this.xPos = xPos;
 		this.yPos = yPos;
 
-		if (type >= 0 && type <= 3) {
-			objectType = type;
-		} else {
-			objectType = 3;
-		}
+		objectType = type;
+
 
 		if (objectType > 0) {
 			value = objectType * 1000;
@@ -143,12 +144,36 @@ public class PickupObject {
 	}
 
 	public void upDateXPos() {
-		if (xPos > -5) {
+		//Om poängobjekt åker utanför skärmen så ska de sättas på en ny position
+		if (xPos > - width) {
 			xPos -= TheGame.gameSpeed;
 			rectangle.setX(xPos);
 
-		} else {
+		} else{
+			//Kontrollerar om objektet inte är en raketdel
+			 if(objectType < 7){
 			newObjectPos();
+			 }
+			 //om objektet är en raketdel, och inte den sista av raketdelar
+			 else if(objectType >= 7 && objectType < 9){
+				 objectType++;
+				 value = objectType * 1000;
+				 newObjectPos();
+			 }
+			 //om objektet är sista raketdelen som åkt utanför skärmen ska den stanna där
+			 else if(objectType == 9){
+				 
+			 }
 		}
+		
+		
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public float getWidth() {
+		return width;
 	}
 }
