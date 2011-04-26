@@ -22,7 +22,6 @@ public class TheGame extends BasicGameState {
 
 	private int mapWidth = 720;
 	private Polygon collisonBlock;
-	private ParticleSystem rocketFire;
 	
 
 	private final float speedAcc = 0.2f;
@@ -199,8 +198,6 @@ public class TheGame extends BasicGameState {
 			spaceRide = true;
 		}
 		
-
-		rocketFire.update(delta);
 		time += delta; // Tilldelar tid till variabeln
 
 		pointObject.upDateXPos();
@@ -350,8 +347,6 @@ public class TheGame extends BasicGameState {
 		}
 
 		
-		rocketFire.render();
-		
 
 		// ********************************************************
 
@@ -465,12 +460,6 @@ public class TheGame extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
-
-		try {
-			rocketFire = ParticleIO.loadConfiguredSystem("data/rocketSystem.xml");
-		} catch (IOException e) {
-			throw new SlickException("Failed to load particle systems", e);
-		}
 
 		if (StateHandler.musicOn) {
 			StateHandler.bgm.loop();
