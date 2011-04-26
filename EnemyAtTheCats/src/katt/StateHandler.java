@@ -24,7 +24,7 @@ public final class StateHandler extends StateBasedGame {
 	public static boolean dead;
 
 	public StateHandler() throws SlickException {
-		super("Det bra spelet");
+		super("Ett spel av katter, om katter, för katter, med KLÖS!");
 		soundsOn = true;
 		musicOn = true;
 		paused = false;
