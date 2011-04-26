@@ -7,6 +7,10 @@ public class Highscores {
 	private Score high = null;
 	private Score mid = null;
 	private Score low = null;
+	
+	private String hi;
+	private String mi;
+	private String lo;
 
 	/**
 	 * @param args
@@ -24,7 +28,7 @@ public class Highscores {
 		Score highscore3 = low;
 
 		if (nytt.getPoints() < low.getPoints()) {
-			System.out.print("Du lyckades tyvŠrr inte slŒ nŒgot nytt rekord");
+			System.out.print("Du lyckades tyvärr inte slå något nytt rekord");
 		}
 
 		else if (nytt.getPoints() < mid.getPoints()) {
@@ -166,17 +170,28 @@ public class Highscores {
 	}
 
 	public void printIn() {
-		System.out.println("Värden in:");
+		System.out.println("V‰rden in:");
 		System.out.println(high.getName() + " : " + high.getPoints());
 		System.out.println(mid.getName() + " : " + mid.getPoints());
 		System.out.println(low.getName() + " : " + low.getPoints());
 	}
 
 	public void printUt() {
-		System.out.println("Värden ut:");
+		System.out.println("V‰rden ut:");
 		System.out.println(high.getName() + " : " + high.getPoints());
 		System.out.println(mid.getName() + " : " + mid.getPoints());
 		System.out.println(low.getName() + " : " + low.getPoints());
+	}
+	
+	public String tillString() {
+		
+		get();
+		hi = (high.getName() + " : " + high.getPoints());
+		mi = (mid.getName() + " : " + mid.getPoints());
+		lo = (low.getName() + " : " + low.getPoints());
+		
+		
+		return hi + "\n" + mi + "\n" + lo;
 	}
 
 }
