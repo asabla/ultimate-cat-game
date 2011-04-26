@@ -162,7 +162,7 @@ public class PickupObject{
 			 }
 			 //om objektet är sista raketdelen som åkt utanför skärmen ska den stanna där
 			 else if(objectType == 9){
-				 
+				 xPos = -30;
 			 }
 		}
 		
