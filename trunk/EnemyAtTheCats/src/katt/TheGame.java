@@ -338,8 +338,6 @@ public class TheGame extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		drawBackgrounds();
 
-		Input input = container.getInput();
-
 		if (game.getState(StateHandler.theGame) == game.getCurrentState()) {
 			blockMapRow[currentMap].getTmap().render((int) currentMapX,
 					(int) posY);
@@ -408,11 +406,6 @@ public class TheGame extends BasicGameState {
 
 		if (game.getState(StateHandler.theGame) == game.getCurrentState()) {
 			for (Player1 pl : players) {
-				if(pl.getCurrentAnimation().equals(pl.getRocket())){
-					((ConfigurableEmitter)
-						    rocketFire.getEmitter(0)).setPosition(pl.getPlayerX() + 25,
-									 pl.getPlayerY() + 25);
-				}
 				pl.updateAnimationSpeed();
 				g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
 						pl.getPlayerY());
