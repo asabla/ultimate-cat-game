@@ -2,12 +2,13 @@ package katt;
 
 import java.io.*;
 
-public class Highscores {
+public class Highscores
+{
 
 	private Score high = null;
 	private Score mid = null;
 	private Score low = null;
-	
+
 	private String hi;
 	private String mi;
 	private String lo;
@@ -15,30 +16,36 @@ public class Highscores {
 	/**
 	 * @param args
 	 */
-	public Highscores() {
+	public Highscores()
+	{
 		// this.high = high;
 		// this.mid = mid;
 		// this.low = low;
 
 	}
 
-	public void check(Score nytt) {
+	public void check(Score nytt)
+	{
 		Score highscore1 = high;
 		Score highscore2 = mid;
 		Score highscore3 = low;
 
-		if (nytt.getPoints() < low.getPoints()) {
+		if (nytt.getPoints() < low.getPoints())
+		{
 			System.out.print("Du lyckades tyvärr inte slå något nytt rekord");
 		}
 
-		else if (nytt.getPoints() < mid.getPoints()) {
+		else if (nytt.getPoints() < mid.getPoints())
+		{
 			highscore3 = nytt;
 		}
 
-		else if (nytt.getPoints() < high.getPoints()) {
+		else if (nytt.getPoints() < high.getPoints())
+		{
 			highscore3 = highscore2;
 			highscore2 = nytt;
-		} else {
+		} else
+		{
 			highscore3 = highscore2;
 			highscore2 = highscore1;
 			highscore1 = nytt;
@@ -52,9 +59,11 @@ public class Highscores {
 		write();
 	}
 
-	public void write() {
+	public void write()
+	{
 
-		try {
+		try
+		{
 
 			FileOutputStream fos1 = new FileOutputStream("data/score1.tmp");
 			ObjectOutputStream oos1 = new ObjectOutputStream(fos1);
@@ -70,10 +79,12 @@ public class Highscores {
 			oos1.close();
 			oos2.close();
 			oos3.close();
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e)
+		{
 			// TODO Auto-generated catch block
 			System.out.print("Filen saknas");
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			System.out.print("IOException");
 		}
@@ -81,9 +92,11 @@ public class Highscores {
 
 	}
 
-	public void write(Score noll) {
+	public void write(Score noll)
+	{
 
-		try {
+		try
+		{
 
 			FileOutputStream fos1 = new FileOutputStream("data/score1.tmp");
 			ObjectOutputStream oos1 = new ObjectOutputStream(fos1);
@@ -99,19 +112,23 @@ public class Highscores {
 			oos1.close();
 			oos2.close();
 			oos3.close();
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e)
+		{
 			// TODO Auto-generated catch block
 			System.out.print("Filen saknas");
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			System.out.print("IOException");
 		}
 		get();
 	}
 
-	public void get() {
+	public void get()
+	{
 
-		try {
+		try
+		{
 
 			FileInputStream fis1 = new FileInputStream("data/score1.tmp");
 			ObjectInputStream ois1 = new ObjectInputStream(fis1);
@@ -128,24 +145,29 @@ public class Highscores {
 			ois2.close();
 			ois3.close();
 
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	public void reset() {
+	public void reset()
+	{
 
 		Score noll = new Score(0l);
 
-		try {
+		try
+		{
 			FileOutputStream fos1 = new FileOutputStream("data/score1.tmp");
 			ObjectOutputStream oos1 = new ObjectOutputStream(fos1);
 			FileOutputStream fos2 = new FileOutputStream("data/score2.tmp");
@@ -162,36 +184,62 @@ public class Highscores {
 			oos3.close();
 		}
 
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			System.out.print("FEL");
 		}
 		printUt();
 
 	}
 
-	public void printIn() {
+	public void printIn()
+	{
 		System.out.println("V‰rden in:");
 		System.out.println(high.getName() + " : " + high.getPoints());
 		System.out.println(mid.getName() + " : " + mid.getPoints());
 		System.out.println(low.getName() + " : " + low.getPoints());
 	}
 
-	public void printUt() {
+	public void printUt()
+	{
 		System.out.println("V‰rden ut:");
 		System.out.println(high.getName() + " : " + high.getPoints());
 		System.out.println(mid.getName() + " : " + mid.getPoints());
 		System.out.println(low.getName() + " : " + low.getPoints());
 	}
-	
-	public String tillString() {
-		
+
+	public String tillString()
+	{
+
 		get();
 		hi = (high.getName() + " : " + high.getPoints());
 		mi = (mid.getName() + " : " + mid.getPoints());
 		lo = (low.getName() + " : " + low.getPoints());
-		
-		
+
 		return hi + "\n" + mi + "\n" + lo;
 	}
-
+	
+	public String getHigh()
+	{
+		get();
+		hi = (high.getName() + " : " + high.getPoints());
+		
+		return hi;
+	}
+	
+	public String getMid()
+	{
+		get();
+		mi = (mid.getName() + " : " + mid.getPoints());
+		
+		return mi;
+	}
+	
+	public String getLow()
+	{
+		get();
+		lo = (low.getName() + " : " + low.getPoints());
+		
+		return lo;
+	}
 }
