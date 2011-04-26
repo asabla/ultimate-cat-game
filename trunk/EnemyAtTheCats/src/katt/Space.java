@@ -23,9 +23,10 @@ public class Space extends BasicGameState {
 	private static int time;
 	private Image cat;
 	private boolean gogo;
-	
+	private Image[] bonusGame;
 	private float catPosy;
 	private float catPosx;
+	private int count = 0;
 	
 	float startPy;// start pos Y för i väg flygande objekt
 	float startPx;// start pos X för i väg flygande objekt
@@ -45,6 +46,7 @@ public class Space extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
+		
 		try {
 			rocketFire = ParticleIO.loadConfiguredSystem("data/rocketSystem.xml");
 		} catch (IOException e) {
@@ -65,6 +67,15 @@ public class Space extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
+		bonusGame = new Image[3];
+	    try{
+	    	bonusGame[0] = new Image("data/Img/bonusgame.png");
+			bonusGame[1] = new Image("data/Img/bonusgame2.png");
+			bonusGame[2] = new Image("data/Img/bonusgame3.png");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		time = 1;
 		startPy = 400;
 		startPx = 200; 
@@ -82,33 +93,27 @@ public class Space extends BasicGameState {
 
 	}
 
+
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		
+		
+		
 		cat = new Image("data/Img/catRocket.png");
 		game.getState(StateHandler.theGame).render(container, game, g);
-		//g.drawImage(cat, catPosx, catPosy);
-			// ((ConfigurableEmitter)
-				//	 smoke.getEmitter(0)).setPosition((startPx + 30),
-					//			slutPy + 15);
+		g.drawImage(bonusGame[count], 200, 150);
+	
  //****************************************************************************************
 			 if (startPy == slutPy) {
 
-//					g.drawImage(cat, startPx, slutPy);
-//					 ((ConfigurableEmitter)
-//					 smoke.getEmitter(0)).setPosition((startPx + 30),
-//					 slutPy + 15);
-					 
-//					startPy = 400f;
-//					startPx = 200f;
 
 				}
 				// Kollar att den den inte gått för mycket åt höger, körs tills den
 				// når slutPXH = den högra gränsen på X
 				else if (startPx > slutPXh || (gogo)) {
 					
-					g.drawString("Bonus GAAAAAAAAAAMMMEEE", 200, 200);
+				
 					
 
 					g.drawImage(cat, startPx++, startPy--);
@@ -125,7 +130,7 @@ public class Space extends BasicGameState {
 				// Kollar att den den inte gått för mycket åt vänster, körs tills
 				// den når slutPXv = den vänstra gränsen på X
 				else if (startPx < slutPXv || (!gogo)) {
-					g.drawString("Bonus GAAAAAAAAAAMMMEEE", 200, 200);
+					
 					g.drawImage(cat, startPx++, startPy--);
 					 ((ConfigurableEmitter)
 					 rocketFire.getEmitter(0)).setPosition((startPx + 20),
@@ -146,7 +151,10 @@ public class Space extends BasicGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		
+		count++;
+		if (count > 2){
+			count = 0;
+		}
 		rocketFire.update(delta);
 		time += delta;
 		// TODO Auto-generated method stub
