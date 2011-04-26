@@ -325,6 +325,8 @@ public class TheGame extends BasicGameState {
 			}
 			}
 			if(rocketAssembled() && !bonusPlayed){
+				//game.enterState(StateHandler.space);
+				//spaceRide = true;
 				System.err.println("Bonus activated!");
 				bonusPlayed = true;
 			}
