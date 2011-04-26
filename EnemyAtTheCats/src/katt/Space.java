@@ -73,7 +73,7 @@ public class Space extends BasicGameState {
 			bonusGame[1] = new Image("data/Img/bonusgame2.png");
 			bonusGame[2] = new Image("data/Img/bonusgame3.png");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		time = 1;
@@ -82,14 +82,12 @@ public class Space extends BasicGameState {
 		slutPy = startPy - 500f;
 		slutPXh = startPx + 40f;
 		slutPXv = startPx - 40f;
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void leave(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -661,7 +661,11 @@ public class TheGame extends BasicGameState {
 			return false;
 		}
 	}
-	//Kontrollerar om raketen är ihopsatt
+	/**
+	 * Kontrollerar om raketen är ihopsatt
+	 * @return true om alla delar är hittade
+	 * @author Viktor
+	 */
 	private boolean rocketAssembled(){
 		if(rocketParts[0] == true && 
 				rocketParts[1] == true &&
