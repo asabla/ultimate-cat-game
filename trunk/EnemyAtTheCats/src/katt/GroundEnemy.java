@@ -43,7 +43,7 @@ public class GroundEnemy extends EnemyObject {
 	// Uppdaterar fiendens position i sidled
 	public void upDateXPos() {
 		// Spelar upp ett hundljud när fienden kommer in i bild
-		if (getPosX() < 650 && getPosX() > 640 && StateHandler.soundsOn) {
+		if (getPosX() < 650 && getPosX() > 640) {
 			StateHandler.soundBank.playSound("dog1");
 		}
 		// När hunden kommit ur bild sätts den ut på en ny position
