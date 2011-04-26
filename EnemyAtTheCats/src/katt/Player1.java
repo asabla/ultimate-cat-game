@@ -125,6 +125,11 @@ public class Player1 implements Runnable {
 		}
 	}
 
+	/**
+	 *Handels the events when key-pressed
+	 *@param input target input from theGame.update
+	 *@author Oskar, Thomas 
+	 */
 	public void keyPressed(Input input) {
 
 		// UP
@@ -173,11 +178,11 @@ public class Player1 implements Runnable {
 
 	public void jump() {
 		float jumpPower = -15f;
-		float sleep = 21f - TheGame.gameSpeed;
+		float sleep = 26f - TheGame.gameSpeed*2.2f;
 		// Jumping begins
 
 		currentAnimation = jump;
-		while (!isOnGround) { // && !threadDone
+		while (!isOnGround) {
 
 			playerY += jumpPower; // Increment the jump
 			jumpPower++;
@@ -246,6 +251,9 @@ public class Player1 implements Runnable {
 		}
 	}
 
+	/**
+	 * Event when player dies. Reset position
+	 */
 	public void deadPlayer() {
 		// threadDone = true;
 		this.loosePlayerLife();
@@ -253,6 +261,16 @@ public class Player1 implements Runnable {
 		this.setPlayerY(200);
 	}
 
+	public void setLife(int life) {
+		// this.life = life;
+		try {
+			Thread.sleep(30);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void threadDone() {
 		// threadDone= false;
 	}
@@ -349,24 +367,6 @@ public class Player1 implements Runnable {
 		this.playerScore = playerScore;
 	}
 
-	public void setLife(int life) {
-		// this.life = life;
-		try {
-			Thread.sleep(30);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void run() {
-		if (!isOnGround)
-			jump();
-		else
-			fall();
-	}
-
 	public void setGravityEffect(float gravity) {
 		this.gravityEffect = gravity;
 
@@ -408,4 +408,11 @@ public class Player1 implements Runnable {
 		this.frontHitBox = frontHitBox;
 	}
 
+	@Override
+	public void run() {
+		if (!isOnGround)
+			jump();
+		else
+			fall();
+	}
 }
