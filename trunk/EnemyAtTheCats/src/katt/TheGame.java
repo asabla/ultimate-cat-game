@@ -325,6 +325,7 @@ public class TheGame extends BasicGameState {
 			}
 			}
 			if(rocketAssembled() && !bonusPlayed){
+				//StateHandler.soundBank.playSound("spaceflight");
 				//game.enterState(StateHandler.space);
 				//spaceRide = true;
 				System.err.println("Bonus activated!");
