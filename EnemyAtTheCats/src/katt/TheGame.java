@@ -204,20 +204,7 @@ public class TheGame extends BasicGameState {
 		lifeObject.upDateXPos();
 		gEnemy.upDateXPos();
 		if(rocketPart != null){
-			rocketPart.upDatePartPos();
-			if(rocketPart.getxPos()< -20){
-				if(rocketPart.getObjectType() < 9){
-				rocketPart = new PickupObject(rocketPart.getObjectType() + 1, 700, 300);
-				try{
-				rocketPartImage = new Image((String)rocketPart.getImgLoc());
-				}catch(Exception e){
-					System.err.print(e.getMessage());
-				}
-				}
-				else{
-					rocketPart = null;
-				}
-			}			
+			rocketPart.upDatePartPos();			
 			}
 		
 
@@ -316,23 +303,16 @@ public class TheGame extends BasicGameState {
 
 				//Sparar att raketdelen är tagen, i vår Array
 				rocketParts[rocketPart.getObjectType() - 7] =
-					true;
-				
+					true;				
 				if(rocketPart.getObjectType() >= 7 && rocketPart.getObjectType()<9){
-				rocketPart = new PickupObject(rocketPart.getObjectType() + 1, 
-						640, 300);
-				try{
-				rocketPartImage = new Image((String)rocketPart.getImgLoc());
-				}
-				catch(SlickException e){
-					System.out.println(e.getMessage());
-				}
+				rocketPart.setxPos(-60);
 				}
 				else{
 					rocketPart = null;
 				}				
 			}
 			}
+			
 			if(rocketAssembled() && !bonusPlayed){
 				StateHandler.soundBank.playSound("spaceflight");
 				game.enterState(StateHandler.space);
@@ -715,7 +695,19 @@ public class TheGame extends BasicGameState {
 
 			if (loopCount >= levelLength) {
 				if (gameSpeed + speedAcc <= 10) {
-					currentLevel++;
+					currentLevel++;					
+						if(rocketPart.getObjectType() < 9){
+						rocketPart = new PickupObject(rocketPart.getObjectType() + 1, 700, 300);
+						try{
+						rocketPartImage = new Image((String)rocketPart.getImgLoc());
+						}catch(Exception e){
+							System.err.print(e.getMessage());
+						}
+						}
+						else{
+							rocketPart = null;
+						}
+								
 					gameSpeed += speedAcc;
 					System.out.println("Currengamespeed: " + gameSpeed);
 				}
