@@ -39,6 +39,7 @@ public class GameOver extends BasicGameState implements ComponentListener {
 	private static String pscore;
 	private Image sendScore;
 	private Database db;
+	private Functions func;
 
 	public GameOver(int ID) {
 		super();
@@ -164,8 +165,9 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		f_telefon = new TextField(container, myFont, 150, 350, 200, 35);
 //		f_points = new TextField(container, myFont, 150, 390, 200, 35);
 		db = new Database();
+		func = new Functions();
 
-		f_namn.setText("Gurkmannen"); // S‰tter spelarens namn fˆrdefinerat
+		f_namn.setText(func.getPlayerName()); // S‰tter spelarens namn fˆrdefinerat
 		f_email1.setText("mail"); // S‰tter spelarens email
 		f_email2.setText("gmail.com");//Sätter vad som ska stå efter @
 		f_telefon.setText("324-234234"); // S‰tter spelarens telefon

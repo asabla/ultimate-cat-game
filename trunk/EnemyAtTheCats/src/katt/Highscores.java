@@ -21,7 +21,7 @@ public class Highscores
 		// this.high = high;
 		// this.mid = mid;
 		// this.low = low;
-
+		get();
 	}
 
 	public void check(Score nytt)

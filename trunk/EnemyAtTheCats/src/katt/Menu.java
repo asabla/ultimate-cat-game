@@ -6,9 +6,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.MouseOverArea;
+import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -22,11 +24,15 @@ public class Menu extends BasicGameState implements ComponentListener {
 	private StateBasedGame game;
 	private int ID = -1;
 	private Database db;
+	private Functions func;
+	private UnicodeFont myFont;
+	private TextField player_name;
 
 	public Menu(int ID) {
 		super();
 		this.ID = ID;
 		db = new Database();
+		func = new Functions();
 	}
 
 	@Override
@@ -36,6 +42,9 @@ public class Menu extends BasicGameState implements ComponentListener {
 		for (int i = 0; i < areas.length; i++) {
 			areas[i].render(container, g);
 		}
+		
+		player_name.render(container, g);
+		g.drawString("Ditt namn: ", 130, 300);
 	}
 
 	@Override
@@ -44,6 +53,7 @@ public class Menu extends BasicGameState implements ComponentListener {
 		{
 			StateHandler.paused = false;
 			StateHandler.dead = false;
+			func.setPlayerName(player_name.getText());
 			game.enterState(StateHandler.theGame);
 			// Player1.threadDone();
 		}
@@ -66,6 +76,10 @@ public class Menu extends BasicGameState implements ComponentListener {
 		newgameOver = new Image("data/Img/Nyttspel2.png");
 		Highscore = new Image("data/Img/highscore1.png");
 		HighscoreOver = new Image("data/Img/highscore2.png");
+		
+		myFont = func.setNewFont("Arial", 24);
+		player_name = new TextField(container, myFont, 130, 330, 200, 30);
+		player_name.setFocus(true);
 
 		// container.setMouseCursor("data/Img/cursor.png", 0, 0);
 
@@ -94,6 +108,8 @@ public class Menu extends BasicGameState implements ComponentListener {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		Input input = container.getInput();
+		myFont.loadGlyphs();
+		player_name.setFocus(true);
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			StateHandler.paused = true;
