@@ -22,6 +22,8 @@ public class TheGame extends BasicGameState {
 	private int mapWidth = 720;
 	private Polygon collisonBlock;
 	private ParticleSystem smoke;
+	
+
 	private final float speedAcc = 0.2f;
 
 	private static int time;
@@ -49,11 +51,12 @@ public class TheGame extends BasicGameState {
 
 	private Player1[] players;
 	private int playerCount;
-
+	private boolean spaceRide = false;
 	private GroundEnemy gEnemy;
 	private boolean gogo;
 	private boolean movePoint;
 	private boolean moveLife;
+	
 
 	/*
 	 * Deklaration av variablerna för spelets olika bakgrund bgLayerX - Olika
@@ -165,13 +168,18 @@ public class TheGame extends BasicGameState {
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput();
-
+		
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			players[0].setOnGround(true);
 			game.enterState(StateHandler.pause);
 		}
+		if(input.isKeyPressed(Input.KEY_U)){
+			game.enterState(StateHandler.space);
+			spaceRide = true;
+		}
+		
 
-		smoke.update(delta);
+//		smoke.update(delta);
 		time += delta; // Tilldelar tid till variabeln
 
 		pointObject.upDateXPos();
@@ -278,17 +286,23 @@ public class TheGame extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		drawBackgrounds();
+
+		Input input = container.getInput();
+
 		if (game.getState(StateHandler.theGame) == game.getCurrentState()) {
 			blockMapRow[currentMap].getTmap().render((int) currentMapX,
 					(int) posY);
 			blockMapRow[neighbourMap].getTmap().render((int) neighbourMapX,
 					(int) posY);
 
+
 			blockMapRow[currentMap].drawHitBox(g, currentMapX);
 			blockMapRow[neighbourMap].drawHitBox(g, neighbourMapX);
 		}
 
-		// smoke.render();
+		
+//		 smoke.render();
+		
 
 		// ********************************************************
 
@@ -338,18 +352,33 @@ public class TheGame extends BasicGameState {
 		// }
 
 		// ********************************************************
+
+		if(!spaceRide){
+
 		if (game.getState(StateHandler.theGame) == game.getCurrentState()) {
 			for (Player1 pl : players) {
 				pl.updateAnimationSpeed();
 				g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
 						pl.getPlayerY());
-				// ((ConfigurableEmitter)
-				// smoke.getEmitter(0)).setPosition(pl.getPlayerX() + 30,
-				// pl.getPlayerY() + 15);
+//				 ((ConfigurableEmitter)
+//				 smoke.getEmitter(0)).setPosition(pl.getPlayerX() + 30,
+//				 pl.getPlayerY() + 15);
 				g.draw(pl.getBottomHitBox());
 				g.draw(pl.getTopHitBox());
 				g.draw(pl.getFrontHitBox());
 			}
+		}
+		
+
+
+//		for (Player1 pl : players) {
+//			pl.updateAnimationSpeed();
+//			g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
+//					pl.getPlayerY());
+////			 ((ConfigurableEmitter)
+//			 smoke.getEmitter(0)).setPosition(pl.getPlayerX() + 30,
+//			 pl.getPlayerY() + 15);
+		
 
 			g.drawImage(pointObjectImage, pointObject.getxPos(),
 					pointObject.getyPos());
@@ -357,6 +386,7 @@ public class TheGame extends BasicGameState {
 					lifeObject.getyPos());
 
 			g.drawImage(gEnemyImage, gEnemy.getPosX(), gEnemy.getPosY());
+
 		}
 
 		// draw chosen player with current animation and current coordinate
@@ -373,8 +403,8 @@ public class TheGame extends BasicGameState {
 
 		g.drawString("Tid: " + this.time / 1000 + "sec", 450, 450);
 		g.drawString("Level: " + currentLevel, 550, 450);
-
-	}
+		}
+	
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
@@ -626,4 +656,5 @@ public class TheGame extends BasicGameState {
 		blockMapRow[neighbourMap].updateBlockMap(neighbourMapX, true);
 
 	}
+	
 }
