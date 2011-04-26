@@ -31,6 +31,7 @@ public class SFXBank {
 			soundMap.put("shake", new Sound("Data/Audio/SFXShake.ogg"));
 			soundMap.put("click", new Sound("Data/Audio/SFXClick.ogg"));
 			soundMap.put("dog1", new Sound("Data/Audio/SFXDogBark.ogg"));
+			soundMap.put("spaceflight", new Sound("Data/Audio/SFXSpaceFlight.ogg"));
 		} catch (SlickException e) {
 		}
 	}
@@ -45,7 +46,9 @@ public class SFXBank {
 	}
 
 	public void playSound(String key) {
+		if(StateHandler.soundsOn){
 		getSound(key).play();
+		}
 	}
 
 	/*
