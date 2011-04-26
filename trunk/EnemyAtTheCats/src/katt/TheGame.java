@@ -204,8 +204,22 @@ public class TheGame extends BasicGameState {
 		lifeObject.upDateXPos();
 		gEnemy.upDateXPos();
 		if(rocketPart != null){
-			rocketPart.upDateXPos();
+			rocketPart.upDatePartPos();
+			if(rocketPart.getxPos()< -20){
+				if(rocketPart.getObjectType() < 9){
+				rocketPart = new PickupObject(rocketPart.getObjectType() + 1, 700, 300);
+				try{
+				rocketPartImage = new Image((String)rocketPart.getImgLoc());
+				}catch(Exception e){
+					System.err.print(e.getMessage());
+				}
+				}
+				else{
+					rocketPart = null;
+				}
+			}			
 			}
+		
 
 		mapHandler();
 
