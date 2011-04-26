@@ -167,9 +167,9 @@ public class TheGame extends BasicGameState {
 		lifeObjectImage = new Image("data/Img/object0.png");
 		rocketPartImage = new Image((String) rocketPart.getImgLoc());
 		
-		rocket1 = new Image("data/Img/object7.png");
 		rocket2 = new Image("data/Img/object8.png");
 		rocket3 = new Image("data/Img/object9.png");
+		rocket1 = new Image("data/Img/object7.png");
 
 		// mr = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_UP, 3);
 		rnd = new Random();
