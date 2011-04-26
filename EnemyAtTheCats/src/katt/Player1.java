@@ -176,13 +176,6 @@ public class Player1 implements Runnable {
 				StateHandler.bgm.loop();
 			}
 		}
-		if (input.isKeyPressed(Input.KEY_X)){
-			if(!currentAnimation.equals(rocket))
-				currentAnimation = rocket;
-			else
-				currentAnimation = run;
-		} 
-
 	}
 
 	public void jump() {
