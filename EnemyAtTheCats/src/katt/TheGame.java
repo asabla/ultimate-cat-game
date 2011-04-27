@@ -805,9 +805,6 @@ public class TheGame extends BasicGameState {
 
 
 			if (getLoopCount() >= getLevelLength()) {
-
-			
-
 				if (gameSpeed + speedAcc <= 10) {
 					setCurrentLevel(getCurrentLevel() + 1);
 
