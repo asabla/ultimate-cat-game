@@ -25,6 +25,7 @@ public class Space extends BasicGameState {
 	private Image cat;
 	private boolean gogo;
 	private Image[] bonusGame;
+	private Image[] go;
 	private float catPosy;
 	private float catPosx;
 	private int count = 0;
@@ -32,6 +33,7 @@ public class Space extends BasicGameState {
 	private boolean inSpace;
 	private boolean outSpace;
 	private boolean sky;
+	private int goTestMove = 0;
 	float startPy;// start pos Y för i väg flygande objekt
 	float startPx;// start pos X för i väg flygande objekt
 	float slutPXv;// gräns för flygande objekt vänster
@@ -75,11 +77,17 @@ public class Space extends BasicGameState {
 		introSpace = false;
 		inSpace = false;
 		bonusGame = new Image[3];
+		go = new Image[3];
 	    try{
 	    	bonusGame[0] = new Image("data/Img/bonusgame.png");
 			bonusGame[1] = new Image("data/Img/bonusgame2.png");
 			bonusGame[2] = new Image("data/Img/bonusgame3.png");
+			go[0] = new Image("data/Img/go1.png");
+			go[1] = new Image("data/Img/go2.png");
+			go[2] = new Image("data/Img/go3.png");
 		} catch (SlickException e) {
+		
+			
 
 			e.printStackTrace();
 		}
@@ -90,7 +98,7 @@ public class Space extends BasicGameState {
 		slutPy = startPy - 500f;
 		slutPXh = startPx + 40f;
 		slutPXv = startPx - 40f;
-
+		
 	}
 
 	@Override
@@ -209,12 +217,12 @@ public class Space extends BasicGameState {
 					setOutSpace(true);
 				}
 				else{
-//				Imgage goText = new Image("")	
+ 	
 				Image spaceLayer1 =  new Image("data/Img/space1.png");
 				Image spaceLayer2 =  new Image("data/Img/planets1.png");
-//				g.drawImage(goText, 0, 0);
 				g.drawImage(spaceLayer1, 0, 0);
 				g.drawImage(spaceLayer2, 0, 0);
+				g.drawImage(go[count],goTestMove++ , 150);
 				g.drawImage(cat, startPx++, startPy--);
 				((ConfigurableEmitter)
 				rocketFire.getEmitter(0)).setPosition((startPx + 20),
