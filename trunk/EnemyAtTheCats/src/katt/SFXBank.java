@@ -32,6 +32,7 @@ public class SFXBank {
 			soundMap.put("click", new Sound("Data/Audio/SFXClick.ogg"));
 			soundMap.put("dog1", new Sound("Data/Audio/SFXDogBark.ogg"));
 			soundMap.put("spaceflight", new Sound("Data/Audio/SFXSpaceFlight.ogg"));
+			soundMap.put("spacedrop", new Sound("Data/Audio/SFXSpaceDropOut.ogg"));
 		} catch (SlickException e) {
 		}
 	}
