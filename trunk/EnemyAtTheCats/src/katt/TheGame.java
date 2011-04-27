@@ -208,7 +208,8 @@ public class TheGame extends BasicGameState {
 			players[0].setOnGround(true);
 			if(game.getCurrentState() == game.getState(StateHandler.THEGAME)){
 				players[0].setSpaceControl(true);
-				game.enterState(StateHandler.XTRALEVEL);
+				StateHandler.soundBank.playSound("spaceflight");
+				game.enterState(StateHandler.SPACE);
 			}
 			if(game.getCurrentState() == game.getState(StateHandler.XTRALEVEL)){
 				game.enterState(StateHandler.THEGAME);
@@ -512,7 +513,8 @@ public class TheGame extends BasicGameState {
 		}
 
 		if (StateHandler.paused) {
-					
+			StateHandler.paused = false;
+			
 			int playerX = (int) players[0].getPlayerX();
 			int playerY = (int) players[0].getPlayerY();
 			int playerLife = players[0].getPlayerlife();

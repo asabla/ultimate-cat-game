@@ -2,6 +2,7 @@ package katt;
 
 import java.io.IOException;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -40,6 +41,7 @@ public class Space extends BasicGameState {
 	
 		super();
 		this.ID = ID;
+		
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -100,6 +102,7 @@ public class Space extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		
+		g.setBackground(Color.white);
 		
 //		StateHandler.soundBank.playSound("spaceflight");
 		cat = new Image("data/Img/catRocket.png");
@@ -172,7 +175,7 @@ public class Space extends BasicGameState {
 		   }
 			if(inSpace){
 				if(startPy == 200){
-					
+					game.enterState(StateHandler.XTRALEVEL);
 				}
 				else{
 				Image spaceLayer1 =  new Image("data/Img/space1.png");
