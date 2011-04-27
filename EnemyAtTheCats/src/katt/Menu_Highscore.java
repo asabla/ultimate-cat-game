@@ -109,6 +109,7 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 		// Anv‰nds fˆr att kontrollera om anv‰ndare klickar pÂ nÂgon av knapparna
 		if (source == areas[0])//Nytt spel
 		{
+			StateHandler.soundBank.playSound("boing");
 			game.enterState(StateHandler.menu);
 		}
 	}
