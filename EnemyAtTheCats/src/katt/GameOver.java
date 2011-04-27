@@ -68,7 +68,7 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		f_telefon.render(container, g);
 //		f_points.render(container, g);
 
-		g.drawString(superName, 280, 50);
+		g.drawString(superName, 180, 50);
 		g.setFont(myFont);
 		g.drawString("Game Over", 300, 20);
 		g.drawString(message, 200, 550);
@@ -173,7 +173,8 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		func = new Functions();
 		scores = new Highscores();
 		ss = new Score(Long.parseLong(pscore));
-		superName = scores.check(ss);
+		ss.setName(func.getPlayerName());
+		superName = scores.check(ss); //Strängen används för att skriva ut info till spelaren
 
 		f_namn.setText(func.getPlayerName()); // S‰tter spelarens namn fˆrdefinerat
 		f_email1.setText("mail"); // S‰tter spelarens email
