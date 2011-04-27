@@ -58,10 +58,12 @@ public class TheGame extends BasicGameState {
 	private boolean movePoint;
 	private boolean moveLife;
 	
-	//En raketdel
-	private PickupObject rocketPart;	
+	//Raketdelarna
+	private RocketPart helmet;
+	private RocketPart rocket;
+	private RocketPart boots;
 	//en array som ska hålla tagna raketdelar
-	private boolean[] rocketParts;
+	private RocketPart[] rocketParts;
 	//Variabel som håller reda på om bonusbanan är spelad
 	private boolean bonusPlayed;
 	/*
@@ -76,9 +78,10 @@ public class TheGame extends BasicGameState {
 	Image gEnemyImage = null;
 	Image rocketPartImage = null;
 	
-	Image rocket1 = null;
-	Image rocket2 = null;
-	Image rocket3 = null;
+	Image helmetImg = null;
+	Image rocketImg = null;
+	Image bootsImg = null;
+
 
 
 	public static float posY = 0;
@@ -158,8 +161,11 @@ public class TheGame extends BasicGameState {
 		pointObject = new PickupObject();
 		lifeObject = new PickupObject(0, 5000, 250);
 		
-		rocketPart = new PickupObject(7, 720, 300);		
-		rocketParts = new boolean[]{false, false, false};
+		helmet = new RocketPart(7, 720, 300);
+		rocket = new RocketPart(8, 4500, 260);
+		boots = new RocketPart(9, 9000, 320);
+		
+		rocketParts = new RocketPart[]{helmet, rocket, boots};
 		bonusPlayed = false;
 
 		setTime(1); // Startar spelet med 1sekund
@@ -169,11 +175,10 @@ public class TheGame extends BasicGameState {
 
 		pointObjectImage = new Image((String) pointObject.getImgLoc());
 		lifeObjectImage = new Image("data/Img/object0.png");
-		rocketPartImage = new Image((String) rocketPart.getImgLoc());
 		
-		rocket2 = new Image("data/Img/object8.png");
-		rocket3 = new Image("data/Img/object9.png");
-		rocket1 = new Image("data/Img/object7.png");
+		helmetImg = new Image("data/Img/object7.png");
+		rocketImg = new Image("data/Img/object8.png");
+		bootsImg = new Image("data/Img/object9.png");
 
 		// mr = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_UP, 3);
 		rnd = new Random();
@@ -226,9 +231,11 @@ public class TheGame extends BasicGameState {
 		pointObject.upDateXPos();
 		lifeObject.upDateXPos();
 		gEnemy.upDateXPos();
-		if(rocketPart != null){
-			rocketPart.upDatePartPos();			
-			}
+		
+		helmet.upDatePartPos();
+		rocket.upDatePartPos();
+		boots.upDatePartPos();
+		
 		
 
 		mapHandler();
@@ -332,35 +339,31 @@ public class TheGame extends BasicGameState {
 				// newStartAfterCatHasPassedAway();
 				game.enterState(StateHandler.DEADMENU);
 			}
-			//Kontrollerar att inte alla raketdelar har passerat och om katten kolliderat med någon
-			if(rocketPart != null){
-			if (objectCollide(players[x], rocketPart.getRectangle())){
-   		     StateHandler.soundBank.playSound("Harp1");
-
-				//Sparar att raketdelen är tagen, i vår Array
-				rocketParts[rocketPart.getObjectType() - 7] =
-					true;				
-				if(rocketPart.getObjectType() >= 7 && rocketPart.getObjectType()<9){
-				rocketPart.setxPos(-60);
+			if (rocketPartTaken(players[x])){
+				StateHandler.soundBank.playSound("harp1");				
+				if(rocketAssembled() && !bonusPlayed){
+					game.enterState(StateHandler.SPACE);
+					spaceRide = true;
+					
+					StateHandler.soundBank.playSound("spaceflight");
+					game.enterState(StateHandler.SPACE);
+					spaceRide = true;
+					bonusPlayed = true;
 				}
-				else{
-					rocketPart = null;
-				}				
-			}
 			}
 			
-			if(rocketAssembled() && !bonusPlayed){
-
-				game.enterState(StateHandler.SPACE);
-				spaceRide = true;
-				
-				StateHandler.soundBank.playSound("spaceflight");
-				game.enterState(StateHandler.SPACE);
-				spaceRide = true;
-
-				System.err.println("Bonus activated!");
-				bonusPlayed = true;
-			}
+//			if(rocketAssembled() && !bonusPlayed){
+//
+//				game.enterState(StateHandler.SPACE);
+//				spaceRide = true;
+//				
+//				StateHandler.soundBank.playSound("spaceflight");
+//				game.enterState(StateHandler.SPACE);
+//				spaceRide = true;
+//
+//				System.err.println("Bonus activated!");
+//				bonusPlayed = true;
+//			}
 		}
 		
 	}
@@ -459,9 +462,9 @@ public class TheGame extends BasicGameState {
 			g.drawImage(gEnemyImage, gEnemy.getPosX(), gEnemy.getPosY());
 
 			
-			if(rocketPart != null){
-				g.drawImage(rocketPartImage, rocketPart.getxPos(), rocketPart.getyPos());
-				}
+			g.drawImage(helmetImg, helmet.getxPos(), helmet.getyPos());
+			g.drawImage(rocketImg, rocket.getxPos(), rocket.getyPos());
+			g.drawImage(bootsImg, boots.getxPos(), boots.getyPos());	
 
 
 		}
@@ -483,17 +486,18 @@ public class TheGame extends BasicGameState {
 		
 		//Ritar ut bonusrutor, och de raketdelar som hittils är tagna
 		g.drawString("BONUS", 550, 40);
-		g.drawRect(550, 10, rocket1.getWidth(), rocket1.getHeight());
-		g.drawRect(590, 10, rocket1.getWidth(), rocket1.getHeight());
-		g.drawRect(630, 10, rocket1.getWidth(), rocket1.getHeight());
-		if(rocketParts[0] == true){
-			g.drawImage(rocket1, 550, 10);
+		g.drawRect(550, 10, 28, 28);
+		g.drawRect(590, 10, 28, 28);
+		g.drawRect(630, 10, 28, 28);
+		
+		if(helmet.isTaken()){
+			g.drawImage(helmetImg, 550, 10);
 		}
-		if(rocketParts[1] == true){
-			g.drawImage(rocket2, 590, 10);
+		if(rocket.isTaken()){
+			g.drawImage(rocketImg, 590, 10);
 		}		
-		if(rocketParts[2] == true){
-			g.drawImage(rocket3, 630, 10);
+		if(boots.isTaken()){
+			g.drawImage(bootsImg, 630, 10);
 		}
 		}
 	
@@ -732,20 +736,26 @@ public class TheGame extends BasicGameState {
 			return false;
 		}
 	}
-	/**
-	 * Kontrollerar om raketen är ihopsatt
-	 * @return true om alla delar är hittade
-	 * @author Viktor
-	 */
 	private boolean rocketAssembled(){
-		if(rocketParts[0] == true && 
-				rocketParts[1] == true &&
-				rocketParts[2] == true){
+		if(helmet.isTaken() && 
+				rocket.isTaken() &&
+				boots.isTaken()){
 			return true;
 		}
 		else{
 			return false;
 		}
+	}
+	
+	private boolean rocketPartTaken(Player1 pl){
+		for(int i = 0; i < 3; i++){
+			if(pl.getPlayerBox().intersects(rocketParts[i].getRectangle())){
+				rocketParts[i].setxPos(-100);
+				rocketParts[i].setTaken(true);
+				return true;
+			}
+		}
+		return false;
 	}
 
 
@@ -791,20 +801,7 @@ public class TheGame extends BasicGameState {
 
 				if (gameSpeed + speedAcc <= 10) {
 					setCurrentLevel(getCurrentLevel() + 1);
-					
-					if(rocketPart != null){
-						if(rocketPart.getObjectType() < 9){
-						rocketPart = new PickupObject(rocketPart.getObjectType() + 1, 700, 300);
-						try{
-						rocketPartImage = new Image((String)rocketPart.getImgLoc());
-						}catch(Exception e){
-							System.err.print(e.getMessage());
-						}
-						}
-						else{
-							rocketPart = null;
-						}
-						}
+
 								
 					gameSpeed += speedAcc;
 					System.out.println("Currengamespeed: " + gameSpeed);
