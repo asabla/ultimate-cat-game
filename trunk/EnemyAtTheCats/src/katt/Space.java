@@ -30,6 +30,8 @@ public class Space extends BasicGameState {
 	private int count = 0;
 	private boolean introSpace;
 	private boolean inSpace;
+	private boolean outSpace;
+	private boolean sky;
 	float startPy;// start pos Y för i väg flygande objekt
 	float startPx;// start pos X för i väg flygande objekt
 	float slutPXv;// gräns för flygande objekt vänster
@@ -101,11 +103,36 @@ public class Space extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		
-		g.setBackground(Color.white);
-		
-//		StateHandler.soundBank.playSound("spaceflight");
 		cat = new Image("data/Img/catRocket.png");
+		if(outSpace){ 
+			if(!sky){
+			Image heavenLayer1 =  new Image("data/Img/img_bg_sky.png");
+			Image heavenLayer2 =  new Image("data/Img/cloud1.png");
+			g.drawImage(heavenLayer1, 0, 0);
+			g.drawImage(heavenLayer2, 0, 0);
+			g.drawImage(cat, startPx++, startPy++);
+			if(startPy == 400){
+				sky = true;
+				startPx = 0;
+				startPy = 0;
+			}
+			
+		}
+			if(sky){
+				game.getState(StateHandler.THEGAME).render(container, game, g);
+				g.drawImage(cat, startPx++, startPy++);
+				if(startPy == 300){
+					game.enterState(StateHandler.THEGAME);
+				}
+//				players[1].getPlayerX();
+//				players[1].getPlayerY();
+			}
+		}
+
+		else{
+		
+
+
 		if(!introSpace && !inSpace)
 		{
 		game.getState(StateHandler.THEGAME).render(container, game, g);
@@ -175,11 +202,17 @@ public class Space extends BasicGameState {
 		   }
 			if(inSpace){
 				if(startPy == 200){
+					startPx = 0;
+					startPy = 0;
+					
 					game.enterState(StateHandler.XTRALEVEL);
+					setOutSpace(true);
 				}
 				else{
+//				Imgage goText = new Image("")	
 				Image spaceLayer1 =  new Image("data/Img/space1.png");
 				Image spaceLayer2 =  new Image("data/Img/planets1.png");
+//				g.drawImage(goText, 0, 0);
 				g.drawImage(spaceLayer1, 0, 0);
 				g.drawImage(spaceLayer2, 0, 0);
 				g.drawImage(cat, startPx++, startPy--);
@@ -188,7 +221,7 @@ public class Space extends BasicGameState {
 					     startPy + 25);
 						rocketFire.render();
 			}
-			
+			}
 		}
 		}
 	
@@ -235,6 +268,14 @@ public class Space extends BasicGameState {
 	public void sound()
 	{	
 		StateHandler.soundBank.playSound("spaceflight");
+	}
+
+	public void setOutSpace(boolean outSpace) {
+		this.outSpace = outSpace;
+	}
+
+	public boolean isOutSpace() {
+		return outSpace;
 	}
 
 	
