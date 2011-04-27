@@ -24,6 +24,8 @@ public class Player1 implements Runnable {
 	private Rectangle topHitBox, bottomHitBox, frontHitBox;
 	private float gravityEffect;
 	boolean print = true;
+	private boolean spaceControl;
+
 
 	public Player1(int playerX, int playerY, String pngDir, int jumpControl, int plife) {
 		super();
@@ -58,6 +60,7 @@ public class Player1 implements Runnable {
 		this.topHitBox = createRectangle(playerX, playerY, 25, 5);
 		this.bottomHitBox = createRectangle(playerX, 35 + playerY, 25, 20);
 		this.frontHitBox = createRectangle(spriteSizeX - 5, 25 + playerY, 5, 30);
+
 	}
 
 	/**
@@ -133,7 +136,8 @@ public class Player1 implements Runnable {
 	 *@author Oskar, Thomas 
 	 */
 	public void keyPressed(Input input) {
-
+	
+		if(!spaceControl) {
 		// UP
 		if (input.isKeyPressed(jumpControl)) {		
 			if (jumps < 2) {
@@ -156,13 +160,23 @@ public class Player1 implements Runnable {
 					StateHandler.soundBank.playSound("jump");
 
 				setOnGround(false);
+	
 			}
 		}
-
+		}
+		else {
+			if (input.isKeyDown(input.KEY_UP)) {
+				setPlayerY(getPlayerY() -1);
+			}
+			if(input.isKeyDown(Input.KEY_DOWN)){
+				setPlayerY(getPlayerY() +1);
+			}
+		}
+	
 		if (input.isKeyPressed(Input.KEY_Z)) {
 			TheGame.frame.setVisible(true);
 		}
-
+	
 		if (input.isKeyPressed(Input.KEY_S)) {
 			if (StateHandler.musicOn) {
 				StateHandler.musicOn = false;
@@ -176,7 +190,10 @@ public class Player1 implements Runnable {
 				StateHandler.bgm.loop();
 			}
 		}
+
 	}
+
+	
 
 	public void jump() {
 		float jumpPower = -14f;
@@ -224,7 +241,7 @@ public class Player1 implements Runnable {
 		playerY += (gravityEffect / 2) * TheGame.gameSpeed;
 		gravityEffect++;
 
-		System.out.println("Falling");
+//		System.out.println("Falling");
 
 		try {
 			Thread.sleep(20);
@@ -381,13 +398,15 @@ public class Player1 implements Runnable {
 	public void setPlayerlife(int playerlife) {
 		this.playerlife = playerlife;
 	}
+
+	
+	public Rectangle getTopHitBox() {
+		  return topHitBox;
+		 }
+
 	
 	public int getJumps(){
 		return jumps;
-	}
-
-	public Rectangle getTopHitBox() {
-		return topHitBox;
 	}
 
 	public void setTopHitBox(Rectangle topHitBox) {
@@ -410,6 +429,14 @@ public class Player1 implements Runnable {
 		this.frontHitBox = frontHitBox;
 	}
 
+	public boolean isSpaceControl() {
+		return spaceControl;
+	}
+
+	public void setSpaceControl(boolean spaceControl) {
+		this.spaceControl = spaceControl;
+	}
+
 	public Animation getRocket() {
 		return rocket;
 	}
@@ -425,4 +452,5 @@ public class Player1 implements Runnable {
 		else
 			fall();
 	}
+
 }

@@ -31,7 +31,7 @@ public class PauseMenu extends BasicGameState implements ComponentListener {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		game.getState(StateHandler.theGame).render(container, game, g);
+		game.getState(StateHandler.THEGAME).render(container, game, g);
 		for (int i = 0; i < areas.length; i++) {
 			areas[i].render(container, g);
 		}
@@ -43,14 +43,14 @@ public class PauseMenu extends BasicGameState implements ComponentListener {
 		{
 			StateHandler.paused = true;
 			StateHandler.dead = false;
-			game.enterState(StateHandler.theGame);
+			game.enterState(StateHandler.THEGAME);
 		}
 		if (source == areas[1])// Visa Highscore - INTE KLAR
 		{
-			Menu_Highscore hs = new Menu_Highscore(StateHandler.highscore);
+			Menu_Highscore hs = new Menu_Highscore(StateHandler.HIGHSCORE);
 			hs.setHighscores(db.getHighscoreToArrayList(10, false, false));
 
-			game.enterState(StateHandler.highscore);
+			game.enterState(StateHandler.HIGHSCORE);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class PauseMenu extends BasicGameState implements ComponentListener {
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			StateHandler.paused = true;
 			StateHandler.dead = false;
-			game.enterState(StateHandler.theGame);
+			game.enterState(StateHandler.THEGAME);
 		}
 	}
 

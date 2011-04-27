@@ -30,7 +30,7 @@ public class DeadMenu extends BasicGameState implements ComponentListener {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		game.getState(StateHandler.theGame).render(container, game, g);
+		game.getState(StateHandler.THEGAME).render(container, game, g);
 		areas[0].render(container, g);
 	}
 
@@ -39,7 +39,7 @@ public class DeadMenu extends BasicGameState implements ComponentListener {
 		if (source == areas[0]) {
 			StateHandler.dead = true;
 			StateHandler.paused = false;
-			game.enterState(StateHandler.theGame);
+			game.enterState(StateHandler.THEGAME);
 			// Player1.threadDone();
 		}
 	}
@@ -92,7 +92,7 @@ public class DeadMenu extends BasicGameState implements ComponentListener {
 		if (input.isKeyPressed(Input.KEY_RIGHT)) {
 			StateHandler.dead = true;
 			StateHandler.paused = false;
-			game.enterState(StateHandler.theGame);
+			game.enterState(StateHandler.THEGAME);
 			// Player1.threadDone();
 		}
 	}

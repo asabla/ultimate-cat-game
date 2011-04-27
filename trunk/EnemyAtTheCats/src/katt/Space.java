@@ -105,7 +105,7 @@ public class Space extends BasicGameState {
 		cat = new Image("data/Img/catRocket.png");
 		if(!introSpace && !inSpace)
 		{
-		game.getState(StateHandler.theGame).render(container, game, g);
+		game.getState(StateHandler.THEGAME).render(container, game, g);
 		g.drawImage(bonusGame[count], 200, 150);
 	
  //****************************************************************************************

@@ -69,7 +69,7 @@ public class BlockMap {
 	 */
 	public void loadBlocks() {
 		for (int x = 0; x < this.tmap.getWidth(); x++) {
-			for (int y = 0; y < this.tmap.getHeight() - 1; y++) {
+			for (int y = 0; y < this.tmap.getHeight(); y++) {
 				if (this.tmap.getTileId(x, y, 0) == 1) {
 					this.blockList.add(new Block(x * this.tileSize, y
 							* this.tileSize, this.square, "square"));
