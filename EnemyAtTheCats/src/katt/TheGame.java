@@ -51,7 +51,7 @@ public class TheGame extends BasicGameState {
 	protected Player1[] players;
 	private int playerCount;
 	private boolean spaceRide = false;
-	protected GroundEnemy gEnemy;
+	private GroundEnemy gEnemy;
 	private boolean gogo;
 	private boolean movePoint;
 	private boolean moveLife;
@@ -219,7 +219,7 @@ public class TheGame extends BasicGameState {
 		setTime(getTime() + delta); // Tilldelar tid till variabeln
 
 		if(input.isKeyPressed(Input.KEY_U)){
-			game.enterState(StateHandler.SPACE);
+			game.enterState(StateHandler.XTRALEVEL);
 			spaceRide = true;
 			StateHandler.soundBank.playSound("spaceflight");
 		}
@@ -439,18 +439,7 @@ public class TheGame extends BasicGameState {
 
 		if(!spaceRide){
 
-		if (game.getState(StateHandler.THEGAME) == game.getCurrentState()) {
-
-			for (Player1 pl : players) {
-				pl.updateAnimationSpeed();
-				g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
-						pl.getPlayerY());
-
-//				g.draw(pl.getBottomHitBox());
-//				g.draw(pl.getTopHitBox());
-//				g.draw(pl.getFrontHitBox());
-			}
-		}
+		
 		
 
 			g.drawImage(pointObjectImage, pointObject.getxPos(),
@@ -498,6 +487,20 @@ public class TheGame extends BasicGameState {
 		if(boots.isTaken()){
 			g.drawImage(bootsImg, 630, 10);
 		}
+		g.draw(players[0].getBottomHitBox());
+		g.draw(players[0].getTopHitBox());
+		g.draw(players[0].getFrontHitBox());
+		
+		if (game.getState(StateHandler.THEGAME) == game.getCurrentState() || game.getState(StateHandler.XTRALEVEL) == game.getCurrentState()) {
+
+			for (Player1 pl : players) {
+				pl.updateAnimationSpeed();
+				g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
+						pl.getPlayerY());
+
+				
+			}
+		}
 		}
 	
 
@@ -505,6 +508,8 @@ public class TheGame extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
+		
+		players[0].setCurrentAnimation(players[0].getRun());
 
 		if (StateHandler.musicOn) {
 			StateHandler.bgm.loop();
@@ -532,6 +537,7 @@ public class TheGame extends BasicGameState {
 		else if (StateHandler.bonus) {
 			
 			gameSpeed = XtraLevel.normalGameSpeed;
+			spaceRide = false;
 			
 			int playerX = (int) players[0].getPlayerX();
 			int playerY = (int) players[0].getPlayerY();
@@ -790,6 +796,7 @@ public class TheGame extends BasicGameState {
 			float temp2 = currentMapX;
 			currentMapX = neighbourMapX;
 			neighbourMapX = temp2;
+			
 		}
 
 		if (neighbourMapX + getMapWidth() <= 0) {

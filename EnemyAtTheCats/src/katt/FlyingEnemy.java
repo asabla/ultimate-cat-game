@@ -17,11 +17,18 @@ public class FlyingEnemy extends EnemyObject {
 	private float maxYpos;
 	private float minYpos;
 	private boolean upwards;
+	private Image fEnemyImage;
 
 	public FlyingEnemy(int type) {
 		super();
 		this.type = type;
 		setImgLoc("data/Img/flyingEnemy" + type + ".png");
+		try {
+			setfEnemyImage(new Image("data/Img/flyingEnemy" + type + ".png"));
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		maxYpos = getPosY() + 40;
 		minYpos = getPosY() - 40;
 		upwards = true;
@@ -51,7 +58,7 @@ public class FlyingEnemy extends EnemyObject {
 	public void newObjectPos() {
 		setCollided(false);
 		setxPos(3000 + getRandom().nextInt(500));
-		setyPos(250);
+		setyPos(getRandom().nextInt(400));
 	}
 
 	public void upDateXPos() {
@@ -62,10 +69,19 @@ public class FlyingEnemy extends EnemyObject {
 		if (getPosX() > -5) {
 			setxPos(getPosX() - TheGame.gameSpeed);
 			getRectangle().setX(getPosX());
+			getRectangle().setY(getPosY());
 
 		} else {
 			newObjectPos();
 		}
+	}
+
+	public void setfEnemyImage(Image fEnemyImage) {
+		this.fEnemyImage = fEnemyImage;
+	}
+
+	public Image getfEnemyImage() {
+		return fEnemyImage;
 	}
 
 }
