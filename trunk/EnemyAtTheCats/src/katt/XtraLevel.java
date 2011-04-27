@@ -36,6 +36,7 @@ public class XtraLevel extends TheGame {
 		blockMapRow[2] = new BlockMap("data/Img/xtraroom1.tmx");
 		blockMapRow[3] = new BlockMap("data/Img/xtraroom2.tmx");
 		blockMapRow[4] = new BlockMap("data/Img/xtraroom1.tmx");
+		players[0].setCurrentAnimation(players[0].getRocket());
 		
 //		// Change "Enemy"-objects
 //		gEnemy = new GroundEnemy(2); // SpaceEnemy (2)
@@ -169,9 +170,9 @@ public class XtraLevel extends TheGame {
 						pl.getPlayerY());
 		
 				// Draw hitboxes for elaboration-porpuses
-				g.draw(pl.getBottomHitBox());
-				g.draw(pl.getTopHitBox());
-				g.draw(pl.getFrontHitBox());
+//				g.draw(pl.getBottomHitBox());
+//				g.draw(pl.getTopHitBox());
+//				g.draw(pl.getFrontHitBox());
 			}
 			
 			// Draw Enemy-objects
@@ -206,7 +207,8 @@ public class XtraLevel extends TheGame {
 
 			players = new Player1[getPlayerCount()];
 			players[0] = new Player1(playerX, playerY, "data/Img/cat.png",
-					Input.KEY_UP, playerLife);	
+					Input.KEY_UP, playerLife);
+			players[0].setCurrentAnimation(players[0].getRocket());
 			
 		} 
 		else { // Entering the XtraLevel
@@ -231,6 +233,7 @@ public class XtraLevel extends TheGame {
 			players[0] = new Player1(200, 400, "data/Img/cat.png", Input.KEY_UP, 3); // TODO Change player sheet
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 			players[0].setSpaceControl(true);
+			players[0].setCurrentAnimation(players[0].getRocket());
 			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
 			// Input.KEY_W, 3);
 		}
