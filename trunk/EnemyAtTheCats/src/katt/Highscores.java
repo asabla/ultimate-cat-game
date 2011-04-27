@@ -197,6 +197,46 @@ public class Highscores
 		printUt();
 
 	}
+	
+	public void setDefaultValue()
+	{
+		try
+		{
+			FileOutputStream fos1 = new FileOutputStream("data/score1.tmp");
+			ObjectOutputStream oos1 = new ObjectOutputStream(fos1);
+			FileOutputStream fos2 = new FileOutputStream("data/score2.tmp");
+			ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+			FileOutputStream fos3 = new FileOutputStream("data/score3.tmp");
+			ObjectOutputStream oos3 = new ObjectOutputStream(fos3);
+
+			high = new Score(100l);
+			high.setName("Catman");
+			
+			mid = new Score(50l);
+			mid.setName("Gustaf");
+			
+			low = new Score(20l);
+			low.setName("Odi");
+			
+			oos1.writeObject(high);
+			oos2.writeObject(mid);
+			oos3.writeObject(low);
+
+			oos1.close();
+			oos2.close();
+			oos3.close();
+		} catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			System.out.print("Filen saknas");
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			System.out.print("IOException");
+		}
+		
+		//get();  //Behöver inte hämta highscoren
+	}
 
 	public void printIn()
 	{
