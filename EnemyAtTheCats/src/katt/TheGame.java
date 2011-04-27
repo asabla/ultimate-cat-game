@@ -196,6 +196,7 @@ public class TheGame extends BasicGameState {
 		if(input.isKeyPressed(Input.KEY_U)){
 			game.enterState(StateHandler.space);
 			spaceRide = true;
+			StateHandler.soundBank.playSound("spaceflight");
 		}
 		
 		time += delta; // Tilldelar tid till variabeln
@@ -314,9 +315,14 @@ public class TheGame extends BasicGameState {
 			}
 			
 			if(rocketAssembled() && !bonusPlayed){
+
+				game.enterState(StateHandler.space);
+				spaceRide = true;
+				
 				StateHandler.soundBank.playSound("spaceflight");
 				game.enterState(StateHandler.space);
 				spaceRide = true;
+
 				System.err.println("Bonus activated!");
 				bonusPlayed = true;
 			}
