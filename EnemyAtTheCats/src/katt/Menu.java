@@ -20,6 +20,7 @@ public class Menu extends BasicGameState implements ComponentListener {
 	private Image newgameOver = null;
 	private Image Highscore = null;
 	private Image HighscoreOver = null;
+	private Image logo = null;
 	private MouseOverArea[] areas = new MouseOverArea[2];
 	private StateBasedGame game;
 	private int ID = -1;
@@ -38,13 +39,14 @@ public class Menu extends BasicGameState implements ComponentListener {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.setBackground(Color.blue);
+		g.setBackground(Color.decode("#8FB3C9"));
+		g.drawImage(logo, 121.5f, 10);
 		for (int i = 0; i < areas.length; i++) {
 			areas[i].render(container, g);
 		}
 		
 		player_name.render(container, g);
-		g.drawString("Ditt namn: ", 130, 300);
+		g.drawString("Ditt namn: ", 10, 440);
 	}
 
 	@Override
@@ -76,6 +78,7 @@ public class Menu extends BasicGameState implements ComponentListener {
 			throws SlickException {
 		this.game = game;
 
+		logo = new Image("data/Img/logo.png");
 		back = new Image("data/Img/Back.png");
 		newgame = new Image("data/Img/Nyttspel1.png");
 		newgameOver = new Image("data/Img/Nyttspel2.png");
@@ -83,20 +86,19 @@ public class Menu extends BasicGameState implements ComponentListener {
 		HighscoreOver = new Image("data/Img/highscore2.png");
 		
 		myFont = func.setNewFont("Arial", 24);
-		player_name = new TextField(container, myFont, 130, 330, 200, 30);
+		player_name = new TextField(container, myFont, 100, 425, 200, 30);
 		player_name.setFocus(true);
 
 		// container.setMouseCursor("data/Img/cursor.png", 0, 0);
 
 		for (int i = 0; i < 2; i++) {
 			if (i == 0) {
-				areas[i] = new MouseOverArea(container, newgame, 130, 100, 400,
+				areas[i] = new MouseOverArea(container, newgame, 153, 280, 400,
 						52, this);
 				areas[i].setMouseOverImage(newgameOver);
 			}
 			if (i == 1) {
-				areas[i] = new MouseOverArea(container, Highscore, 130, 200,
-						400, 52, this);
+				areas[i] = new MouseOverArea(container, Highscore, 153, 350, 400, 52, this);
 				areas[i].setMouseOverImage(HighscoreOver);
 			}
 
