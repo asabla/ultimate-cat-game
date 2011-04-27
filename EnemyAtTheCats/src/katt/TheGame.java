@@ -31,28 +31,29 @@ public class TheGame extends BasicGameState {
 	private PickupObject pointObject;
 	private PickupObject lifeObject;
 
-	private Image[] backgrounds;
-	private float[] backgroundPos;
-	private float[] backgroundSpeed;
+	protected Image[] backgrounds;
+	protected float[] backgroundPos;
+	protected float[] backgroundSpeed;
 
 	private int mapCount;
 	private int levelLength;
 	private int currentLevel;
 	private int loopCount;
-	private BlockMap[] blockMapRow;
-	private float currentMapX;
-	private float neighbourMapX;
-	private int currentMap;
-	private int neighbourMap; // Både den som är innan currentmap och när
+	protected BlockMap[] blockMapRow;
+	private BlockMap[] blockMapRowXtraLevel;
+	protected float currentMapX;
+	protected float neighbourMapX;
+	protected int currentMap;
+	protected int neighbourMap; // Både den som är innan currentmap och när
 								// currentmap är på väg ut ur banan
 	private Random rnd;
 	private Database db;
 	private String topScore;
 
-	private Player1[] players;
+	protected Player1[] players;
 	private int playerCount;
 	private boolean spaceRide = false;
-	private GroundEnemy gEnemy;
+	protected GroundEnemy gEnemy;
 	private boolean gogo;
 	private boolean movePoint;
 	private boolean moveLife;
@@ -81,6 +82,8 @@ public class TheGame extends BasicGameState {
 
 
 	public static float posY = 0;
+	
+	// Poäng som flyger igenom luften när poängobjekt är tagen
 	float startPy;// start pos Y för i väg flygande objekt
 	float startPx;// start pos X för i väg flygande objekt
 	float slutPXv;// gräns för flygande objekt vänster
@@ -96,15 +99,15 @@ public class TheGame extends BasicGameState {
 
 		db = new Database();
 	}
-
+	
 	/**
 	 * Set the start values of the project Read only in start of the project
 	 */
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		currentLevel = 1;
-		levelLength = 5;
-		loopCount = 0;
+		setCurrentLevel(1); // Starting Level
+		setLevelLength(5); // Number of Maps before levelUp
+		setLoopCount(0); // Number of Maps loaded
 
 		// topScore = db.getSingleHighscoreResult();
 
@@ -114,26 +117,26 @@ public class TheGame extends BasicGameState {
 		backgroundPos[2] = 0;
 		backgroundPos[3] = 1280;
 
-		backgrounds = new Image[4];
+		backgrounds = (new Image[4]);
 		bgSky = new Image("data/Img/img_bg_sky.png");
 		backgrounds[0] = new Image("data/Img/img_bg_layer1.png");
 		backgrounds[1] = new Image("data/Img/img_bg_layer1.png");
 		backgrounds[2] = new Image("data/Img/img_bg_layer2.png");
 		backgrounds[3] = new Image("data/Img/img_bg_layer2.png");
-
+		
 		backgroundSpeed = new float[4];
 		backgroundSpeed[0] = 0.12f;
 		backgroundSpeed[1] = 0.12f;
 		backgroundSpeed[2] = 0.55f;
 		backgroundSpeed[3] = 0.55f;
 
-		mapCount = 5;
+		mapCount = 5; // Number of BlockMaps in BlockMapRow (Array of BlockMaps)
 
 		currentMap = 0;
 		neighbourMap = 1;
 
 		currentMapX = 0;
-		neighbourMapX = mapWidth;
+		neighbourMapX = getMapWidth();
 
 		blockMapRow = new BlockMap[mapCount];
 		blockMapRow[0] = new BlockMap("data/Img/room.tmx");
@@ -141,10 +144,12 @@ public class TheGame extends BasicGameState {
 		blockMapRow[2] = new BlockMap("data/Img/room3.tmx");
 		blockMapRow[3] = new BlockMap("data/Img/room4.tmx");
 		blockMapRow[4] = new BlockMap("data/Img/room5.tmx");
+		
+		
 
-		playerCount = 1;
+		setPlayerCount(1);
 
-		players = new Player1[playerCount];
+		players = new Player1[getPlayerCount()];
 		players[0] = new Player1(200, 400, "data/Img/cat.png",
 				Input.KEY_UP, 3);
 		// players[1] = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_W,
@@ -157,7 +162,7 @@ public class TheGame extends BasicGameState {
 		rocketParts = new boolean[]{false, false, false};
 		bonusPlayed = false;
 
-		time = 1; // Startar spelet med 1sekund
+		setTime(1); // Startar spelet med 1sekund
 
 		// container.setVSync(true);
 		container.setTargetFrameRate(150);
@@ -191,15 +196,32 @@ public class TheGame extends BasicGameState {
 		
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			players[0].setOnGround(true);
-			game.enterState(StateHandler.pause);
+			game.enterState(StateHandler.PAUSE);
 		}
+
+		if (input.isKeyPressed(Input.KEY_I)) {
+			players[0].setOnGround(true);
+			if(game.getCurrentState() == game.getState(StateHandler.THEGAME)){
+				players[0].setSpaceControl(true);
+				game.enterState(StateHandler.XTRALEVEL);
+			}
+			if(game.getCurrentState() == game.getState(StateHandler.XTRALEVEL)){
+				game.enterState(StateHandler.THEGAME);
+				players[0].setSpaceControl(false);
+			}
+		}
+
+//		smoke.update(delta);
+		setTime(getTime() + delta); // Tilldelar tid till variabeln
+
 		if(input.isKeyPressed(Input.KEY_U)){
-			game.enterState(StateHandler.space);
+			game.enterState(StateHandler.SPACE);
 			spaceRide = true;
 			StateHandler.soundBank.playSound("spaceflight");
 		}
 		
 		time += delta; // Tilldelar tid till variabeln
+
 
 		pointObject.upDateXPos();
 		lifeObject.upDateXPos();
@@ -221,15 +243,28 @@ public class TheGame extends BasicGameState {
 		float currentPlX = players[0].getPlayerX();
 		float currentPlY = players[0].getPlayerY();
 		
-		for (int x = 0; x < playerCount; x++) {
+		for (int x = 0; x < getPlayerCount(); x++) {
 			players[x].keyPressed(input);
 			players[x].setPlayerScore(
 					players[x].getPlayerScore()+ 
-					(time / 1000 + (int) gameSpeed) / 2);
+					(getTime() / 1000 + (int) gameSpeed) / 2);
 
 			// Update hitbox location
 			players[x].getPlayerBox().setY(players[x].getPlayerY());
 			players[x].getPlayerBox().setX(players[x].getPlayerX());
+			
+			int hitBoxPushY = 10;
+			   
+			   int spriteSizeY = 35;
+			
+			  players[x].getBottomHitBox().setX(players[x].getPlayerX()+spriteSizeX);
+			   players[x].getBottomHitBox().setY(players[x].getPlayerY() + spriteSizeY - 5);
+			   
+			   players[x].getTopHitBox().setX(players[x].getPlayerX()+spriteSizeX);
+			   players[x].getTopHitBox().setY(players[x].getPlayerY()+ hitBoxPushY);
+			   
+			   players[x].getFrontHitBox().setX(players[x].getPlayerX()+ 25 + spriteSizeX);
+			   players[x].getFrontHitBox().setY(players[x].getPlayerY()+ hitBoxPushY + 5);
 
 			players[x].getBottomHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 30);
 			players[x].getTopHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 10);
@@ -244,7 +279,7 @@ public class TheGame extends BasicGameState {
 				// newStartAfterCatHasPassedAway();
 				players[x].setOnGround(true);
 				GameOver.setPScore("" + players[x].getPlayerScore());
-				game.enterState(StateHandler.deadMenu);
+				game.enterState(StateHandler.DEADMENU);
 				players[x].deadPlayer();
 
 			}
@@ -271,15 +306,15 @@ public class TheGame extends BasicGameState {
 				lifeObject.newObjectPosLong();
 			}
 			if (players[x].getPlayerlife() == 0) {
-				game.enterState(StateHandler.gameOver);
+				game.enterState(StateHandler.GAMEOVER);
 			}
 
 			try {
-				// Check if any collision is made && no jumping is active
-				if (!entityCollisionWith(players[x].getPlayerBox(),
-						blockMapRow[currentMap])
-						&& !players[x].getJumping().isAlive()
-						&& !players[x].getFalling().isAlive()) {
+				// Check if any collision is made && no jumping is active && no falling is active
+				if (!entityCollisionWith(players[x].getPlayerBox(),blockMapRow[currentMap]) 
+						&& !players[x].getJumping().isAlive() 
+						&& !players[x].getFalling().isAlive())
+				{
 					players[x].beginFall();
 				}
 			} catch (SlickException e) {
@@ -295,7 +330,7 @@ public class TheGame extends BasicGameState {
 				System.out.println("Träffade fiende");
 				players[x].setOnGround(true);
 				// newStartAfterCatHasPassedAway();
-				game.enterState(StateHandler.deadMenu);
+				game.enterState(StateHandler.DEADMENU);
 			}
 			//Kontrollerar att inte alla raketdelar har passerat och om katten kolliderat med någon
 			if(rocketPart != null){
@@ -316,17 +351,18 @@ public class TheGame extends BasicGameState {
 			
 			if(rocketAssembled() && !bonusPlayed){
 
-				game.enterState(StateHandler.space);
+				game.enterState(StateHandler.SPACE);
 				spaceRide = true;
 				
 				StateHandler.soundBank.playSound("spaceflight");
-				game.enterState(StateHandler.space);
+				game.enterState(StateHandler.SPACE);
 				spaceRide = true;
 
 				System.err.println("Bonus activated!");
 				bonusPlayed = true;
 			}
 		}
+		
 	}
 
 	/**
@@ -335,7 +371,8 @@ public class TheGame extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		drawBackgrounds();
 
-		if (game.getState(StateHandler.theGame) == game.getCurrentState()) {
+		if (game.getState(StateHandler.THEGAME) == game.getCurrentState()) {
+
 			blockMapRow[currentMap].getTmap().render((int) currentMapX,
 					(int) posY);
 			blockMapRow[neighbourMap].getTmap().render((int) neighbourMapX,
@@ -397,9 +434,11 @@ public class TheGame extends BasicGameState {
 
 		// ********************************************************
 
+
 		if(!spaceRide){
 
-		if (game.getState(StateHandler.theGame) == game.getCurrentState()) {
+		if (game.getState(StateHandler.THEGAME) == game.getCurrentState()) {
+
 			for (Player1 pl : players) {
 				pl.updateAnimationSpeed();
 				g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
@@ -418,10 +457,12 @@ public class TheGame extends BasicGameState {
 					lifeObject.getyPos());
 
 			g.drawImage(gEnemyImage, gEnemy.getPosX(), gEnemy.getPosY());
+
 			
 			if(rocketPart != null){
 				g.drawImage(rocketPartImage, rocketPart.getxPos(), rocketPart.getyPos());
 				}
+
 
 		}
 
@@ -437,8 +478,8 @@ public class TheGame extends BasicGameState {
 		// g.drawString("Liv: " + players[1].getPlayerLife(), 500, 45);
 		// g.drawString("Poäng: " + players[1].getPlayerScore(), 500, 60);
 
-		g.drawString("Tid: " + this.time / 1000 + "sec", 450, 450);
-		g.drawString("Level: " + currentLevel, 550, 450);
+		g.drawString("Tid: " + this.getTime() / 1000 + "sec", 450, 450);
+		g.drawString("Level: " + getCurrentLevel(), 550, 450);
 		
 		//Ritar ut bonusrutor, och de raketdelar som hittils är tagna
 		g.drawString("BONUS", 550, 40);
@@ -457,6 +498,7 @@ public class TheGame extends BasicGameState {
 		}
 	
 
+
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -466,7 +508,26 @@ public class TheGame extends BasicGameState {
 		}
 
 		if (StateHandler.paused) {
+					
+			int playerX = (int) players[0].getPlayerX();
+			int playerY = (int) players[0].getPlayerY();
+			int playerLife = players[0].getPlayerlife();
+			long playerScore = players[0].getPlayerScore();
 			
+
+			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+
+			players = new Player1[getPlayerCount()];
+			players[0] = new Player1(playerX, playerY, "data/Img/cat.png",
+					Input.KEY_UP, playerLife);
+			players[0].setPlayerScore(playerScore);
+			
+			players[0].beginFall();
+			
+		} 
+		else if (StateHandler.bonus) {
+			
+			gameSpeed = XtraLevel.normalGameSpeed;
 			
 			int playerX = (int) players[0].getPlayerX();
 			int playerY = (int) players[0].getPlayerY();
@@ -476,53 +537,53 @@ public class TheGame extends BasicGameState {
 
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 
-			players = new Player1[playerCount];
+			players = new Player1[getPlayerCount()];
 			players[0] = new Player1(playerX, playerY, "data/Img/cat.png",
 					Input.KEY_UP, playerLife);
 			players[0].setPlayerScore(playerScore);
 			
 			players[0].beginFall();
 			
-		} else if (StateHandler.dead) {
+		}else if (StateHandler.dead) {
 			pointObject.newObjectPos();
 			gEnemy.newObjectPos();
 			lifeObject.newObjectPos();
-			loopCount = 0;
+			setLoopCount(0);
 
 			currentMap = 0;
 			neighbourMap = 1;
 
 			currentMapX = 0;
-			neighbourMapX = mapWidth;
+			neighbourMapX = getMapWidth();
 
 			int playerLife = players[0].getPlayerlife();
 			long playerScore = players[0].getPlayerScore();
 
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 
-			players = new Player1[playerCount];
+			players = new Player1[getPlayerCount()];
 			players[0] = new Player1(200, 400, "data/Img/cat.png",
 					Input.KEY_UP, playerLife);
 			players[0].setPlayerScore(playerScore);
 		}
 
-		else {
+		else { // Nytt Spel
 
-			currentLevel = 1;
-			levelLength = 5;
-			loopCount = 0;
+			setCurrentLevel(1);
+			setLevelLength(5);
+			setLoopCount(0);
 			gameSpeed = 2f;
 			currentMap = 0;
 			neighbourMap = 1;
 
 			currentMapX = 0;
-			neighbourMapX = mapWidth;
+			neighbourMapX = getMapWidth();
 
-			playerCount = 1;
+			setPlayerCount(1);
 
-			time = 1; // Startar spelet med 1sekund
+			setTime(1); // Startar spelet med 1sekund
 
-			players = new Player1[playerCount];
+			players = new Player1[getPlayerCount()];
 			players[0] = new Player1(200, 400, "data/Img/cat.png", Input.KEY_UP, 3);
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
@@ -545,7 +606,7 @@ public class TheGame extends BasicGameState {
 	 * @return true : if shape collides with mapelement, false : if shape dont collide with mapElement 
 	 * @author Jonathan B
 	 */
-	private boolean entityCollisionWith(Shape shp, BlockMap bMap)
+	protected boolean entityCollisionWith(Shape shp, BlockMap bMap)
 			throws SlickException {
 		for (int i = 0; i < bMap.getEntities().size(); i++) {
 			Block entity1 = (Block) bMap.getEntities().get(i);
@@ -565,7 +626,7 @@ public class TheGame extends BasicGameState {
 	 * @return The new position of the background 
 	 * @author Jonathan B
 	 */
-	private float updateGraphicElement(float layerPos, float moveSpeed,
+	protected float updateGraphicElement(float layerPos, float moveSpeed,
 			int screenUpdate) {
 		layerPos -= moveSpeed * gameSpeed;
 		if (layerPos <= -screenUpdate) {
@@ -578,12 +639,13 @@ public class TheGame extends BasicGameState {
 	 * Draw all backgrounds with current position
 	 * @author Jonathan B
 	 */
-	private void drawBackgrounds() {
+	public void drawBackgrounds() {
 		bgSky.draw(0, 0);
 		for (int x = 0; x < 4; x++) {
 			backgrounds[x].draw(backgroundPos[x], posY);
 		}
 	}
+
 
 	/**
 	 * Handels the events if a player collides with a mapElement
@@ -591,7 +653,7 @@ public class TheGame extends BasicGameState {
 	 * @param map Target map
 	 * @author Jonathan B, Oskar, Thomas
 	 */
-	private void collisionHandler(Player1 pl, BlockMap map) {
+	protected void collisionHandler(Player1 pl, BlockMap map) {
 		try {
 			if (entityCollisionWith(pl.getBottomHitBox(), map)) {
 				pl.setPlayerY(collisonBlock.getMinY() - 50);
@@ -599,19 +661,40 @@ public class TheGame extends BasicGameState {
 				pl.setGravityEffect(gravity);
 				System.out.println("Floor");
 			}
-			if (entityCollisionWith(pl.getTopHitBox(), map)
-					&& !entityCollisionWith(pl.getBottomHitBox(), map)) {
-				pl.setPlayerY(collisonBlock.getMaxY() + 1);
+
+			if(entityCollisionWith(pl.getTopHitBox(), map)) {
+				pl.setPlayerY(collisonBlock.getMaxY());
 				System.out.println("Roof");
+				pl.setOnGround(true);
+				pl.beginFall();
+				
 			}
-			if (entityCollisionWith(pl.getFrontHitBox(), map)
-					&& !entityCollisionWith(pl.getBottomHitBox(), map)) {
+			if(entityCollisionWith(pl.getFrontHitBox(), map) && !entityCollisionWith(pl.getBottomHitBox(), map)) {
+				System.out.println("Wall");
 				pl.setPlayerX(collisonBlock.getMinX() - 50);
 			}
-		} catch (SlickException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			
+//			if (entityCollisionWith(pl.getPlayerBox(), map)) {
+//				
+//				if (wallHit(map, pl))
+//				{
+//					System.out.println("Wall");
+//					pl.setPlayerX(pl.getPlayerX() - 2 * gameSpeed);
+//				}
+//				if (pl.getPlayerY() + 50 > collisonBlock.getY()
+//						&& !wallHit(map, pl))
+//				{
+//					System.out.println("Floor");
+//					pl.setOnGround(true);
+//
+//					// Put Player above the collisionBlock
+//					pl.setPlayerY(collisonBlock.getY() - 50);
+//
+//					// Reset the GravityEffect
+//					pl.setGravityEffect(gravity);
+//				}
+//			}
+		} catch (SlickException e1){}
 
 	}
 
@@ -621,8 +704,10 @@ public class TheGame extends BasicGameState {
 	 * @return true if outside the screen, false if not
 	 * @author Jonathan B
 	 */
-	private boolean playerDropOut(Player1 pl) {
-		return pl.getPlayerBox().getX()+40 < 0 || pl.getPlayerBox().getY() > 480;
+
+	protected boolean playerDropOut(Player1 pl) {
+		return pl.getPlayerBox().getX() < 0 || pl.getPlayerBox().getY() > 480 || pl.getPlayerBox().getY() < -50;
+
 	}
 
 	@Override
@@ -638,7 +723,7 @@ public class TheGame extends BasicGameState {
 	 * @return true if collide, false if not
 	 * @author Jonathan B, Viktor
 	 */
-	private boolean objectCollide(Player1 pl, Shape shp) {
+	protected boolean objectCollide(Player1 pl, Shape shp) {
 		if (pl.getTopHitBox().intersects(shp)
 				|| pl.getFrontHitBox().intersects(shp)
 				|| pl.getBottomHitBox().intersects(shp)) {
@@ -668,17 +753,17 @@ public class TheGame extends BasicGameState {
 	 * Handels the moving, buffering and looping of maps. Update positions of collisionblocks
 	 * @author Jonathan B
 	 */
-	private void mapHandler() {
+	protected void mapHandler() {
 		currentMapX -= gameSpeed;
 		neighbourMapX -= gameSpeed;
 
-		for (int x = 0; x < playerCount; x++) {
+		for (int x = 0; x < getPlayerCount(); x++) {
 			collisionHandler(players[x], blockMapRow[currentMap]);
 			collisionHandler(players[x], blockMapRow[neighbourMap]);
 		}
 
 		//if(currentMapX + mapWidth < 0){
-		if (currentMapX + mapWidth < players[0].getPlayerBox().getCenterX()) {
+		if (currentMapX + getMapWidth() < players[0].getPlayerBox().getCenterX()) {
 			int temp = currentMap;
 			currentMap = neighbourMap;
 			neighbourMap = temp;
@@ -688,22 +773,24 @@ public class TheGame extends BasicGameState {
 			neighbourMapX = temp2;
 		}
 
-		if (neighbourMapX + mapWidth <= 0) {
+		if (neighbourMapX + getMapWidth() <= 0) {
 			// if(neighbourMapX + mapWidth <= 0){
 			neighbourMap = rnd.nextInt(mapCount - 1);
 			while (neighbourMap == currentMap) {
 				neighbourMap = rnd.nextInt(mapCount - 1);
 			}
 
-			neighbourMapX = mapWidth;
+			neighbourMapX = getMapWidth();
 
-			loopCount++;
+			setLoopCount(getLoopCount() + 1);
+
+
+			if (getLoopCount() >= getLevelLength()) {
 
 			
 
-			if (loopCount >= levelLength) {
 				if (gameSpeed + speedAcc <= 10) {
-					currentLevel++;
+					setCurrentLevel(getCurrentLevel() + 1);
 					
 					if(rocketPart != null){
 						if(rocketPart.getObjectType() < 9){
@@ -722,7 +809,7 @@ public class TheGame extends BasicGameState {
 					gameSpeed += speedAcc;
 					System.out.println("Currengamespeed: " + gameSpeed);
 				}
-				loopCount = 0;
+				setLoopCount(0);
 			}
 		}
 
@@ -730,5 +817,94 @@ public class TheGame extends BasicGameState {
 		blockMapRow[neighbourMap].updateBlockMap(neighbourMapX, true);
 
 	}
+
+	private boolean gEnemyHit(Player1 pl)
+	{
+		if (pl.getPlayerBox().intersects(gEnemy.getRectangle()) 
+				&& !gEnemy.isCollided())
+			
+		{
+			gEnemy.setCollided(true);
+			System.out.println("Enemy collision");
+			return true;
+		} else
+		{
+			return false;
+		}
+	}
+
+	// Sätter banan och poäng när katten börjar om efter att ha dött, så 
+	// att det inte finns några poäng och att katten börjar på första banan på den leveln katten har dött
+
+
+
+	private void newStartAfterCatHasPassedAway()	
+	{
+		gEnemy.newObjectPos();
+
+		pointObject.newObjectPos();
+		gEnemy.newObjectPos();
+		pointObject.newObjectPos();		
+		lifeObject.newObjectPos();
+		setLoopCount(0);
+
+		currentMap = 0;
+		neighbourMap = 1;
+
+		currentMapX = 0;
+		neighbourMapX = getMapWidth();
+	}
+
 	
+	public void setPlayerCount(int playerCount) {
+		this.playerCount = playerCount;
+	}
+
+	public int getPlayerCount() {
+		return playerCount;
+	}
+
+	public void setCurrentLevel(int currentLevel) {
+		this.currentLevel = currentLevel;
+	}
+
+	public int getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public void setLevelLength(int levelLength) {
+		this.levelLength = levelLength;
+	}
+
+	public int getLevelLength() {
+		return levelLength;
+	}
+
+	public void setLoopCount(int loopCount) {
+		this.loopCount = loopCount;
+	}
+
+	public int getLoopCount() {
+		return loopCount;
+	}
+
+	public void setMapWidth(int mapWidth) {
+		this.mapWidth = mapWidth;
+	}
+
+	public int getMapWidth() {
+		return mapWidth;
+	}
+
+	public static void setTime(int time) {
+		TheGame.time = time;
+	}
+
+	public static int getTime() {
+		return time;
+	}
+
+	
+
+
 }

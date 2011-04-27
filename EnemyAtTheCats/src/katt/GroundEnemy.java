@@ -39,6 +39,12 @@ public class GroundEnemy extends EnemyObject {
 		setxPos(3000 + getRandom().nextInt(500));
 		setyPos(400);
 	}
+	
+	public void newObjectPos(int i) {
+		setCollided(false);
+		setxPos(3000 + getRandom().nextInt(500));
+		setyPos(getRandom().nextInt(480 - (int) getRectangle().getHeight()));
+	}
 
 	// Uppdaterar fiendens position i sidled
 	public void upDateXPos() {
@@ -51,6 +57,7 @@ public class GroundEnemy extends EnemyObject {
 		if (getPosX() > -5) {
 			setxPos(getPosX() - TheGame.gameSpeed);
 			getRectangle().setX(getPosX());
+			getRectangle().setY(getPosY());
 		} else {
 			newObjectPos();
 		}

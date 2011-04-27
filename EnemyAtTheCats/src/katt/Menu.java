@@ -53,17 +53,21 @@ public class Menu extends BasicGameState implements ComponentListener {
 		{
 			StateHandler.paused = false;
 			StateHandler.dead = false;
+
 			StateHandler.soundBank.playSound("boing");
 			func.setPlayerName(player_name.getText());
-			game.enterState(StateHandler.theGame);
+			game.enterState(StateHandler.THEGAME);
+
 			// Player1.threadDone();
 		}
 		if (source == areas[1])// Visa Highscore - INTE KLAR
 		{
+
 			StateHandler.soundBank.playSound("boing");
-			Menu_Highscore hs = new Menu_Highscore(StateHandler.highscore);
+			Menu_Highscore hs = new Menu_Highscore(StateHandler.HIGHSCORE);
+
 			hs.setHighscores(db.getHighscoreToArrayList(10, false, false));
-			game.enterState(StateHandler.highscore);
+			game.enterState(StateHandler.HIGHSCORE);
 		}
 	}
 
@@ -115,7 +119,7 @@ public class Menu extends BasicGameState implements ComponentListener {
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			StateHandler.paused = true;
 			StateHandler.dead = false;
-			game.enterState(StateHandler.theGame);
+			game.enterState(StateHandler.THEGAME);
 		}
 	}
 
