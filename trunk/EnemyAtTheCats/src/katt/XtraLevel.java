@@ -1,5 +1,13 @@
 package katt;
 
+
+import java.util.ArrayList;
+
+import java.util.Random;
+
+import org.newdawn.slick.Color;
+
+
 import java.io.IOException;
 
 import org.newdawn.slick.GameContainer;
@@ -16,8 +24,13 @@ import org.newdawn.slick.particles.ParticleSystem;
 public class XtraLevel extends TheGame {
 	
 	public static float normalGameSpeed;
+
+	private ArrayList<FlyingEnemy> fEnemys;
+	private int previousLoop;
+	
 	private ParticleSystem rocketFire;
 	
+
 	public XtraLevel(int ID) {
 		super(ID);
 		
@@ -46,12 +59,25 @@ public class XtraLevel extends TheGame {
 		players[0].setCurrentAnimation(players[0].getRocket());
 
 		
+		fEnemys = new ArrayList<FlyingEnemy>();
+		
 //		// Change "Enemy"-objects
 //		gEnemy = new GroundEnemy(2); // SpaceEnemy (2)
 //		gEnemyImage = new Image("data/Img/xtraEnemy.png");
 	}
-
 	
+	private void generateEnemys() {
+		Random randomGenerator = new Random();
+		
+		int numberOfEnemys = getCurrentLevel(); // Minimum number of Enemys equal to level
+		int numberOfExtraEnemys = randomGenerator.nextInt(getCurrentLevel()); // Extra Enemys
+		int totalEnemys = numberOfEnemys + numberOfExtraEnemys; // Total number of Enemys to add
+		
+		for (int i = 0; i < totalEnemys; i++) {
+			fEnemys.add(new FlyingEnemy(randomGenerator.nextInt(4))); // Add random type of Enemy
+		}
+		
+	}
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
@@ -76,7 +102,17 @@ public class XtraLevel extends TheGame {
 
 		setTime(getTime() + delta); // Tilldelar tid till variabeln
 
-		gEnemy.upDateXPos();
+		// Enemys Generation if new loop detected
+		if(getLoopCount() != previousLoop) {
+			generateEnemys();
+		}
+		
+			previousLoop = getLoopCount();
+		
+		// Enemy Update Positions
+		for (FlyingEnemy fEnemy : fEnemys) {
+			fEnemy.upDateXPos();
+		}
 
 		mapHandler();
 
@@ -122,16 +158,19 @@ public class XtraLevel extends TheGame {
 				game.enterState(StateHandler.THEGAME); // Return to game
 			}
 
-			if (objectCollide(players[x],gEnemy.getRectangle())) {
-				input.clearKeyPressedRecord();
-				if (StateHandler.soundsOn) {
-					StateHandler.soundBank.playSound("crash");
+			for (FlyingEnemy fEnemy : fEnemys) {
+				if (objectCollide(players[x],fEnemy.getRectangle())) {
+					input.clearKeyPressedRecord();
+					if (StateHandler.soundsOn) {
+						StateHandler.soundBank.playSound("crash");
+					}
+					System.out.println("Träffade fiende");
+					players[x].setOnGround(true);
+					// newStartAfterCatHasPassedAway();
+					game.enterState(StateHandler.THEGAME);
 				}
-				System.out.println("Träffade fiende");
-				players[x].setOnGround(true);
-				// newStartAfterCatHasPassedAway();
-				game.enterState(StateHandler.THEGAME);
 			}
+			
 		}
 		
 		// System.out.print(input.);
@@ -159,7 +198,7 @@ public class XtraLevel extends TheGame {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-				
+				g.setBackground(Color.black);
 		drawBackgrounds();
 		
 		if (game.getState(StateHandler.XTRALEVEL) == game.getCurrentState()) {
@@ -189,7 +228,26 @@ public class XtraLevel extends TheGame {
 			}
 			
 			// Draw Enemy-objects
-			g.drawImage(gEnemyImage, gEnemy.getPosX(), gEnemy.getPosY());
+			for (FlyingEnemy fEnemy : fEnemys) {
+			g.drawImage(fEnemy.getfEnemyImage(), fEnemy.getPosX(), fEnemy.getPosY());
+			}
+			g.drawString("No. of Enemys: " + fEnemys.size(), 20, 40);
+			g.drawString("Level: " + getCurrentLevel(), 20, 70);
+			g.getFont().drawString(20, 90, "HejHej", Color.yellow, 20, 100);
+			if(getCurrentLevel() == 4)
+				congratulations(g);
+		
+			
+		}
+		
+	}
+
+	private void congratulations(Graphics g) {
+		try {
+			g.drawImage(new Image("data/Img/dogmaJesus.jpg"), 50, 50);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
@@ -239,6 +297,9 @@ public class XtraLevel extends TheGame {
 			setCurrentLevel(1);
 			setLevelLength(5);
 			setLoopCount(0);
+			previousLoop = 0;
+			
+			generateEnemys();
 		
 			TheGame.gameSpeed = 2f;
 			currentMap = 0;
@@ -272,6 +333,7 @@ public class XtraLevel extends TheGame {
 		}
 		StateHandler.bonus = true;
 		players[0].setSpaceControl(false);
+		
 	}
 	
 	
