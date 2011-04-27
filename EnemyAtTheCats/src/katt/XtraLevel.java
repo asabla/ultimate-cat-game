@@ -1,5 +1,7 @@
 package katt;
 
+import java.io.IOException;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -7,10 +9,15 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import org.newdawn.slick.particles.ConfigurableEmitter;
+import org.newdawn.slick.particles.ParticleIO;
+import org.newdawn.slick.particles.ParticleSystem;
+
 public class XtraLevel extends TheGame {
 	
 	public static float normalGameSpeed;
-
+	private ParticleSystem rocketFire;
+	
 	public XtraLevel(int ID) {
 		super(ID);
 		
@@ -37,6 +44,7 @@ public class XtraLevel extends TheGame {
 		blockMapRow[3] = new BlockMap("data/Img/xtraroom2.tmx");
 		blockMapRow[4] = new BlockMap("data/Img/xtraroom1.tmx");
 		players[0].setCurrentAnimation(players[0].getRocket());
+
 		
 //		// Change "Enemy"-objects
 //		gEnemy = new GroundEnemy(2); // SpaceEnemy (2)
@@ -48,6 +56,7 @@ public class XtraLevel extends TheGame {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput();
+		rocketFire.update(delta);
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			players[0].setOnGround(true);
@@ -166,6 +175,10 @@ public class XtraLevel extends TheGame {
 		if (game.getState(StateHandler.XTRALEVEL) == game.getCurrentState()) {
 			for (Player1 pl : players) {
 				pl.updateAnimationSpeed();
+				((ConfigurableEmitter)
+						rocketFire.getEmitter(0)).setPosition(( pl.getPlayerX() + 17),
+								pl.getPlayerY() + 30);
+								rocketFire.render();
 				g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
 						pl.getPlayerY());
 		
@@ -177,7 +190,8 @@ public class XtraLevel extends TheGame {
 			
 			// Draw Enemy-objects
 			g.drawImage(gEnemyImage, gEnemy.getPosX(), gEnemy.getPosY());
-	}
+		}
+		
 	}
 
 	@Override
@@ -185,6 +199,13 @@ public class XtraLevel extends TheGame {
 			throws SlickException {
 		
 		normalGameSpeed = gameSpeed;
+		
+		try {
+			rocketFire = ParticleIO.loadConfiguredSystem("data/rocketSystem.xml");
+		} catch (IOException e) {
+			throw new SlickException("Failed to load particle systems", e);
+		}
+		
 		
 		// Stop playing CatGame normal music
 		if (StateHandler.bgm.playing()) {
@@ -239,6 +260,8 @@ public class XtraLevel extends TheGame {
 			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
 			// Input.KEY_W, 3);
 		}
+		players[0].setPlayerX(240);
+		players[0].setPlayerY(200);
 	}
 
 	@Override
