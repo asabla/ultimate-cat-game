@@ -22,6 +22,7 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	
 	private Image back = null;
 	private Image backOver = null;
+	private Image trophy = null;
 	private MouseOverArea[] areas = new MouseOverArea[2];
 	private StateBasedGame game;
 	private Highscores hs;
@@ -52,6 +53,7 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 		this.game = game;
 		back = new Image("data/Img/tillbaka1.png");  //Tillbakaknappen
 		backOver = new Image("data/Img/tillbaka2.png");  //Om musen ‰r ˆver sÂ byter bild
+		trophy = new Image("data/Img/highScoreTrophy.png");
 		
 		
 		//L‰gger alla bilder i en array, samt definerar areas och bildernas position. Samt storlek pÂ mouse over
@@ -68,7 +70,8 @@ public class Menu_Highscore extends BasicGameState implements ComponentListener
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException
 	{
-		g.setBackground(Color.blue); //S‰tter bakgrundsf‰rg
+		g.setBackground(Color.decode("#8FB3C9")); //S‰tter bakgrundsf‰rg
+		g.drawImage(trophy, 10, 10);
 		for(int i = 0; i < areas.length; i++)
 		{
 			//renderar knappen
