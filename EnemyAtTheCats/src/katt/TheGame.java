@@ -694,8 +694,7 @@ public class TheGame extends BasicGameState {
 			loopCount++;
 
 			
-			//VIKTOR FIXAAAAA!!!! null pointer exception!!!!
-			//FIXAT!!!!!!! ///VIktor
+
 			if (loopCount >= levelLength) {
 				if (gameSpeed + speedAcc <= 10) {
 					currentLevel++;
