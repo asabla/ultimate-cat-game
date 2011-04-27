@@ -84,12 +84,15 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		if (source == areas[0]) {
 			StateHandler.paused = false;
 			StateHandler.dead = false;
+			StateHandler.soundBank.playSound("boing");
 			game.enterState(StateHandler.theGame);
 		}
 		if (source == areas[1]) {
+			StateHandler.soundBank.playSound("boing");
 			game.enterState(StateHandler.menu);
 		}
 		if (source == areas[2]) {
+			StateHandler.soundBank.playSound("boing");
 			int tmp = Integer.parseInt(pscore); // Parsar om texten
 			String mail = f_email1.getText() + "@" + f_email2.getText();												// ifrÂn highscore
 															// till en int
@@ -98,15 +101,19 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		}
 
 		if (source == f_namn) {
+			StateHandler.soundBank.playSound("boing");
 			f_email1.setFocus(true);
 		}
 		if (source == f_email1) {
+			StateHandler.soundBank.playSound("boing");
 			f_email2.setFocus(true);
 		}
 		if(source == f_email2);{
+			StateHandler.soundBank.playSound("boing");
 			f_telefon.setFocus(true);
 		}
 		if (source == f_telefon) {
+			StateHandler.soundBank.playSound("boing");
 			// setPoints
 		}
 	}
