@@ -114,10 +114,12 @@ public class PickupObject{
 
 	public void setxPos(float xPos) {
 		this.xPos = xPos;
+		rectangle.setX(xPos);
 	}
 
 	public void setyPos(float yPos) {
 		this.yPos = yPos;
+		rectangle.setY(yPos);
 	}
 
 	public void setValue(int value) {
@@ -157,11 +159,6 @@ public class PickupObject{
 		}
 		
 		
-	}
-	
-	public void upDatePartPos(){
-		xPos -= TheGame.gameSpeed;
-		rectangle.setX(xPos);
 	}
 
 	public void setWidth(float width) {
