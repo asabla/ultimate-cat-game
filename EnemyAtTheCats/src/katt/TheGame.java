@@ -736,6 +736,10 @@ public class TheGame extends BasicGameState {
 			return false;
 		}
 	}
+	/**
+	 * Kontrollerar om alla raketdelar är tagna
+	 * @return true om så är fallet
+	 */
 	private boolean rocketAssembled(){
 		if(helmet.isTaken() && 
 				rocket.isTaken() &&
@@ -747,6 +751,11 @@ public class TheGame extends BasicGameState {
 		}
 	}
 	
+	/**
+	 * Kontrollerar om en raketdel är tagen
+	 * @param pl Target Player
+	 * @return true om spelaren kolliderat med en raketdel
+	 */
 	private boolean rocketPartTaken(Player1 pl){
 		for(int i = 0; i < 3; i++){
 			if(pl.getPlayerBox().intersects(rocketParts[i].getRectangle())){
