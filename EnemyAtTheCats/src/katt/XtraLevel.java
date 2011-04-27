@@ -53,7 +53,7 @@ public class XtraLevel extends TheGame {
 			players[0].setOnGround(true);
 			game.enterState(StateHandler.PAUSE);
 		}
-		if (input.isKeyPressed(Input.KEY_U)) {
+		if (input.isKeyPressed(Input.KEY_I)) {
 			players[0].setOnGround(true);
 			if(game.getCurrentState() == game.getState(StateHandler.THEGAME)){
 				game.enterState(StateHandler.XTRALEVEL);
@@ -196,19 +196,21 @@ public class XtraLevel extends TheGame {
 		}
 		
 		if (StateHandler.paused) {
+			StateHandler.paused = false;
 			
 			int playerX = (int) players[0].getPlayerX();
 			int playerY = (int) players[0].getPlayerY();
 			int playerLife = players[0].getPlayerlife();
-			long playerScore = players[0].getPlayerScore();
-			
+					
 
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 
 			players = new Player1[getPlayerCount()];
+			
 			players[0] = new Player1(playerX, playerY, "data/Img/cat.png",
 					Input.KEY_UP, playerLife);
 			players[0].setCurrentAnimation(players[0].getRocket());
+			players[0].setSpaceControl(true);
 			
 		} 
 		else { // Entering the XtraLevel
@@ -246,6 +248,7 @@ public class XtraLevel extends TheGame {
 			StateHandler.spaceMusic.stop();
 		}
 		StateHandler.bonus = true;
+		players[0].setSpaceControl(false);
 	}
 	
 	

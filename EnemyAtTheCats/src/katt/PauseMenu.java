@@ -43,7 +43,10 @@ public class PauseMenu extends BasicGameState implements ComponentListener {
 		{
 			StateHandler.paused = true;
 			StateHandler.dead = false;
-			game.enterState(StateHandler.THEGAME);
+			if(StateHandler.bonus)
+				game.enterState(StateHandler.XTRALEVEL);
+			else
+				game.enterState(StateHandler.THEGAME);
 		}
 		if (source == areas[1])// Visa Highscore - INTE KLAR
 		{
@@ -96,7 +99,10 @@ public class PauseMenu extends BasicGameState implements ComponentListener {
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			StateHandler.paused = true;
 			StateHandler.dead = false;
-			game.enterState(StateHandler.THEGAME);
+			if(StateHandler.bonus)
+				game.enterState(StateHandler.XTRALEVEL);
+			else
+				game.enterState(StateHandler.THEGAME);
 		}
 	}
 
