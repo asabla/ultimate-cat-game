@@ -695,9 +695,12 @@ public class TheGame extends BasicGameState {
 
 			
 			//VIKTOR FIXAAAAA!!!! null pointer exception!!!!
+			//FIXAT!!!!!!! ///VIktor
 			if (loopCount >= levelLength) {
 				if (gameSpeed + speedAcc <= 10) {
-					currentLevel++;					
+					currentLevel++;
+					
+					if(rocketPart != null){
 						if(rocketPart.getObjectType() < 9){
 						rocketPart = new PickupObject(rocketPart.getObjectType() + 1, 700, 300);
 						try{
@@ -708,6 +711,7 @@ public class TheGame extends BasicGameState {
 						}
 						else{
 							rocketPart = null;
+						}
 						}
 								
 					gameSpeed += speedAcc;
