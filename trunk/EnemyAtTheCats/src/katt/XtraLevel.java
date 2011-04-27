@@ -176,8 +176,8 @@ public class XtraLevel extends TheGame {
 			for (Player1 pl : players) {
 				pl.updateAnimationSpeed();
 				((ConfigurableEmitter)
-						rocketFire.getEmitter(0)).setPosition(( pl.getPlayerX() + 17),
-								pl.getPlayerY() + 30);
+						rocketFire.getEmitter(0)).setPosition(( pl.getPlayerX() + 15),
+								pl.getPlayerY() + 35);
 								rocketFire.render();
 				g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
 						pl.getPlayerY());
