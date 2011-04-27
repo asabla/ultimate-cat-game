@@ -27,7 +27,8 @@ public class Space extends BasicGameState {
 	private float catPosy;
 	private float catPosx;
 	private int count = 0;
-	
+	private boolean introSpace;
+	private boolean inSpace;
 	float startPy;// start pos Y för i väg flygande objekt
 	float startPx;// start pos X för i väg flygande objekt
 	float slutPXv;// gräns för flygande objekt vänster
@@ -67,6 +68,8 @@ public class Space extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
+		introSpace = false;
+		inSpace = false;
 		bonusGame = new Image[3];
 	    try{
 	    	bonusGame[0] = new Image("data/Img/bonusgame.png");
@@ -76,6 +79,7 @@ public class Space extends BasicGameState {
 
 			e.printStackTrace();
 		}
+		
 		time = 1;
 		startPy = 400;
 		startPx = 200; 
@@ -97,15 +101,19 @@ public class Space extends BasicGameState {
 			throws SlickException {
 		
 		
-		
+//		StateHandler.soundBank.playSound("spaceflight");
 		cat = new Image("data/Img/catRocket.png");
+		if(!introSpace && !inSpace)
+		{
 		game.getState(StateHandler.theGame).render(container, game, g);
 		g.drawImage(bonusGame[count], 200, 150);
 	
  //****************************************************************************************
 			 if (startPy == slutPy) {
-
-
+				 introSpace = true;
+				 startPx = 200; 
+				 startPy = 500;
+				 
 				}
 				// Kollar att den den inte gått för mycket åt höger, körs tills den
 				// når slutPXH = den högra gränsen på X
@@ -140,6 +148,45 @@ public class Space extends BasicGameState {
 						gogo = true;
 					}
 				}
+				}
+			if(introSpace)
+		   {
+			if(startPy == -40){
+				 startPx = -50; 
+				 startPy = 500;
+				 inSpace = true;
+				 introSpace = false;
+			}
+			else{
+			Image heavenLayer1 =  new Image("data/Img/img_bg_sky.png");
+			Image heavenLayer2 =  new Image("data/Img/cloud1.png");
+			g.drawImage(heavenLayer1, 0, 0);
+			g.drawImage(heavenLayer2, 0, 0);
+			g.drawImage(cat, startPx++, startPy--);
+			((ConfigurableEmitter)
+			rocketFire.getEmitter(0)).setPosition((startPx + 20),
+				     startPy + 25);
+					rocketFire.render();
+				
+		}
+		   }
+			if(inSpace){
+				if(startPy == 200){
+					
+				}
+				else{
+				Image spaceLayer1 =  new Image("data/Img/space1.png");
+				Image spaceLayer2 =  new Image("data/Img/planets1.png");
+				g.drawImage(spaceLayer1, 0, 0);
+				g.drawImage(spaceLayer2, 0, 0);
+				g.drawImage(cat, startPx++, startPy--);
+				((ConfigurableEmitter)
+				rocketFire.getEmitter(0)).setPosition((startPx + 20),
+					     startPy + 25);
+						rocketFire.render();
+			}
+			
+		}
 		}
 	
 		// TODO Auto-generated method stub
@@ -180,6 +227,11 @@ public class Space extends BasicGameState {
 	}
 	public Image getCat() {
 		return cat;
+	}
+	
+	public void sound()
+	{	
+		StateHandler.soundBank.playSound("spaceflight");
 	}
 
 	
