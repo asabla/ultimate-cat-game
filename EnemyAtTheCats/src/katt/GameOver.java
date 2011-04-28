@@ -89,6 +89,7 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		if (source == areas[0]) {
 			StateHandler.paused = false;
 			StateHandler.dead = false;
+			StateHandler.bonus = false;
 			StateHandler.soundBank.playSound("boing");
 			game.enterState(StateHandler.THEGAME);
 
