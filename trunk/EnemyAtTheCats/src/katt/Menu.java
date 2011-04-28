@@ -27,7 +27,6 @@ public class Menu extends BasicGameState implements ComponentListener {
 	private Database db;
 	private Functions func;
 	private UnicodeFont myFont;
-	private TextField player_name;
 
 	public Menu(int ID) {
 		super();
@@ -45,7 +44,6 @@ public class Menu extends BasicGameState implements ComponentListener {
 			areas[i].render(container, g);
 		}
 		
-		player_name.render(container, g);
 		g.drawString("Ditt namn: ", 10, 440);
 	}
 
@@ -57,7 +55,6 @@ public class Menu extends BasicGameState implements ComponentListener {
 			StateHandler.dead = false;
 
 			StateHandler.soundBank.playSound("boing");
-			func.setPlayerName(player_name.getText());
 			game.enterState(StateHandler.THEGAME);
 
 			// Player1.threadDone();
@@ -86,8 +83,6 @@ public class Menu extends BasicGameState implements ComponentListener {
 		HighscoreOver = new Image("data/Img/highscore2.png");
 		
 		myFont = func.setNewFont("Arial", 24);
-		player_name = new TextField(container, myFont, 100, 425, 200, 30);
-		player_name.setFocus(true);
 
 		// container.setMouseCursor("data/Img/cursor.png", 0, 0);
 
@@ -116,7 +111,6 @@ public class Menu extends BasicGameState implements ComponentListener {
 			throws SlickException {
 		Input input = container.getInput();
 		myFont.loadGlyphs();
-		player_name.setFocus(true);
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			StateHandler.paused = true;
