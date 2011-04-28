@@ -1,6 +1,7 @@
 package katt;
 
 import java.awt.Font;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,15 +11,41 @@ import org.newdawn.slick.font.effects.ColorEffect;
 public class Functions
 {
 	private static String PlayerName = "";
+	private Random rnd;
 	
 	public Functions()
 	{
-		
+		rnd = new Random();
 	}
 	
 	public String getPlayerName()
 	{
 		return PlayerName;
+	}
+	
+	//Returnerar en genererad sträng
+	public String getRandomString(){
+		//Skapar en array som håller åtta bokstäver/siffror
+	    char[] pw = new char[8];
+	    //Sätter ett nummer som motsvarar en bokstav
+	    int c  = 'A';
+	    //variabel som håller ett slumpmässigt nummer som motsvarar stora bokstäver,
+	    //små bokstäver eller siffror
+	    int  r1 = 0;
+	    //Loopar och slumpar fram nummer till strängen
+	    for (int i=0; i < 8; i++)
+	    {
+	      r1 = rnd.nextInt(3);
+	      switch(r1) {
+	        case 0: c = '0' +  rnd.nextInt(10); break;
+	        case 1: c = 'a' +  rnd.nextInt(26); break;
+	        case 2: c = 'A' +  rnd.nextInt(26); break;
+	      }
+	      pw[i] = (char)c;
+	    }
+	    //Returnerar strängen
+	    System.out.println(new String(pw));
+	    return new String(pw);
 	}
 	
 	public void setPlayerName(String name)
