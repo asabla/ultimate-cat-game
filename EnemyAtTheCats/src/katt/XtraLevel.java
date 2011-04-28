@@ -357,7 +357,8 @@ public class XtraLevel extends TheGame {
 
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)
-			throws SlickException {
+			throws SlickException {		
+		StateHandler.soundBank.playSound("spacedrop");
 		if (StateHandler.spaceMusic.playing()) {
 			StateHandler.spaceMusic.stop();
 		}
