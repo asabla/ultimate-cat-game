@@ -173,10 +173,6 @@ public class Player1 implements Runnable {
 			}
 		}
 	
-		if (input.isKeyPressed(Input.KEY_Z)) {
-			TheGame.frame.setVisible(true);
-		}
-	
 		if (input.isKeyPressed(Input.KEY_S)) {
 			if (StateHandler.musicOn) {
 				StateHandler.musicOn = false;
