@@ -27,12 +27,19 @@ public class Menu extends BasicGameState implements ComponentListener {
 	private Database db;
 	private Functions func;
 	private UnicodeFont myFont;
+	private StartScreen start;
 
 	public Menu(int ID) {
 		super();
 		this.ID = ID;
 		db = new Database();
 		func = new Functions();
+		start = new StartScreen(null);
+		
+		
+		
+		
+		
 	}
 
 	@Override
@@ -44,7 +51,7 @@ public class Menu extends BasicGameState implements ComponentListener {
 			areas[i].render(container, g);
 		}
 		
-		g.drawString("Ditt namn: ", 10, 440);
+		g.drawString("Ditt namn: " + start.getNamn(), 10, 440);
 	}
 
 	@Override
@@ -103,6 +110,8 @@ public class Menu extends BasicGameState implements ComponentListener {
 			// areas[i].setMouseOverImage(newgameOver);
 			// }
 		}
+		start.setVisible(true);
+//		start.initialize();
 
 	}
 
