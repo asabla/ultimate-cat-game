@@ -262,22 +262,22 @@ public class TheGame extends BasicGameState {
 			players[x].getPlayerBox().setX(players[x].getPlayerX());
 			
 			//Dubbla metoder här nedanför?? setLocation gör väl samma sak, fast i en metod
-			int hitBoxPushY = 10;
-			   
-			   int spriteSizeY = 35;
-			
-			  players[x].getBottomHitBox().setX(players[x].getPlayerX()+spriteSizeX);
-			   players[x].getBottomHitBox().setY(players[x].getPlayerY() + spriteSizeY - 5);
-			   
-			   players[x].getTopHitBox().setX(players[x].getPlayerX()+spriteSizeX);
-			   players[x].getTopHitBox().setY(players[x].getPlayerY()+ hitBoxPushY);
-			   
-			   players[x].getFrontHitBox().setX(players[x].getPlayerX()+ 25 + spriteSizeX);
-			   players[x].getFrontHitBox().setY(players[x].getPlayerY()+ hitBoxPushY + 5);
+//			int hitBoxPushY = 10;
+//			   
+//			   int spriteSizeY = 35;
+//			
+//			  players[x].getBottomHitBox().setX(players[x].getPlayerX()+spriteSizeX);
+//			   players[x].getBottomHitBox().setY(players[x].getPlayerY() + spriteSizeY - 5);
+//			   
+//			   players[x].getTopHitBox().setX(players[x].getPlayerX()+spriteSizeX);
+//			   players[x].getTopHitBox().setY(players[x].getPlayerY()+ hitBoxPushY);
+//			   
+//			   players[x].getFrontHitBox().setX(players[x].getPlayerX()+ 25 + spriteSizeX);
+//			   players[x].getFrontHitBox().setY(players[x].getPlayerY()+ hitBoxPushY + 5);
 
 			players[x].getBottomHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 30);
 			players[x].getTopHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 10);
-			players[x].getFrontHitBox().setLocation(currentPlX + spriteSizeX + 25 , currentPlY + 15);
+			players[x].getFrontHitBox().setLocation(currentPlX + spriteSizeX + 25 , currentPlY + 20);
 
 			// if outside the window print dead
 			if (playerDropOut(players[x])) {
