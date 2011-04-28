@@ -32,7 +32,7 @@ public class TheGame extends BasicGameState {
 	protected Image[] backgrounds;
 	protected float[] backgroundPos;
 	protected float[] backgroundSpeed;
-
+	private Space space; 
 	private int mapCount;
 	private int levelLength;
 	private int currentLevel;
@@ -217,7 +217,12 @@ public class TheGame extends BasicGameState {
 
 //		smoke.update(delta);
 		setTime(getTime() + delta); // Tilldelar tid till variabeln
-
+		
+		if(input.isKeyPressed(Input.KEY_A)){
+			game.enterState(StateHandler.SPACE);
+			spaceRide = true;
+			StateHandler.soundBank.playSound("spaceflight");
+		}
 		if(input.isKeyPressed(Input.KEY_U)){
 			game.enterState(StateHandler.XTRALEVEL);
 			spaceRide = true;
@@ -345,6 +350,7 @@ public class TheGame extends BasicGameState {
 					spaceRide = true;
 					
 					StateHandler.soundBank.playSound("spaceflight");
+					
 					game.enterState(StateHandler.SPACE);
 					spaceRide = true;
 					bonusPlayed = true;
