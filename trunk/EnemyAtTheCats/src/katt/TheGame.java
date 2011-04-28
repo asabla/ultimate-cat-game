@@ -581,7 +581,8 @@ public class TheGame extends BasicGameState {
 		}
 
 		else { // Nytt Spel
-
+			
+			bonusPlayed = false;
 			setCurrentLevel(1);
 			setLevelLength(5);
 			setLoopCount(0);
