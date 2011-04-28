@@ -572,7 +572,6 @@ public class TheGame extends BasicGameState {
 
 		else { // Nytt Spel
 
-			bonusPlayed = false;
 			setCurrentLevel(1);
 			setLevelLength(5);
 			setLoopCount(0);
@@ -593,7 +592,9 @@ public class TheGame extends BasicGameState {
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
 			// Input.KEY_W, 3);
-
+			
+			if(!StateHandler.bonusCompleted){
+			bonusPlayed = false;			
 			// nollställer raketdelarna
 			for (int i = 0; i < 3; i++) {
 				rocketParts[i].setTaken(false);
@@ -601,6 +602,7 @@ public class TheGame extends BasicGameState {
 			helmet.setxPos(2800);
 			rocket.setxPos(14000);
 			boots.setxPos(20000);
+			}
 
 		}
 	}
