@@ -4,7 +4,7 @@
   <image source="red.png" width="128" height="51"/>
  </tileset>
  <tileset firstgid="25" name="grasstile" tilewidth="16" tileheight="16">
-  <image source="grasstile.png" width="80" height="80"/>
+  <image source="grasstile.png" width="144" height="80"/>
  </tileset>
  <layer name="collision" width="45" height="30">
   <data encoding="base64" compression="gzip">
@@ -13,12 +13,12 @@
  </layer>
  <layer name="Grass 0" width="45" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3USwrAIAyEYY9jq314/8s5mxwgtBoC/wezcRFGCZYCAAAAAMBaVTmiSzhdyh1dwulR3ugSThk7sxt7ZOz8127Yn3kqTekLz+ydv86zu9u8keBsAmO6dscYFQAA
+   H4sIAAAAAAAAC+3QSQqAQAwAwfmOHhU3FDf0/1+yvzAwC0IX9CWHEBKCJEmSJEl5NdTWPiLSSlvtIyJ11Nc+IpJ/LsM/l5HqzwONNNFMS8bZQ2+CfTsddNJF9w9mH+yuhRgYFQAA
   </data>
  </layer>
  <layer name="Grass 1" width="45" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3UOwoAIQwFQO/iZ+9/Q9PYqd0qwgy8JiEkVVICAADgJTlSbh8B8IjxM2ukRb4fa6udu5lZjzM6uSw5OBgVAAA=
+   H4sIAAAAAAAAC+3OwQmAMBBE0ZQSz4km9t+cc7ECUQm8B/+0MGwpAAAArKSm7e8nABbRUk97OtJIM50v3G5PN/nGBSG/WcIYFQAA
   </data>
  </layer>
 </map>
