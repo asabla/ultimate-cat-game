@@ -55,7 +55,9 @@ public class GameOver extends BasicGameState implements ComponentListener {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		
-		g.setBackground(Color.magenta);
+		game.getState(StateHandler.THEGAME).render(container, game, g);
+		
+		//g.setBackground(Color.magenta);
 
 		areas[0].render(container, g);
 		areas[1].render(container, g);
