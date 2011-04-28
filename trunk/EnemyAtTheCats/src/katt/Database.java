@@ -393,7 +393,7 @@ public class Database
         }
     }
 
-    private void close()
+    void close()
     {
         try
         {

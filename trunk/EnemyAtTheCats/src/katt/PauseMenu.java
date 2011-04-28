@@ -1,5 +1,6 @@
 package katt;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -34,6 +35,10 @@ public class PauseMenu extends BasicGameState implements ComponentListener {
 		game.getState(StateHandler.THEGAME).render(container, game, g);
 		for (int i = 0; i < areas.length; i++) {
 			areas[i].render(container, g);
+		}
+		
+		if(StateHandler.bonusCompleted) {
+			showBonusCode(g);
 		}
 	}
 
@@ -95,6 +100,17 @@ public class PauseMenu extends BasicGameState implements ComponentListener {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		Input input = container.getInput();
+		
+		
+			
+	}
+	
+	private void showBonusCode(Graphics g) {
+//		g.setColor(Color.white);
+//		g.fillRect(130, 300, 400, 52);
+		g.setColor(Color.black);
+		g.drawString("You completed the bonus stage!\n" +
+				"Please collect your check at the homepage.",130 , 280);
 	}
 
 	@Override

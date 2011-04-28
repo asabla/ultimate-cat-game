@@ -145,9 +145,9 @@ public class Player1 implements Runnable {
 				jumping = new Thread(this);
 				jumping.start();
 					StateHandler.soundBank.playSound("jump");
-
+					setOnGround(false);
 			}
-			setOnGround(false);
+			
 		}
 		
 		// UP-REPEAT
@@ -403,6 +403,10 @@ public class Player1 implements Runnable {
 	
 	public int getJumps(){
 		return jumps;
+	}
+	
+	public void setJumps(int newJumps) {
+		this.jumps = newJumps;
 	}
 
 	public void setTopHitBox(Rectangle topHitBox) {

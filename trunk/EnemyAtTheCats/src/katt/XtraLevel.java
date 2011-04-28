@@ -27,6 +27,7 @@ public class XtraLevel extends TheGame {
 
 	private Space space;
 
+	private Database db;
 
 
 	private ArrayList<FlyingEnemy> fEnemys1;
@@ -86,7 +87,8 @@ public class XtraLevel extends TheGame {
 		int totalEnemys = numberOfEnemys + numberOfExtraEnemys; // Total number of Enemys to add
 		
 		for (int i = 0; i < totalEnemys; i++) {
-			fEnemys1.add(new FlyingEnemy(randomGenerator.nextInt(4))); // Add random type of Enemy
+			fEnemys1.add(new FlyingEnemy(randomGenerator.nextInt(13))); // Add random type of Enemy
+
 		}
 		
 	}
@@ -97,6 +99,16 @@ public class XtraLevel extends TheGame {
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput();
 		rocketFire.update(delta);
+		
+		if(getCurrentLevel() == 2) { 
+			db.sendUserValues("Joppe@mm.se", "Jihooo");
+			
+			StateHandler.paused = true;
+			StateHandler.bonusCompleted = true;
+			StateHandler.bonus = false;
+			game.enterState(StateHandler.PAUSE);
+		}
+		
 
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			players[0].setOnGround(true);
@@ -170,14 +182,20 @@ public class XtraLevel extends TheGame {
 				input.clearKeyPressedRecord();
 				System.out.println("Dead");
 				System.out.println("Ramlade ut " + players[x].getPlayerY());
+
+				StateHandler.bonus = false;
+				
+
 				game.enterState(StateHandler.SPACE); // Return to game
 				
 				
 				
+
 			}
 
 
 			for (FlyingEnemy fEnemy : fEnemys1) {
+
 				if (objectCollide(players[x],fEnemy.getRectangle())) {
 					input.clearKeyPressedRecord();
 					if (StateHandler.soundsOn) {
@@ -185,7 +203,7 @@ public class XtraLevel extends TheGame {
 					}
 					System.out.println("Träffade fiende");
 					players[x].setOnGround(true);
-					// newStartAfterCatHasPassedAway();
+					StateHandler.bonus = false;
 					game.enterState(StateHandler.SPACE);
 
 				}
@@ -193,8 +211,6 @@ public class XtraLevel extends TheGame {
 			}
 			
 		}
-		
-		// System.out.print(input.);
 		
 	}
 
@@ -242,39 +258,25 @@ public class XtraLevel extends TheGame {
 				g.drawAnimation(pl.getCurrentAnimation(), pl.getPlayerX(),
 						pl.getPlayerY());
 		
-				// Draw hitboxes for elaboration-porpuses
-//				g.draw(pl.getBottomHitBox());
-//				g.draw(pl.getTopHitBox());
-//				g.draw(pl.getFrontHitBox());
+				
 			}
 			
 			// Draw Enemy-objects
-
 			for (FlyingEnemy fEnemy : fEnemys1) {
 			g.drawImage(fEnemy.getfEnemyImage(), fEnemy.getPosX(), fEnemy.getPosY());
 			}
 			g.drawString("No. of Enemys: " + fEnemys1.size(), 20, 40);
 			g.drawString("Level: " + getCurrentLevel(), 20, 70);
 			g.getFont().drawString(20, 90, "HejHej", Color.yellow, 20, 100);
+
 			
 			
-			if(getCurrentLevel() == 4)
-				congratulations(g);
 		
 			
 		}
 		
 	}
 
-	private void congratulations(Graphics g) {
-		try {
-			g.drawImage(new Image("data/Img/dogmaJesus.jpg"), 50, 50);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-	}
 
 
 
@@ -283,6 +285,9 @@ public class XtraLevel extends TheGame {
 			throws SlickException {
 		
 		normalGameSpeed = gameSpeed;
+		StateHandler.bonus = true;
+		
+		db = new Database();
 		
 		try {
 			rocketFire = ParticleIO.loadConfiguredSystem("data/rocketSystem.xml");
@@ -298,6 +303,10 @@ public class XtraLevel extends TheGame {
 		// Start playing SpaceMusic
 		if (StateHandler.musicOn) {
 			StateHandler.spaceMusic.loop(); 
+		}
+		
+		if(StateHandler.paused && StateHandler.bonusCompleted) {
+			game.enterState(StateHandler.THEGAME);
 		}
 		
 		if (StateHandler.paused) {
@@ -362,7 +371,7 @@ public class XtraLevel extends TheGame {
 		if (StateHandler.spaceMusic.playing()) {
 			StateHandler.spaceMusic.stop();
 		}
-		StateHandler.bonus = true;
+//		StateHandler.bonus = true;
 		players[0].setSpaceControl(false);
 		
 	}

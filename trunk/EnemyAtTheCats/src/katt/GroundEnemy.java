@@ -84,7 +84,7 @@ public class GroundEnemy extends EnemyObject {
 	public void newObjectPos() {
 		setCollided(false);
 		setxPos(3000 + getRandom().nextInt(500));
-		setyPos(400);
+		setyPos(402);
 	}
 	
 	public void newObjectPos(int i) {
