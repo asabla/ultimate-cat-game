@@ -71,10 +71,15 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		g.setFont(myFont);
 		g.drawString(pscore, 150, 350);
 		
-		if(f_namn.length() > 0 && f_email.length() > 0 && f_telefon.length() > 0)
-		g.drawString(f_namn, 150, 260);
-		g.drawString(f_email, 150, 290);
-		g.drawString(f_telefon, 150, 320);
+			if(start.deltar() == true){
+				g.drawString(f_namn, 150, 260);
+				g.drawString(f_email, 150, 290);
+				g.drawString(f_telefon, 150, 320);
+			}
+			else{
+				g.drawString("Du är inte med i tävlingen :(", 150,290);
+			}
+		
 		
 		g.drawImage(sadCat, 590, 410);
 		

@@ -64,6 +64,7 @@ public final class StateHandler extends StateBasedGame {
 	public static void main(String[] argv) throws SlickException {
 		AppGameContainer appContainer = new AppGameContainer(new StateHandler());
 		appContainer.setDisplayMode(screenWidth, screenHeight, false);
+		appContainer.setShowFPS(false);
 		appContainer.start();
 	}
 }
