@@ -30,6 +30,7 @@ public class StartScreen extends JDialog {
 	private static String mail;
 	private static String tel;
 	
+	static boolean deltar = true;
 	/**
 	 * @param owner
 	 */
@@ -185,6 +186,8 @@ public class StartScreen extends JDialog {
 					mail = "";
 					tel = "";
 					
+					deltar = false;
+					
 					setVisible(false);
 				}
 			});
@@ -202,6 +205,11 @@ public class StartScreen extends JDialog {
 	
 	public String getTel() {
 		return tel;
+	}
+	
+	public boolean deltar(){
+		
+		return deltar;
 	}
 	
 	
