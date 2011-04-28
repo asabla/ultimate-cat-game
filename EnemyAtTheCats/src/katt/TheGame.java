@@ -2,6 +2,8 @@ package katt;
 
 import java.io.IOException;
 import java.util.Random;
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -231,7 +233,23 @@ public class TheGame extends BasicGameState {
 
 		pointObject.upDateXPos();
 		lifeObject.upDateXPos();
+			
+		
 		gEnemy.upDateXPos();
+		try {
+			if(!entityCollisionWith(gEnemy.getRectangle(), blockMapRow[currentMap])
+						) {
+				
+					gEnemy.upDateXPos();
+				
+			}
+			
+				
+			} catch (SlickException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+		}
+		
 		
 		helmet.upDatePartPos();
 		rocket.upDatePartPos();
@@ -374,6 +392,7 @@ public class TheGame extends BasicGameState {
 	 * Draws everything in the container of the game
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
+		g.setColor(Color.white);
 		drawBackgrounds();
 
 		if (game.getState(StateHandler.THEGAME) == game.getCurrentState()) {
@@ -440,7 +459,7 @@ public class TheGame extends BasicGameState {
 		// ********************************************************
 
 
-		if(!spaceRide){
+		
 
 		
 		
@@ -457,8 +476,7 @@ public class TheGame extends BasicGameState {
 			g.drawImage(rocketImg, rocket.getxPos(), rocket.getyPos());
 			g.drawImage(bootsImg, boots.getxPos(), boots.getyPos());	
 
-
-		}
+		
 
 		// draw chosen player with current animation and current coordinate
 
@@ -691,6 +709,7 @@ public class TheGame extends BasicGameState {
 				System.out.println("Roof");
 				pl.setOnGround(true);
 				pl.beginFall();
+				pl.setJumps(2);
 				
 			}
 			if(entityCollisionWith(pl.getFrontHitBox(), map) && !entityCollisionWith(pl.getBottomHitBox(), map)) {
