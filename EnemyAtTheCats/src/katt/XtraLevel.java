@@ -55,12 +55,14 @@ public class XtraLevel extends TheGame {
 		backgrounds[5] = new Image("data/Img/Planets2.png");
 
 		// BlockMaps for XtraLevel
-		blockMapRow = new BlockMap[5];
+		blockMapRow = new BlockMap[7];
 		blockMapRow[0] = new BlockMap("data/Img/xtraroom1.tmx");
 		blockMapRow[1] = new BlockMap("data/Img/xtraroom2.tmx");
 		blockMapRow[2] = new BlockMap("data/Img/xtraroom1.tmx");
 		blockMapRow[3] = new BlockMap("data/Img/xtraroom2.tmx");
 		blockMapRow[4] = new BlockMap("data/Img/xtraroom1.tmx");
+		blockMapRow[5] = new BlockMap("data/Img/xtraroom1.tmx");
+		blockMapRow[6] = new BlockMap("data/Img/xtraroom2.tmx");
 		players[0].setCurrentAnimation(players[0].getRocket());
 
 		fEnemys1 = new ArrayList<FlyingEnemy>();

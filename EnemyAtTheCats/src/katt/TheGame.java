@@ -135,7 +135,7 @@ public class TheGame extends BasicGameState {
 		backgroundSpeed[4] = 0.40f;
 		backgroundSpeed[5] = 0.40f;
 
-		mapCount = 5; // Number of BlockMaps in BlockMapRow (Array of BlockMaps)
+		mapCount = 7; // Number of BlockMaps in BlockMapRow (Array of BlockMaps)
 
 		currentMap = 0;
 		neighbourMap = 1;
@@ -144,11 +144,13 @@ public class TheGame extends BasicGameState {
 		neighbourMapX = getMapWidth();
 
 		blockMapRow = new BlockMap[mapCount];
-		blockMapRow[0] = new BlockMap("data/Img/room.tmx");
-		blockMapRow[1] = new BlockMap("data/Img/room2.tmx");
-		blockMapRow[2] = new BlockMap("data/Img/room3.tmx");
-		blockMapRow[3] = new BlockMap("data/Img/room4.tmx");
-		blockMapRow[4] = new BlockMap("data/Img/room5.tmx");
+		blockMapRow[0] = new BlockMap("data/Img/room01.tmx");
+		blockMapRow[1] = new BlockMap("data/Img/room02.tmx");
+		blockMapRow[2] = new BlockMap("data/Img/room03.tmx");
+		blockMapRow[3] = new BlockMap("data/Img/room04.tmx");
+		blockMapRow[4] = new BlockMap("data/Img/room05.tmx");
+		blockMapRow[5] = new BlockMap("data/Img/room06.tmx");
+		blockMapRow[6] = new BlockMap("data/Img/room07.tmx");
 
 		setPlayerCount(1);
 
@@ -824,7 +826,7 @@ public class TheGame extends BasicGameState {
 
 		if (neighbourMapX + getMapWidth() <= 0) {
 			// if(neighbourMapX + mapWidth <= 0){
-			neighbourMap = rnd.nextInt(mapCount - 1);
+			neighbourMap = rnd.nextInt(mapCount);
 			while (neighbourMap == currentMap) {
 				neighbourMap = rnd.nextInt(mapCount - 1);
 			}

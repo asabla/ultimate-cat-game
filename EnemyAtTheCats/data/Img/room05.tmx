@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="45" height="30" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="collision" tilewidth="16" tileheight="16">
+  <image source="red.png" width="128" height="51"/>
+ </tileset>
+ <tileset firstgid="25" name="grasstile" tilewidth="16" tileheight="16">
+  <image source="grasstile.png" width="144" height="80"/>
+ </tileset>
+ <layer name="collision" width="45" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OMQoAQAgDQf3/p22vPAtBYQa2S5EIAAAAAGCLfPrZTG+7XflcCrfzPBgVAAA=
+  </data>
+ </layer>
+ <layer name="Grass 0" width="45" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3NOQqAQBAF0bmOhu4K7ve/kxVO1NCZQT2opPnMlCJJkiRJkiTpLxZaqQ02Dc2J7UAjTclt/ccW3G96qA/e7uhKbHc66Exu6z/e4P4B3GiV9RgVAAA=
+  </data>
+ </layer>
+ <layer name="Grass 1" width="45" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3Muw3AIBBEQUrBMf7Rf3PekMiIxIE1I73oVlcKAAAAAPzTle60vWxqOhe2Le3pmGzH3fi/T2584wEyvivhGBUAAA==
+  </data>
+ </layer>
+</map>
