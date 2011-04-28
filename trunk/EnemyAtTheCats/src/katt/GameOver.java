@@ -79,7 +79,7 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		g.drawString(snabel, 355, 310);
 		g.drawString(pscore, 150, 390);
 		
-		g.drawImage(sadCat, (720-sadCat.getWidth())/2, 400);
+		g.drawImage(sadCat, 590, 410);
 		
 		g.drawImage(gameover, 130, 10);
 	}
