@@ -709,7 +709,6 @@ public class TheGame extends BasicGameState {
 				System.out.println("Roof");
 				pl.setOnGround(true);
 				pl.beginFall();
-				pl.setJumps(2);
 				
 			}
 			if(entityCollisionWith(pl.getFrontHitBox(), map) && !entityCollisionWith(pl.getBottomHitBox(), map)) {

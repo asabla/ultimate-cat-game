@@ -50,8 +50,11 @@ public class PauseMenu extends BasicGameState implements ComponentListener {
 			StateHandler.dead = false;
 			if(StateHandler.bonus)
 				game.enterState(StateHandler.XTRALEVEL);
-			else
-				game.enterState(StateHandler.THEGAME);
+			else {
+				StateHandler.soundBank.playSound("spacedrop");
+				game.enterState(StateHandler.SPACE);
+			}
+				
 		}
 		if (source == areas[1])// Visa Highscore - INTE KLAR
 		{

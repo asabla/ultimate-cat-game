@@ -101,12 +101,11 @@ public class XtraLevel extends TheGame {
 		rocketFire.update(delta);
 		
 		if(getCurrentLevel() == 2) { 
-			db.sendUserValues("Joppe@mm.se", "Jihooo");
-			
 			StateHandler.paused = true;
 			StateHandler.bonusCompleted = true;
 			StateHandler.bonus = false;
 			game.enterState(StateHandler.PAUSE);
+			db.sendUserValues("Joppe@mm.se", "Jihooo");
 		}
 		
 
@@ -185,7 +184,7 @@ public class XtraLevel extends TheGame {
 
 				StateHandler.bonus = false;
 				
-
+				StateHandler.soundBank.playSound("spacedrop");
 				game.enterState(StateHandler.SPACE); // Return to game
 				
 				
@@ -204,6 +203,7 @@ public class XtraLevel extends TheGame {
 					System.out.println("Träffade fiende");
 					players[x].setOnGround(true);
 					StateHandler.bonus = false;
+					StateHandler.soundBank.playSound("spacedrop");
 					game.enterState(StateHandler.SPACE);
 
 				}
@@ -367,7 +367,7 @@ public class XtraLevel extends TheGame {
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)
 			throws SlickException {		
-		StateHandler.soundBank.playSound("spacedrop");
+		
 		if (StateHandler.spaceMusic.playing()) {
 			StateHandler.spaceMusic.stop();
 		}

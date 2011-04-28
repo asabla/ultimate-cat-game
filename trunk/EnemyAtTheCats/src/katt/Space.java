@@ -248,31 +248,7 @@ public class Space extends BasicGameState {
 					g.drawImage(cat, startPx++, startPy--);	
 		}
 		   }
-			if(inSpace){
-				if(startPy == 200){
-					startPx = 0;
-					startPy = 0;
-					
-					game.enterState(StateHandler.XTRALEVEL);
-
-					setOutSpace(true);
-				}
-				else{
- 	
-				Image spaceLayer1 =  new Image("data/Img/space1.png");
-				Image spaceLayer2 =  new Image("data/Img/planets1.png");
-				g.drawImage(spaceLayer1, 0, 0);
-				g.drawImage(spaceLayer2, 0, 0);
-				g.drawImage(go[count],goTestMove++ , 150);
-				g.drawImage(cat, startPx++, startPy--);
-				((ConfigurableEmitter)
-				rocketFire.getEmitter(0)).setPosition((startPx + 20),
-					     startPy + 25);
-						rocketFire.render();
-
-
-			}
-			}
+			
 		}
 		}
 
