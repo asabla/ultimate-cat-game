@@ -95,15 +95,6 @@ public class PauseMenu extends BasicGameState implements ComponentListener {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		Input input = container.getInput();
-
-		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
-			StateHandler.paused = true;
-			StateHandler.dead = false;
-			if(StateHandler.bonus)
-				game.enterState(StateHandler.XTRALEVEL);
-			else
-				game.enterState(StateHandler.THEGAME);
-		}
 	}
 
 	@Override
