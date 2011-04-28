@@ -386,7 +386,7 @@ public class TheGame extends BasicGameState {
 
 //			blockMapRow[currentMap].drawHitBox(g, currentMapX);
 //			blockMapRow[neighbourMap].drawHitBox(g, neighbourMapX);
-		}
+		
 
 		
 
@@ -503,6 +503,7 @@ public class TheGame extends BasicGameState {
 
 				
 			}
+		}
 		}
 		}
 	
