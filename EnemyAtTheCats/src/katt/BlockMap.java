@@ -11,7 +11,6 @@ public class BlockMap {
 	private int mapWidth;
 	private int mapHeight;
 	private int square[] = { 1, 1, 15, 1, 15, 15, 1, 15 };
-	// private int square[] = { 1, 1, 31, 1, 31, 31, 1, 31 };
 	private ArrayList<Block> blockList;
 	private int tileSize;
 
