@@ -59,7 +59,7 @@ public class Player1 implements Runnable {
 		//set player hitboxes (new)
 		this.topHitBox = createRectangle(playerX, playerY, 25, 5);
 		this.bottomHitBox = createRectangle(playerX, 35 + playerY, 25, 20);
-		this.frontHitBox = createRectangle(spriteSizeX - 5, 25 + playerY, 5, 30);
+		this.frontHitBox = createRectangle(spriteSizeX - 5, 25 + playerY, 5, 20);
 
 	}
 
