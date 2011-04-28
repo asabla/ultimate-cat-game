@@ -42,6 +42,8 @@ public class GameOver extends BasicGameState implements ComponentListener {
 	private String superName;
 	private Score ss;
 	
+	private boolean deltar = true;
+	
 	private StartScreen start;
 
 	public GameOver(int ID) {
@@ -70,6 +72,7 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		g.setFont(myFont);
 		g.drawString(pscore, 150, 350);
 		
+		if(f_namn.length() > 0 && f_email.length() > 0 && f_telefon.length() > 0)
 		g.drawString(f_namn, 150, 260);
 		g.drawString(f_email, 150, 290);
 		g.drawString(f_telefon, 150, 320);
@@ -99,6 +102,21 @@ public class GameOver extends BasicGameState implements ComponentListener {
 			game.enterState(StateHandler.MENU);
 
 		}
+		
+		if (source == areas[2]) {
+			
+			if(f_namn.isEmpty() && f_email.isEmpty() && f_telefon.isEmpty()){
+				deltar = false;
+				System.out.println("Deltar ej");
+			}
+			
+			
+			else if(deltar = true){
+			db.sendHighscore(f_namn, Integer.parseInt(pscore), f_email, f_telefon);
+			}
+		}
+			
+		
 		
 	}
 
