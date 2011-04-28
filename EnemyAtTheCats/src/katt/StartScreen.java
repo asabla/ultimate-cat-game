@@ -181,9 +181,9 @@ public class StartScreen extends JDialog {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
 					
-					namn = "Inget";
-					mail = "Inget";
-					tel = "Inget";
+					namn = "";
+					mail = "";
+					tel = "";
 					
 					setVisible(false);
 				}
