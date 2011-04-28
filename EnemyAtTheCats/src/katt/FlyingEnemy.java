@@ -62,10 +62,10 @@ public class FlyingEnemy extends EnemyObject {
 	}
 
 	public void upDateXPos() {
-		// Spelar upp ett ljud när fienden kommer in i bild
-		if (getPosX() > 640 && getPosX() < 650) {
-			StateHandler.soundBank.playSound("harp1");
-		}
+//		// Spelar upp ett ljud när fienden kommer in i bild
+//		if (getPosX() > 640 && getPosX() < 650) {
+//			StateHandler.soundBank.playSound("harp1");
+//		}
 		if (getPosX() > -5) {
 			setxPos(getPosX() - TheGame.gameSpeed);
 			getRectangle().setX(getPosX());
