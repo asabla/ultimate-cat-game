@@ -255,6 +255,12 @@ public class XtraLevel extends TheGame {
 		}
 
 	}
+	@Override
+	protected boolean playerDropOut(Player1 pl) {
+		return pl.getPlayerBox().getX() < 0 || pl.getPlayerBox().getY() > 480
+				|| pl.getPlayerBox().getY() < -50;
+
+	}
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)

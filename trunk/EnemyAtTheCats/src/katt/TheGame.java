@@ -733,8 +733,7 @@ public class TheGame extends BasicGameState {
 	 */
 
 	protected boolean playerDropOut(Player1 pl) {
-		return pl.getPlayerBox().getX() < 0 || pl.getPlayerBox().getY() > 480
-				|| pl.getPlayerBox().getY() < -50;
+		return pl.getPlayerBox().getX() < 0 || pl.getPlayerBox().getY() > 480;
 
 	}
 
