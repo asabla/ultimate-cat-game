@@ -14,6 +14,11 @@ public class BlockMap {
 	private ArrayList<Block> blockList;
 	private int tileSize;
 
+	/**
+	 * Constructor
+	 * @param ref Directory of target TiledMap file
+	 * @author Jonathan B
+	 */
 	public BlockMap(String ref) throws SlickException {
 		this.blockList = new ArrayList<Block>();
 		this.tmap = new TiledMap(ref, "data/Img");
@@ -24,6 +29,10 @@ public class BlockMap {
 		loadBlocks();
 	}
 
+	/**
+	 * Updates the position of all blocks in the BlockMap
+	 * @author Jonathan B
+	 */
 	public void moveBlockMap() {
 		for (Block block : blockList) {
 			block.getPoly().setX // Set the position of the Block
@@ -33,29 +42,22 @@ public class BlockMap {
 	}
 
 	/**
-	 * Reload map Move every polygon to the left
+	 * Reload all blocks in the BlockMap, with current position
+	 * @author Jonathan B
 	 */
-	public void updateBlockMap(float currentX, boolean buffer) {
+	public void updateBlockMap(float currentX) {
 		clearBlocks();
 		loadBlocks();
-		if (buffer) {
-			for (Block block : blockList) {
-				block.getPoly().setX // Set the position of the Block
-						(block.getPoly().getX() // Get the current position
-								+ currentX); // Add the map position
-			}
-		}
-	}
-
-	public void jumpMap(int length) {
-		for (int x = 0; x < this.blockList.size(); x++) {
-			this.blockList.get(x).getPoly()
-					.setX(this.blockList.get(x).getPoly().getX() + length);
+		for (Block block : blockList) {
+			block.getPoly().setX // Set the position of the Block
+					(block.getPoly().getX() // Get the current position
+							+ currentX); // Add the map position
 		}
 	}
 
 	/**
-	 * For testing only Draws the hitboxes, in the game
+	 * For testing only, Draws the hitboxes, in the game
+	 * @author Jonathan B
 	 */
 	public void drawHitBox(Graphics g, float currentX) {
 		for (int x = 0; x < this.blockList.size(); x++) {
@@ -65,13 +67,13 @@ public class BlockMap {
 
 	/**
 	 * reades the tmx file Create a hitbox Insert it in to an arraylist
+	 * @author Jonathan B
 	 */
 	public void loadBlocks() {
 		for (int x = 0; x < this.tmap.getWidth(); x++) {
 			for (int y = 0; y < this.tmap.getHeight(); y++) {
 				if (this.tmap.getTileId(x, y, 0) == 1) {
-					this.blockList.add(new Block(x * this.tileSize, y
-							* this.tileSize, this.square, "square"));
+					this.blockList.add(new Block(x * this.tileSize, y * this.tileSize, this.square, "square"));
 				}
 			}
 		}
@@ -116,5 +118,4 @@ public class BlockMap {
 	public void setMapHeight(int mapHeight) {
 		this.mapHeight = mapHeight;
 	}
-
 }

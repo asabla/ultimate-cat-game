@@ -294,7 +294,7 @@ public class XtraLevel extends TheGame {
 			int playerY = (int) players[0].getPlayerY();
 			int playerLife = players[0].getPlayerlife();
 
-			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+			blockMapRow[currentMap].updateBlockMap(currentMapX);
 
 			players = new Player1[getPlayerCount()];
 
@@ -328,11 +328,9 @@ public class XtraLevel extends TheGame {
 
 			players[0] = new Player1(200, 400, "data/Img/cat.png",
 					Input.KEY_UP, 3); // TODO Change player sheet
-			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+			blockMapRow[currentMap].updateBlockMap(currentMapX);
 			players[0].setSpaceControl(true);
 			players[0].setCurrentAnimation(players[0].getRocket());
-			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
-			// Input.KEY_W, 3);
 		}
 		players[0].setPlayerX(240);
 		players[0].setPlayerY(200);
