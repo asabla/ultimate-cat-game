@@ -362,8 +362,6 @@ public class TheGame extends BasicGameState {
 			// blockMapRow[currentMap].drawHitBox(g, currentMapX);
 			// blockMapRow[neighbourMap].drawHitBox(g, neighbourMapX);
 
-			// ********************************************************
-
 			// om Movepoint eller lifePoint är true så kör denna igång och
 			// flyttar
 			// poängobjektet uppåt tills den nåt rätt Y pos = slutPy.
@@ -408,8 +406,6 @@ public class TheGame extends BasicGameState {
 					gogo = true;
 				}
 			}
-
-			// ********************************************************
 
 			g.drawImage(pointObjectImage, pointObject.getxPos(),pointObject.getyPos());
 			g.drawImage(lifeObjectImage, lifeObject.getxPos(),lifeObject.getyPos());
@@ -482,7 +478,7 @@ public class TheGame extends BasicGameState {
 			int playerLife = players[0].getPlayerlife();
 			long playerScore = players[0].getPlayerScore();
 
-			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+			blockMapRow[currentMap].updateBlockMap(currentMapX);
 
 			players = new Player1[getPlayerCount()];
 			players[0] = new Player1(playerX, playerY, "data/Img/cat.png",
@@ -501,7 +497,7 @@ public class TheGame extends BasicGameState {
 			int playerLife = players[0].getPlayerlife();
 			long playerScore = players[0].getPlayerScore();
 
-			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+			blockMapRow[currentMap].updateBlockMap(currentMapX);
 
 			players = new Player1[getPlayerCount()];
 			players[0] = new Player1(playerX, playerY, "data/Img/cat.png",
@@ -525,7 +521,7 @@ public class TheGame extends BasicGameState {
 			int playerLife = players[0].getPlayerlife();
 			long playerScore = players[0].getPlayerScore();
 
-			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+			blockMapRow[currentMap].updateBlockMap(currentMapX);
 
 			players = new Player1[getPlayerCount()];
 			players[0] = new Player1(200, 400, "data/Img/cat.png",
@@ -552,7 +548,7 @@ public class TheGame extends BasicGameState {
 			players = new Player1[getPlayerCount()];
 			players[0] = new Player1(200, 400, "data/Img/cat.png",
 					Input.KEY_UP, 3);
-			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
+			blockMapRow[currentMap].updateBlockMap(currentMapX);
 			
 			if(!StateHandler.bonusCompleted){
 			bonusPlayed = false;			
@@ -761,8 +757,8 @@ public class TheGame extends BasicGameState {
 			}
 		}
 
-		blockMapRow[currentMap].updateBlockMap(currentMapX, true);
-		blockMapRow[neighbourMap].updateBlockMap(neighbourMapX, true);
+		blockMapRow[currentMap].updateBlockMap(currentMapX);
+		blockMapRow[neighbourMap].updateBlockMap(neighbourMapX);
 
 	}
 
