@@ -24,6 +24,7 @@ public class GameOver extends BasicGameState implements ComponentListener {
 	private Image newgameOver = null;
 	private Image backOver = null;
 	private Image sadCat = null;
+	private Image gameover = null;
 	private MouseOverArea[] areas = new MouseOverArea[3];
 	private GameContainer gameContainer;
 	private Game ettGame;
@@ -69,15 +70,16 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		f_telefon.render(container, g);
 //		f_points.render(container, g);
 
-		g.drawString(superName, 180, 50);
+		g.drawString(superName, 130, 70);
 		g.setFont(myFont);
-		g.drawString("Game Over", 300, 20);
 		g.drawString(message, 200, 550);
 		
 		g.drawString(snabel, 355, 310);
 		g.drawString(pscore, 150, 390);
 		
-		g.drawImage(sadCat, (720+sadCat.getWidth())/2, 400);
+		g.drawImage(sadCat, (720-sadCat.getWidth())/2, 400);
+		
+		g.drawImage(gameover, 130, 10);
 	}
 
 	@Override
@@ -139,6 +141,7 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		backOver = new Image("data/Img/tillbaka2.png");
 		sendScore = new Image("data/Img/object1.png");
 		sadCat = new Image("data/Img/SadCat.png");
+		gameover = new Image ("data/Img/gameover.png");
 
 		// container.setMouseCursor("data/Img/cursor.png", 0, 0);
 
