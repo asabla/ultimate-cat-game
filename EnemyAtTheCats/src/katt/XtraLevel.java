@@ -25,9 +25,15 @@ public class XtraLevel extends TheGame {
 	
 	public static float normalGameSpeed;
 
-	private ArrayList<FlyingEnemy> fEnemys;
-	private int previousLoop;
+	private Space space;
+
+
+
+	private ArrayList<FlyingEnemy> fEnemys1;
+	private int previousLoop1;
+
 	
+
 	private ParticleSystem rocketFire;
 	
 
@@ -59,13 +65,19 @@ public class XtraLevel extends TheGame {
 		players[0].setCurrentAnimation(players[0].getRocket());
 
 		
-		fEnemys = new ArrayList<FlyingEnemy>();
+
+		fEnemys1 = new ArrayList<FlyingEnemy>();
 		
+
+
+		
+
 //		// Change "Enemy"-objects
 //		gEnemy = new GroundEnemy(2); // SpaceEnemy (2)
 //		gEnemyImage = new Image("data/Img/xtraEnemy.png");
 	}
 	
+
 	private void generateEnemys() {
 		Random randomGenerator = new Random();
 		
@@ -74,10 +86,12 @@ public class XtraLevel extends TheGame {
 		int totalEnemys = numberOfEnemys + numberOfExtraEnemys; // Total number of Enemys to add
 		
 		for (int i = 0; i < totalEnemys; i++) {
-			fEnemys.add(new FlyingEnemy(randomGenerator.nextInt(4))); // Add random type of Enemy
+			fEnemys1.add(new FlyingEnemy(randomGenerator.nextInt(4))); // Add random type of Enemy
 		}
 		
 	}
+
+	
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
@@ -103,17 +117,18 @@ public class XtraLevel extends TheGame {
 		setTime(getTime() + delta); // Tilldelar tid till variabeln
 
 		// Enemys Generation if new loop detected
-		if(getLoopCount() != previousLoop) {
+		if(getLoopCount() != previousLoop1) {
 			generateEnemys();
 		}
 		
-			previousLoop = getLoopCount();
+			previousLoop1 = getLoopCount();
 		
 		// Enemy Update Positions
-		for (FlyingEnemy fEnemy : fEnemys) {
+		for (FlyingEnemy fEnemy : fEnemys1) {
 			fEnemy.upDateXPos();
 		}
 
+	
 		mapHandler();
 
 		for (int x = 0; x < 4; x++) {
@@ -155,10 +170,14 @@ public class XtraLevel extends TheGame {
 				input.clearKeyPressedRecord();
 				System.out.println("Dead");
 				System.out.println("Ramlade ut " + players[x].getPlayerY());
-				game.enterState(StateHandler.THEGAME); // Return to game
+				game.enterState(StateHandler.SPACE); // Return to game
+				
+				
+				
 			}
 
-			for (FlyingEnemy fEnemy : fEnemys) {
+
+			for (FlyingEnemy fEnemy : fEnemys1) {
 				if (objectCollide(players[x],fEnemy.getRectangle())) {
 					input.clearKeyPressedRecord();
 					if (StateHandler.soundsOn) {
@@ -167,8 +186,10 @@ public class XtraLevel extends TheGame {
 					System.out.println("Träffade fiende");
 					players[x].setOnGround(true);
 					// newStartAfterCatHasPassedAway();
-					game.enterState(StateHandler.THEGAME);
+					game.enterState(StateHandler.SPACE);
+
 				}
+
 			}
 			
 		}
@@ -228,12 +249,15 @@ public class XtraLevel extends TheGame {
 			}
 			
 			// Draw Enemy-objects
-			for (FlyingEnemy fEnemy : fEnemys) {
+
+			for (FlyingEnemy fEnemy : fEnemys1) {
 			g.drawImage(fEnemy.getfEnemyImage(), fEnemy.getPosX(), fEnemy.getPosY());
 			}
-			g.drawString("No. of Enemys: " + fEnemys.size(), 20, 40);
+			g.drawString("No. of Enemys: " + fEnemys1.size(), 20, 40);
 			g.drawString("Level: " + getCurrentLevel(), 20, 70);
 			g.getFont().drawString(20, 90, "HejHej", Color.yellow, 20, 100);
+			
+			
 			if(getCurrentLevel() == 4)
 				congratulations(g);
 		
@@ -248,9 +272,11 @@ public class XtraLevel extends TheGame {
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
 		}
-		
 	}
+
+
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
@@ -297,9 +323,13 @@ public class XtraLevel extends TheGame {
 			setCurrentLevel(1);
 			setLevelLength(5);
 			setLoopCount(0);
-			previousLoop = 0;
+
+			previousLoop1 = 0;
 			
 			generateEnemys();
+
+
+
 		
 			TheGame.gameSpeed = 2f;
 			currentMap = 0;
