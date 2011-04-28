@@ -42,7 +42,6 @@ public class GameOver extends BasicGameState implements ComponentListener {
 	private String superName;
 	private Score ss;
 	
-	private boolean deltar = true;
 	
 	private StartScreen start;
 
@@ -105,13 +104,12 @@ public class GameOver extends BasicGameState implements ComponentListener {
 		
 		if (source == areas[2]) {
 			
-			if(f_namn.isEmpty() && f_email.isEmpty() && f_telefon.isEmpty()){
-				deltar = false;
+			if(StartScreen.deltar == false){
 				System.out.println("Deltar ej");
 			}
 			
 			
-			else if(deltar = true){
+			else if(StartScreen.deltar = true){
 			db.sendHighscore(f_namn, Integer.parseInt(pscore), f_email, f_telefon);
 			}
 		}
