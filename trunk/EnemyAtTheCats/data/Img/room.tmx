@@ -8,17 +8,17 @@
  </tileset>
  <layer name="collision" width="45" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3OwQkAQAgEMe2/aT9XwrkgJDD/qQIAAIBd/brEc4bnDM8Zv55bkQYaUELHGBUAAA==
+   H4sIAAAAAAAAC+3DsQ0AAAwCIP3/ab9oOkBCAgAAAAB8UU8ORLtrTRgVAAA=
   </data>
  </layer>
  <layer name="Grass 0" width="45" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3QSQqAQAwAwfmOHhU3FDf0/1+yvzAwC0IX9CWHEBKCJEmSJEl5NdTWPiLSSlvtIyJ11Nc+IpJ/LsM/l5HqzwONNNFMS8bZQ2+CfTsddNJF9w9mH+yuhRgYFQAA
+   H4sIAAAAAAAAC+3IsQ3AIAAEMZYCQkNC9h+KHwMkW7rmSgEAAAAATlFTSz09aVzwZnrTl1b6L3gbrMuM1hgVAAA=
   </data>
  </layer>
  <layer name="Grass 1" width="45" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3OwQmAMBBE0ZQSz4km9t+cc7ECUQm8B/+0MGwpAAAArKSm7e8nABbRUk97OtJIM50v3G5PN/nGBSG/WcIYFQAA
+   H4sIAAAAAAAAC+3MuwnAMBBEQfVjfftvTpuoAiMHZgZecCxcKQAAAADwT0+qqaWeRpppXdjO/fYn39iTvNjgGBUAAA==
   </data>
  </layer>
 </map>
