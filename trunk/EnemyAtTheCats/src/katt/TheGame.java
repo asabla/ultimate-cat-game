@@ -1,8 +1,7 @@
 package katt;
 
-import java.io.IOException;
-import java.util.Random;
 
+import java.util.Random;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -181,7 +180,6 @@ public class TheGame extends BasicGameState {
 		rocketImg = new Image("data/Img/object8.png");
 		bootsImg = new Image("data/Img/object9.png");
 
-		// mr = new Player1(200, 400, "data/Img/cat2.png", Input.KEY_UP, 3);
 		rnd = new Random();
 		gEnemy = new GroundEnemy(1);
 		gEnemyImage = new Image(gEnemy.getImgLoc());
@@ -196,7 +194,6 @@ public class TheGame extends BasicGameState {
 	/**
 	 * Inputs and modifications
 	 */
-
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput();
 
@@ -218,7 +215,6 @@ public class TheGame extends BasicGameState {
 			}
 		}
 
-		// smoke.update(delta);
 		setTime(getTime() + delta); // Tilldelar tid till variabeln
 
 		if (input.isKeyPressed(Input.KEY_A)) {
@@ -239,15 +235,11 @@ public class TheGame extends BasicGameState {
 
 		gEnemy.upDateXPos();
 		try {
-			if (!entityCollisionWith(gEnemy.getRectangle(),
-					blockMapRow[currentMap])) {
-
+			if (!entityCollisionWith(gEnemy.getRectangle(), blockMapRow[currentMap])) {
 				gEnemy.upDateXPos();
-
 			}
 
 		} catch (SlickException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -275,12 +267,9 @@ public class TheGame extends BasicGameState {
 			players[x].getPlayerBox().setY(players[x].getPlayerY());
 			players[x].getPlayerBox().setX(players[x].getPlayerX());
 
-			players[x].getBottomHitBox().setLocation(currentPlX + spriteSizeX,
-					currentPlY + 30);
-			players[x].getTopHitBox().setLocation(currentPlX + spriteSizeX,
-					currentPlY + 10);
-			players[x].getFrontHitBox().setLocation(
-					currentPlX + spriteSizeX + 25, currentPlY + 20);
+			players[x].getBottomHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 30);
+			players[x].getTopHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 10);
+			players[x].getFrontHitBox().setLocation(currentPlX + spriteSizeX + 25, currentPlY + 20);
 
 			// if outside the window print dead
 			if (playerDropOut(players[x])) {
@@ -299,8 +288,7 @@ public class TheGame extends BasicGameState {
 			if (objectCollide(players[x], pointObject.getRectangle())) {
 				StateHandler.soundBank.playSound("crush");
 
-				players[x].setPlayerScore(players[x].getPlayerScore()
-						+ pointObject.getValue());
+				players[x].setPlayerScore(players[x].getPlayerScore()+ pointObject.getValue());
 				movePoint = true;
 				pointObject = new PickupObject();
 				try {
@@ -341,7 +329,6 @@ public class TheGame extends BasicGameState {
 				players[x].loosePlayerLife();
 				System.out.println("Träffade fiende");
 				players[x].setOnGround(true);
-				// newStartAfterCatHasPassedAway();
 				game.enterState(StateHandler.DEADMENU);
 			}
 			if (rocketPartTaken(players[x])) {
@@ -357,21 +344,7 @@ public class TheGame extends BasicGameState {
 					bonusPlayed = true;
 				}
 			}
-
-			// if(rocketAssembled() && !bonusPlayed){
-			//
-			// game.enterState(StateHandler.SPACE);
-			// spaceRide = true;
-			//
-			// StateHandler.soundBank.playSound("spaceflight");
-			// game.enterState(StateHandler.SPACE);
-			// spaceRide = true;
-			//
-			// System.err.println("Bonus activated!");
-			// bonusPlayed = true;
-			// }
 		}
-
 	}
 
 	/**
@@ -383,10 +356,8 @@ public class TheGame extends BasicGameState {
 
 		if (game.getState(StateHandler.THEGAME) == game.getCurrentState()) {
 
-			blockMapRow[currentMap].getTmap().render((int) currentMapX,
-					(int) posY);
-			blockMapRow[neighbourMap].getTmap().render((int) neighbourMapX,
-					(int) posY);
+			blockMapRow[currentMap].getTmap().render((int) currentMapX, (int) posY);
+			blockMapRow[neighbourMap].getTmap().render((int) neighbourMapX, (int) posY);
 
 			// blockMapRow[currentMap].drawHitBox(g, currentMapX);
 			// blockMapRow[neighbourMap].drawHitBox(g, neighbourMapX);
@@ -440,12 +411,9 @@ public class TheGame extends BasicGameState {
 
 			// ********************************************************
 
-			g.drawImage(pointObjectImage, pointObject.getxPos(),
-					pointObject.getyPos());
-			g.drawImage(lifeObjectImage, lifeObject.getxPos(),
-					lifeObject.getyPos());
+			g.drawImage(pointObjectImage, pointObject.getxPos(),pointObject.getyPos());
+			g.drawImage(lifeObjectImage, lifeObject.getxPos(),lifeObject.getyPos());
 
-			// g.drawImage(gEnemyImage, gEnemy.getPosX(), gEnemy.getPosY());
 			g.drawAnimation(gEnemy.getCurrentAnimation(), gEnemy.getPosX(),
 					gEnemy.getPosY());
 
@@ -455,15 +423,10 @@ public class TheGame extends BasicGameState {
 
 			// draw chosen player with current animation and current coordinate
 
-			//g.drawString("Player 1", 10, 10);
 			g.drawString("Liv: " + players[0].getPlayerLife(), 10, 10);
 			g.drawString("Poäng: " + players[0].getPlayerScore(), 10, 25);
 
 			g.drawString("Topscore: " + topScore, 150, 10);
-
-			// g.drawString("Player 2", 500, 30);
-			// g.drawString("Liv: " + players[1].getPlayerLife(), 500, 45);
-			// g.drawString("Poäng: " + players[1].getPlayerScore(), 500, 60);
 
 			g.drawString("Tid: " + this.getTime() / 1000 + "sec", 450, 450);
 			g.drawString("Level: " + getCurrentLevel(), 550, 450);
@@ -590,8 +553,6 @@ public class TheGame extends BasicGameState {
 			players[0] = new Player1(200, 400, "data/Img/cat.png",
 					Input.KEY_UP, 3);
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
-			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
-			// Input.KEY_W, 3);
 			
 			if(!StateHandler.bonusCompleted){
 			bonusPlayed = false;			
@@ -617,17 +578,12 @@ public class TheGame extends BasicGameState {
 
 	/**
 	 * Controls if target playershape collides with anything in chosen blockmap
-	 * 
-	 * @param shp
-	 *            The playershape to make collision control with
-	 * @param bMap
-	 *            The BlockMap that objectshape collides with
-	 * @return true : if shape collides with mapelement, false : if shape dont
-	 *         collide with mapElement
+	 * @param shp The playershape to make collision control with
+	 * @param bMap The BlockMap that objectshape collides with
+	 * @return true : if shape collides with mapelement, false : if shape dont collide with mapElement
 	 * @author Jonathan B
 	 */
-	protected boolean entityCollisionWith(Shape shp, BlockMap bMap)
-			throws SlickException {
+	protected boolean entityCollisionWith(Shape shp, BlockMap bMap) throws SlickException {
 		for (int i = 0; i < bMap.getEntities().size(); i++) {
 			Block entity1 = (Block) bMap.getEntities().get(i);
 			if (shp.intersects(entity1.getPoly())) {
@@ -640,13 +596,9 @@ public class TheGame extends BasicGameState {
 
 	/**
 	 * Updates the position of the background
-	 * 
-	 * @param layerPos
-	 *            current position of the background
-	 * @param moveSpeed
-	 *            The movmentspeed of the background
-	 * @param screenUpdate
-	 *            The width of the background and when it shall reloop
+	 * @param layerPos current position of the background
+	 * @param moveSpeed The movmentspeed of the background
+	 * @param screenUpdate The width of the background and when it shall reloop
 	 * @return The new position of the background
 	 * @author Jonathan B
 	 */
@@ -661,7 +613,6 @@ public class TheGame extends BasicGameState {
 
 	/**
 	 * Draw all backgrounds with current position
-	 * 
 	 * @author Jonathan B
 	 */
 	public void drawBackgrounds() {
@@ -673,11 +624,8 @@ public class TheGame extends BasicGameState {
 
 	/**
 	 * Handels the events if a player collides with a mapElement
-	 * 
-	 * @param pl
-	 *            Target player
-	 * @param map
-	 *            Target map
+	 * @param pl Target player
+	 * @param map Target map
 	 * @author Jonathan B, Oskar, Thomas
 	 */
 	protected void collisionHandler(Player1 pl, BlockMap map) {
@@ -701,27 +649,6 @@ public class TheGame extends BasicGameState {
 				System.out.println("Wall");
 				pl.setPlayerX(collisonBlock.getMinX() - 50);
 			}
-
-			// if (entityCollisionWith(pl.getPlayerBox(), map)) {
-			//
-			// if (wallHit(map, pl))
-			// {
-			// System.out.println("Wall");
-			// pl.setPlayerX(pl.getPlayerX() - 2 * gameSpeed);
-			// }
-			// if (pl.getPlayerY() + 50 > collisonBlock.getY()
-			// && !wallHit(map, pl))
-			// {
-			// System.out.println("Floor");
-			// pl.setOnGround(true);
-			//
-			// // Put Player above the collisionBlock
-			// pl.setPlayerY(collisonBlock.getY() - 50);
-			//
-			// // Reset the GravityEffect
-			// pl.setGravityEffect(gravity);
-			// }
-			// }
 		} catch (SlickException e1) {
 		}
 
@@ -729,13 +656,10 @@ public class TheGame extends BasicGameState {
 
 	/**
 	 * Returns true if player is outside the screen
-	 * 
-	 * @param pl
-	 *            Target player
+	 * @param pl Target player
 	 * @return true if outside the screen, false if not
 	 * @author Jonathan B
 	 */
-
 	protected boolean playerDropOut(Player1 pl) {
 		return pl.getPlayerBox().getX() < 0 || pl.getPlayerBox().getY() > 480;
 
@@ -749,11 +673,8 @@ public class TheGame extends BasicGameState {
 
 	/**
 	 * Returns true if player collide with a objectshape
-	 * 
-	 * @param pl
-	 *            Target player
-	 * @param shp
-	 *            Target objectshape
+	 * @param pl Target player
+	 * @param shp Target objectshape
 	 * @return true if collide, false if not
 	 * @author Jonathan B, Viktor
 	 */
@@ -769,7 +690,6 @@ public class TheGame extends BasicGameState {
 
 	/**
 	 * Kontrollerar om alla raketdelar är tagna
-	 * 
 	 * @return true om så är fallet
 	 */
 	private boolean rocketAssembled() {
@@ -782,9 +702,7 @@ public class TheGame extends BasicGameState {
 
 	/**
 	 * Kontrollerar om en raketdel är tagen
-	 * 
-	 * @param pl
-	 *            Target Player
+	 * @param pl Target Player
 	 * @return true om spelaren kolliderat med en raketdel
 	 */
 	private boolean rocketPartTaken(Player1 pl) {
@@ -799,9 +717,7 @@ public class TheGame extends BasicGameState {
 	}
 
 	/**
-	 * Handels the moving, buffering and looping of maps. Update positions of
-	 * collisionblocks
-	 * 
+	 * Handels the moving, buffering and looping of maps. Update positions of collisionblocks
 	 * @author Jonathan B
 	 */
 	protected void mapHandler() {
@@ -813,9 +729,7 @@ public class TheGame extends BasicGameState {
 			collisionHandler(players[x], blockMapRow[neighbourMap]);
 		}
 
-		// if(currentMapX + mapWidth < 0){
-		if (currentMapX + getMapWidth() < players[0].getPlayerBox()
-				.getCenterX()) {
+		if (currentMapX + getMapWidth() < players[0].getPlayerBox().getCenterX()) {
 			int temp = currentMap;
 			currentMap = neighbourMap;
 			neighbourMap = temp;
@@ -827,7 +741,6 @@ public class TheGame extends BasicGameState {
 		}
 
 		if (neighbourMapX + getMapWidth() <= 0) {
-			// if(neighbourMapX + mapWidth <= 0){
 			neighbourMap = rnd.nextInt(mapCount);
 			while (neighbourMap == currentMap) {
 				neighbourMap = rnd.nextInt(mapCount - 1);
@@ -851,39 +764,6 @@ public class TheGame extends BasicGameState {
 		blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 		blockMapRow[neighbourMap].updateBlockMap(neighbourMapX, true);
 
-	}
-
-	private boolean gEnemyHit(Player1 pl) {
-		if (pl.getPlayerBox().intersects(gEnemy.getRectangle())
-				&& !gEnemy.isCollided())
-
-		{
-			gEnemy.setCollided(true);
-			System.out.println("Enemy collision");
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	// Sätter banan och poäng när katten börjar om efter att ha dött, så
-	// att det inte finns några poäng och att katten börjar på första banan på
-	// den leveln katten har dött
-
-	private void newStartAfterCatHasPassedAway() {
-		gEnemy.newObjectPos();
-
-		pointObject.newObjectPos();
-		gEnemy.newObjectPos();
-		pointObject.newObjectPos();
-		lifeObject.newObjectPos();
-		setLoopCount(0);
-
-		currentMap = 0;
-		neighbourMap = 1;
-
-		currentMapX = 0;
-		neighbourMapX = getMapWidth();
 	}
 
 	public void setPlayerCount(int playerCount) {

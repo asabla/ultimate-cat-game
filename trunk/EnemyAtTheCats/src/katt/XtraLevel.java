@@ -156,15 +156,9 @@ public class XtraLevel extends TheGame {
 			players[x].getPlayerBox().setY(players[x].getPlayerY());
 			players[x].getPlayerBox().setX(players[x].getPlayerX());
 
-			int hitBoxPushY = 10;
-			int spriteSizeY = 35;
-
-			players[x].getBottomHitBox().setLocation(currentPlX + spriteSizeX,
-					currentPlY + 30);
-			players[x].getTopHitBox().setLocation(currentPlX + spriteSizeX,
-					currentPlY + 10);
-			players[x].getFrontHitBox().setLocation(
-					currentPlX + spriteSizeX + 25, currentPlY + 15);
+			players[x].getBottomHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 30);
+			players[x].getTopHitBox().setLocation(currentPlX + spriteSizeX, currentPlY + 10);
+			players[x].getFrontHitBox().setLocation(currentPlX + spriteSizeX + 25, currentPlY + 15);
 
 			// if outside the window print dead
 			if (playerDropOut(players[x])) {

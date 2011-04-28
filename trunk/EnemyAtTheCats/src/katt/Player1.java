@@ -90,7 +90,6 @@ public class Player1 implements Runnable {
 	 */
 	private Animation createAnimation(String fileDirectory, int sSizeX, 
 			int sSizeY, int frameCount, float speed, int animationYPos) {
-		
 		return addFramesToAnimation(createSheet(fileDirectory, sSizeX, sSizeY), frameCount, speed, animationYPos);
 	}
 	
@@ -124,7 +123,6 @@ public class Player1 implements Runnable {
 		try {
 			return sheet = new SpriteSheet(fileDir, frameWidth, frameHeight);
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -237,8 +235,6 @@ public class Player1 implements Runnable {
 		playerY += (gravityEffect / 2) * TheGame.gameSpeed;
 		gravityEffect++;
 
-//		System.out.println("Falling");
-
 		try {
 			Thread.sleep(20);
 		} catch (InterruptedException e) {
@@ -270,24 +266,17 @@ public class Player1 implements Runnable {
 	 * Event when player dies. Reset position
 	 */
 	public void deadPlayer() {
-		// threadDone = true;
 		this.loosePlayerLife();
 		this.setPlayerX(200);
 		this.setPlayerY(200);
 	}
 
 	public void setLife(int life) {
-		// this.life = life;
 		try {
 			Thread.sleep(30);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public static void threadDone() {
-		// threadDone= false;
 	}
 
 	public int getPlayerLife() {
