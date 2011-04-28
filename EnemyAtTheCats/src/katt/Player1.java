@@ -166,10 +166,10 @@ public class Player1 implements Runnable {
 		}
 		else {
 			if (input.isKeyDown(input.KEY_UP)) {
-				setPlayerY(getPlayerY() -1);
+				setPlayerY(getPlayerY() -2);
 			}
 			if(input.isKeyDown(Input.KEY_DOWN)){
-				setPlayerY(getPlayerY() +1);
+				setPlayerY(getPlayerY() +2);
 			}
 		}
 	
