@@ -14,7 +14,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class TheGame extends BasicGameState {
-	public static TestFrame frame;
 	public static float gameSpeed = 2f;
 	public int ID;
 
@@ -95,8 +94,6 @@ public class TheGame extends BasicGameState {
 		super();
 
 		this.ID = ID;
-
-		frame = new TestFrame();
 
 		db = new Database();
 	}
