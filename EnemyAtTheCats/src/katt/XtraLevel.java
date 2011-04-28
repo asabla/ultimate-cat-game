@@ -179,8 +179,8 @@ public class XtraLevel extends TheGame {
 			// if outside the window print dead
 			if (playerDropOut(players[x])) {
 				input.clearKeyPressedRecord();
-				System.out.println("Dead");
-				System.out.println("Ramlade ut " + players[x].getPlayerY());
+				System.out.println("Bonus Dead");
+				System.out.println("Bonus Ramlade ut " + players[x].getPlayerY());
 
 				StateHandler.bonus = false;
 				
@@ -265,9 +265,7 @@ public class XtraLevel extends TheGame {
 			for (FlyingEnemy fEnemy : fEnemys1) {
 			g.drawImage(fEnemy.getfEnemyImage(), fEnemy.getPosX(), fEnemy.getPosY());
 			}
-			g.drawString("No. of Enemys: " + fEnemys1.size(), 20, 40);
 			g.drawString("Level: " + getCurrentLevel(), 20, 70);
-			g.getFont().drawString(20, 90, "HejHej", Color.yellow, 20, 100);
 
 			
 			
