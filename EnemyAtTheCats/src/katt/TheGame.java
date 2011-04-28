@@ -159,9 +159,9 @@ public class TheGame extends BasicGameState {
 		pointObject = new PickupObject();
 		lifeObject = new PickupObject(0, 5000, 250);
 		
-		helmet = new RocketPart(7, 720, 300);
-		rocket = new RocketPart(8, 4500, 260);
-		boots = new RocketPart(9, 9000, 320);
+		helmet = new RocketPart(7, 2800, 350);
+		rocket = new RocketPart(8, 13000, 260);
+		boots = new RocketPart(9, 20000, 320);
 		
 		rocketParts = new RocketPart[]{helmet, rocket, boots};
 		bonusPlayed = false;
@@ -264,6 +264,7 @@ public class TheGame extends BasicGameState {
 			players[x].getPlayerBox().setY(players[x].getPlayerY());
 			players[x].getPlayerBox().setX(players[x].getPlayerX());
 			
+			//Dubbla metoder här nedanför?? setLocation gör väl samma sak, fast i en metod
 			int hitBoxPushY = 10;
 			   
 			   int spriteSizeY = 35;
@@ -302,7 +303,6 @@ public class TheGame extends BasicGameState {
 				players[x].setPlayerScore(players[x].getPlayerScore() + pointObject.getValue());
 				movePoint = true;
 				pointObject = new PickupObject();
-
 				try {
 					pointObjectImage = new Image(pointObject.getImgLoc());
 				} catch (SlickException e) {
@@ -604,6 +604,15 @@ public class TheGame extends BasicGameState {
 			blockMapRow[currentMap].updateBlockMap(currentMapX, true);
 			// players[1] = new Player1(200, 400, "data/Img/cat2.png",
 			// Input.KEY_W, 3);
+			
+			//nollställer raketdelarna
+			for(int i = 0; i < 3; i++){
+				rocketParts[i].setTaken(false);
+			}
+			helmet.setxPos(2800);
+			rocket.setxPos(14000);
+			boots.setxPos(20000);
+			
 		}
 	}
 
