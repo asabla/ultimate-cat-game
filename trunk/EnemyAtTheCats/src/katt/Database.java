@@ -278,7 +278,7 @@ public class Database
         close();
     }
 
-    public ArrayList<String> getHighscoreToArrayList(int antal, boolean visaStigande)
+    public ArrayList<String> getHighscoreToArrayList(int antal, boolean visaStigande, boolean visaEfternamn)
     {
         connectToDB();
 
@@ -309,6 +309,22 @@ public class Database
             {
                 String stemp = resultset.getString("namn");
                 int itemp = resultset.getInt("highscore");
+
+                //Används för att enbart visa förnamnet
+                if(visaEfternamn)
+                {
+                    String s = stemp;
+                    int index = s.indexOf(' ');
+                    if(index == -1)
+                    {
+                        stemp = s;
+                    }
+                    else
+                    {
+                        stemp = s.substring(0, index);
+                    }
+                }
+                
                 arrList.add(stemp + "\t" + itemp);
                 //System.out.println(stemp + "\t" + itemp);
             }
