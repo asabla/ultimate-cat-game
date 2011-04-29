@@ -170,7 +170,6 @@ public class Space extends BasicGameState {
 				game.getState(StateHandler.THEGAME).render(container, game, g);
 				g.drawImage(bonusGame[count], 200, 150);
 
-				// ****************************************************************************************
 				if (startPy == slutPy) {
 					introSpace = true;
 					startPx = 200;
@@ -237,7 +236,7 @@ public class Space extends BasicGameState {
 					// Imgage goText = new Image("")
 					Image spaceLayer1 = new Image("data/Img/space1.png");
 					Image spaceLayer2 = new Image("data/Img/planets1.png");
-					// g.drawImage(goText, 0, 0);
+					//g.drawImage(goText, 0, 0);
 					g.drawImage(spaceLayer1, 0, 0);
 					g.drawImage(spaceLayer2, 0, 0);
 
